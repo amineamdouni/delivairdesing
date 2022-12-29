@@ -64,29 +64,25 @@ export default function Login() {
             <Heading size="lg">Login</Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
               <Text style={style.Text}>Username</Text>
-              <Box alignItems="center">
-                <Input
-                  mx="4"
-                  placeholder="Username"
-                  style={style.Input}
-                  size="l"
-                  shadow="12"
 
-                  onChangeText={(text) => setUsername(text)}
-                />
-              </Box>
+              <Input
+                mx="4"
+                placeholder="Username"
+                style={style.Input}
+                size="l"
+                onChangeText={(text) => setUsername(text)}
+              />
+
               <Text style={style.Text}>Password</Text>
-              <Box alignItems="center">
-                <Input
-                  type="password"
-                  mx="4"
-                  placeholder="Password"
-                  style={style.Input}
-                  onChangeText={(text) => setPassword(text)}
-                  size="l"
-                  shadow="12"
-                />
-              </Box>
+
+              <Input
+                type="password"
+                mx="4"
+                placeholder="Password"
+                style={style.Input}
+                onChangeText={(text) => setPassword(text)}
+                size="l"
+              />
 
               <HStack space={90} justifyContent="center" style={style.forgot}>
                 <Center>
@@ -166,25 +162,24 @@ const style = StyleSheet.create({
     width: "110%",
     height: "100%",
     justifyContent: "center",
+    backgroundColor: "",
   },
   Input: {
     backgroundColor: "white",
     borderColor: "black",
     borderWidth: 1,
-    borderRadius: 5,
-
+    borderRadius: 7,
   },
   LoginButton: {
     backgroundColor: "#9EA7B6",
     marginTop: "20%",
     borderRadius: 5,
     width: "70%",
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.8,
     elevation: 1,
-    shadowRadius: 8 ,
-    shadowOffset : { width: 6, height: 5},
-
+    shadowRadius: 8,
+    shadowOffset: { width: 6, height: 5 },
   },
   Text: {
     padding: 5,
@@ -197,6 +192,6 @@ const style = StyleSheet.create({
     padding: 5,
   },
   logoSignUp: {
-    marginTop:40,
+    marginTop: 40,
   },
 });
