@@ -25,6 +25,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
+
 export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
