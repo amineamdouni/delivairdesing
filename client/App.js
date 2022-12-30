@@ -11,9 +11,9 @@ import {
   extendTheme,
 } from "native-base";
 
-
+import Home from "./components/Home";
 import Login from "./components/Login";
-import SignUp from "./components/SingnUp"
+import SignUp from "./components/SingnUp";
 import { NativeBaseProvider } from "native-base";
 
 // Define the config
@@ -31,7 +31,7 @@ export const theme = extendTheme({ config });
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Login/>
+      <Login />
     </NativeBaseProvider>
   );
 }
