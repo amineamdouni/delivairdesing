@@ -13,8 +13,21 @@ import {
   ScrollView,
 } from "native-base";
 import { StyleSheet } from "react-native";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 export default function Home() {
+  const [data, setData] = useState([]);
+
+  const getPosts = () => {
+    axios
+      .get("http:/192.168.1.6:5000/posts/")
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => alert(err));
+  };
+  useEffect(() => getPosts(), []);
   return (
     <Box>
       <Center style={style.Header}>
@@ -44,7 +57,7 @@ export default function Home() {
       <Center style={style.graybox}>
         <Box style={{ color: "black" }}>
           <HStack>
-            <Button style={style.searchButtons}>
+            <Button style={style.searchButtons} onPress={() => getPosts()}>
               <Text>Country</Text>
             </Button>
             <Button style={style.searchButtons}>
@@ -60,6 +73,45 @@ export default function Home() {
         </Box>
       </Center>
       <ScrollView>
+        {data.map((e) => {
+          return (
+            <Box>
+              <Container>
+                <HStack space={2}>
+                  <Center style={style.left}>
+                    <Avatar
+                      source={{
+                        uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
+                      }}
+                    />
+                  </Center>
+                  <Container style={style.Middle}>
+                    <Heading size="sm">Med Amine Amdouni</Heading>
+                    <Text>{e.postTime}</Text>
+                    <Text>📍Ariana,Tunis</Text>
+                  </Container>
+                  <Container>
+                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      {e.type}
+                    </Text>
+                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      3kg
+                    </Text>
+                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      Germany
+                    </Text>
+                  </Container>
+                </HStack>
+                <Container style={{ paddingLeft: 50 }} fontWeight="400">
+                  <Text>Departure Time:</Text>
+                  <Text>{e.departTime}</Text>
+                </Container>
+              </Container>
+              <Divider my={2} />
+            </Box>
+          );
+        })}
+        {/* sender profile begins here */}
         <Box>
           <Container>
             <HStack space={2}>
@@ -94,7 +146,8 @@ export default function Home() {
           </Container>
           <Divider my={2} />
         </Box>
-
+        {/* sender profile ends here */}
+        {/* shipper profile starts here */}
         <Box backgroundColor="#F2F6F6">
           <Container>
             <HStack space={2}>
@@ -128,115 +181,8 @@ export default function Home() {
             </Container>
           </Container>
         </Box>
+        {/* shipper profile ends here */}
         <Divider my={2} />
-        <Box>
-          <Container>
-            <HStack space={2}>
-              <Center style={style.left}>
-                <Avatar
-                  source={{
-                    uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                  }}
-                />
-              </Center>
-              <Container style={style.Middle}>
-                <Heading size="sm">Med Amine Amdouni</Heading>
-                <Text>2 mins ago</Text>
-                <Text>📍Ariana,Tunis</Text>
-              </Container>
-              <Container>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Sender
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  3kg
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Germany
-                </Text>
-              </Container>
-            </HStack>
-            <Container style={{ paddingLeft: 50 }} fontWeight="400">
-              <Text>Departure Time:</Text>
-              <Text>01 January 2023 at 11PM</Text>
-            </Container>
-          </Container>
-          <Divider my={2} />
-        </Box>
-        {/* starts here */}
-        <Box>
-          <Container>
-            <HStack space={2}>
-              <Center style={style.left}>
-                <Avatar
-                  source={{
-                    uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                  }}
-                />
-              </Center>
-              <Container style={style.Middle}>
-                <Heading size="sm">Med Amine Amdouni</Heading>
-                <Text>2 mins ago</Text>
-                <Text>📍Ariana,Tunis</Text>
-              </Container>
-              <Container>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Sender
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  3kg
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Germany
-                </Text>
-              </Container>
-            </HStack>
-            <Container style={{ paddingLeft: 50 }} fontWeight="400">
-              <Text>Departure Time:</Text>
-              <Text>01 January 2023 at 11PM</Text>
-            </Container>
-          </Container>
-          <Divider my={2} />
-        </Box>
-{/* ends here */}
-
-        {/* starts here */}
-        <Box>
-          <Container>
-            <HStack space={2}>
-              <Center style={style.left}>
-                <Avatar
-                  source={{
-                    uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                  }}
-                />
-              </Center>
-              <Container style={style.Middle}>
-                <Heading size="sm">Med Amine Amdouni</Heading>
-                <Text>2 mins ago</Text>
-                <Text>📍Ariana,Tunis</Text>
-              </Container>
-              <Container>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Sender
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  3kg
-                </Text>
-                <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                  Germany
-                </Text>
-              </Container>
-            </HStack>
-            <Container style={{ paddingLeft: 50 }} fontWeight="400">
-              <Text>Departure Time:</Text>
-              <Text>01 January 2023 at 11PM</Text>
-            </Container>
-          </Container>
-          <Divider my={2} />
-        </Box>
-{/* ends here */}
-
       </ScrollView>
     </Box>
   );

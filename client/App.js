@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
+import axios from "axios";
 import {
   Alert,
   Text,
@@ -35,6 +36,9 @@ export const theme = extendTheme({ config });
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function App() {
+
+
+
   return (
     <NativeBaseProvider>
       <NavigationContainer>
@@ -49,6 +53,7 @@ export default function App() {
 }
 function HomeTabs() {
   return (
+
     <Tab.Navigator
       tabBarOptions={{ showLabel: false }}
       screenOptions={({ route }) => ({
@@ -102,6 +107,7 @@ function HomeTabs() {
           ),
         }}
       />
+
     </Tab.Navigator>
   );
 }

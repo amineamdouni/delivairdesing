@@ -25,7 +25,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
-export default function Login({navigation}) {
+export default function Login({ navigation }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -86,7 +86,11 @@ export default function Login({navigation}) {
 
               <HStack space={90} justifyContent="center" style={style.forgot}>
                 <Center>
-                  <Link onPress={()=>{navigation.navigate('signup')}}>
+                  <Link
+                    onPress={() => {
+                      navigation.navigate("signup");
+                    }}
+                  >
                     <Text color="primary.500" underline fontSize={"15px"}>
                       Register Now
                     </Text>
@@ -139,7 +143,9 @@ export default function Login({navigation}) {
                 <Center>
                   <Button
                     className="LoginButton"
+
                     onPress={()=>{navigation.navigate('tabs')}}
+
                     style={style.LoginButton}
                   >
                     Login
