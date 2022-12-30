@@ -91,20 +91,54 @@ export default function Home() {
                     <Text>📍Ariana,Tunis</Text>
                   </Container>
                   <Container>
-                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                    <Text
+                      style={{
+                        backgroundColor:
+                          e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
+                        margin: 5,
+                      }}
+                    >
                       {e.type}
                     </Text>
-                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                    <Text
+                      style={{
+                        backgroundColor:
+                          e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
+                        margin: 5,
+                      }}
+                    >
                       3kg
                     </Text>
-                    <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                    <Text
+                      style={{
+                        backgroundColor:
+                          e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
+                        margin: 5,
+                      }}
+                    >
                       Germany
                     </Text>
                   </Container>
                 </HStack>
                 <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                  <Text>Departure Time:</Text>
-                  <Text>{e.departTime}</Text>
+                  <Text
+                    style={{
+                      backgroundColor:
+                        e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
+                      margin: 5,
+                    }}
+                  >
+                    Departure Time:
+                  </Text>
+                  <Text
+                    style={{
+                      backgroundColor:
+                        e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
+                      margin: 5,
+                    }}
+                  >
+                    {e.departTime}
+                  </Text>
                 </Container>
               </Container>
               <Divider my={2} />
