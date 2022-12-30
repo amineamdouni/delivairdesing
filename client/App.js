@@ -11,10 +11,12 @@ import {
   extendTheme,
 } from "native-base";
 
-import Home from "./components/Home";
-import Login from "./components/Login";
-import SignUp from "./components/SingnUp";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
+import Login from "./components/Login";
+import SignUp from "./components/SingnUp"
+import Home from "./components/Home";
 
 // Define the config
 const config = {
@@ -27,11 +29,21 @@ const config = {
 const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
 
 export const theme = extendTheme({ config });
-
+const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NativeBaseProvider>
-      <Login />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="login" component={Login} />
+          <Stack.Screen name="signup" component={SignUp} />
+          <Stack.Screen name="home" component={Home} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </NativeBaseProvider>
   );
 }
