@@ -139,7 +139,7 @@ export default function Login({navigation}) {
                 <Center>
                   <Button
                     className="LoginButton"
-                    onPress={()=>{navigation.navigate('Home')}}
+                    onPress={()=>{navigation.navigate('tabs')}}
                     style={style.LoginButton}
                   >
                     Login
