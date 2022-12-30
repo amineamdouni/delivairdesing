@@ -34,6 +34,7 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NativeBaseProvider>
+
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Tab.Screen name="Notifications" component={Login} />
