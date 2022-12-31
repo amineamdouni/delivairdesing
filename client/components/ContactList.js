@@ -23,8 +23,8 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-export default function Chat({ navigation }) {
+export default function Contact({ navigation }) {
   <Center>
-    <Text fontSize="6xl">Chat page</Text>
+    <Text>contact page</Text>
   </Center>;
-};
+}
