@@ -23,16 +23,41 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+//--------- We need to secure this amine !------
+const firebaseConfig = {
+  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+  authDomain: "delivair-959e9.firebaseapp.com",
+  projectId: "delivair-959e9",
+  storageBucket: "delivair-959e9.appspot.com",
+  messagingSenderId: "1084409904306",
+  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+};
+
+const app = initializeApp(firebaseConfig);
+
+//-------------------------
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+const auth = getAuth();
+
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
-
 export default function Login({ navigation }) {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const checkAlert = () => {
-    console.log(username);
-    return alert("Hello " + username + " Password : " + password);
+
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        //console.log él res to see all the token informations
+        navigation.navigate("tabs");
+        alert("welcome " + email);
+      })
+      .catch((err) => {
+        alert("Please check your credentials or you may not be signed in");
+      });
   };
 
   return (
@@ -64,14 +89,14 @@ export default function Login({ navigation }) {
           <VStack space={10} alignItems="center">
             <Heading size="lg">Login</Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
-              <Text style={style.Text}>Username</Text>
+              <Text style={style.Text}>Email</Text>
 
               <Input
                 mx="4"
-                placeholder="Username"
+                placeholder="Email"
                 style={style.Input}
                 size="l"
-                onChangeText={(text) => setUsername(text)}
+                onChangeText={(text) => setEmail(text)}
               />
 
               <Text style={style.Text}>Password</Text>
@@ -144,9 +169,9 @@ export default function Login({ navigation }) {
                 <Center>
                   <Button
                     className="LoginButton"
-
-                    onPress={()=>{navigation.navigate('tabs')}}
-
+                    onPress={() => {
+                      handleLogin();
+                    }}
                     style={style.LoginButton}
                   >
                     Login

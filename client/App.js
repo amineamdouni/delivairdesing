@@ -1,14 +1,6 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  Text,
-
-  HStack,
-
-  Switch,
-  useColorMode,
-  extendTheme,
-} from "native-base";
+import { Text, HStack, Switch, useColorMode, extendTheme } from "native-base";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -18,7 +10,9 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Login from "./components/Login";
 import SignUp from "./components/SingnUp";
 import Home from "./components/Home";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
+const auth = getAuth();
 // Define the config
 const config = {
   useSystemColorMode: false,
@@ -33,8 +27,21 @@ export const theme = extendTheme({ config });
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function App() {
-
-
+  const [user, setUser] = useState([]);
+  const [initializing, setInitializing] = useState(true);
+  //Checking if there is a user connected
+  useEffect(() =>
+    onAuthStateChanged(auth, (user) => {
+      // console.log("user connected is ", user.email);
+      setUser(user);
+      if (initializing) {
+        setInitializing(false);
+      }
+      // if (user.email === undefined) {
+      //   navigation.navigate("login");
+      // }
+    })
+  );
 
   return (
     <NativeBaseProvider>
@@ -50,18 +57,15 @@ export default function App() {
 }
 function HomeTabs() {
   return (
-
     <Tab.Navigator
       tabBarOptions={{ showLabel: false }}
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarStyle: {
-         
-         
           backgroundColor: "#B1C4CB",
           backgroundImage: "url('https://wallpaper.dog/large/20470680.jpg')",
           position: "absolute",
-           },
+        },
       })}
     >
       <Tab.Screen
@@ -104,7 +108,6 @@ function HomeTabs() {
           ),
         }}
       />
-
     </Tab.Navigator>
   );
 }
@@ -126,4 +129,3 @@ function ToggleDarkMode() {
     </HStack>
   );
 }
-
