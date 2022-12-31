@@ -170,6 +170,7 @@ export default function Login({ navigation }) {
                   <Button
                     className="LoginButton"
                     onPress={() => {
+                      // navigation.navigate('tabs')
                       handleLogin();
                     }}
                     style={style.LoginButton}
