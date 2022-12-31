@@ -1,13 +1,10 @@
 import React, { useEffect,useState } from "react";
 import axios from "axios";
 import {
-  Alert,
   Text,
-  Link,
+
   HStack,
-  Center,
-  Heading,
-  Button,
+
   Switch,
   useColorMode,
   extendTheme,

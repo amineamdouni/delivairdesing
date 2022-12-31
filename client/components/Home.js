@@ -28,6 +28,7 @@ export default function Home() {
       .catch((err) => alert(err));
   };
   useEffect(() => getPosts(), []);
+
   return (
     <Box>
       <Center style={style.Header}>
@@ -57,7 +58,7 @@ export default function Home() {
       <Center style={style.graybox}>
         <Box style={{ color: "black" }}>
           <HStack>
-            <Button style={style.searchButtons} onPress={() => getPosts()}>
+            <Button style={style.searchButtons}>
               <Text>Country</Text>
             </Button>
             <Button style={style.searchButtons}>
