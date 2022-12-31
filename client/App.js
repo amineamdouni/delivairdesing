@@ -27,19 +27,19 @@ export const theme = extendTheme({ config });
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 export default function App() {
-  const [user,setUser]=useState([])
+  const [user, setUser] = useState([]);
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
   useEffect(() =>
     onAuthStateChanged(auth, (user) => {
-      console.log("user connected is ", user.email);
+      // console.log("user connected is ", user.email);
       setUser(user);
       if (initializing) {
         setInitializing(false);
       }
-      if (user === null){
-        navigation.navigate("login")
-      }
+      // if (user.email === undefined) {
+      //   navigation.navigate("login");
+      // }
     })
   );
 
