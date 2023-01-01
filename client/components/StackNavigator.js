@@ -9,19 +9,21 @@ import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
+import Footer from "./Footer";
 
 const Stack = createNativeStackNavigator();
 
 export default function Stacks() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="login" component={Login} />
+      <Stack.Screen name="login" component={Footer} />
       <Stack.Screen name="signup" component={SignUp} />
       <Stack.Screen name="addpost" component={AddPost} />
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
-      
+      <Stack.Screen name="ooter" component={Footer} />
+
       <Stack.Screen name="tabs" component={HomeTabs} />
     </Stack.Navigator>
   );
