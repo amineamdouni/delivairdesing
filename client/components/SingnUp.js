@@ -27,14 +27,42 @@ import {
 
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
+//--------- We need to secure this amine !------
+const firebaseConfig = {
+  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+  authDomain: "delivair-959e9.firebaseapp.com",
+  projectId: "delivair-959e9",
+  storageBucket: "delivair-959e9.appspot.com",
+  messagingSenderId: "1084409904306",
+  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+};
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+//-----------------------
+
 export default function SignUp() {
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [dataInput, setDataInput] = useState([]);
+  const [user, setUser] = useState("");
+ 
 
-  const checkAlert = () => {
-    return alert(username + " " + Email + " " + password + " " + confirm);
+  //SignUp function
+  const SignUpUser = () => {
+    const info = { Email: Email, passw: password };
+    setDataInput([info]);
+    createUserWithEmailAndPassword(auth, Email, password)
+      .then((Credential) => {
+        setUser(Credential.user.uid);
+        navigation.navigate("tabs");
+      })
+      .catch((err) => {
+        alert(err);
+      });
   };
 
   return (
@@ -159,7 +187,7 @@ export default function SignUp() {
                 <Center>
                   <Button
                     className="LoginButton"
-                    onPress={checkAlert}
+                    onPress={SignUpUser}
                     style={style.LoginButton}
                   >
                     SignUp
