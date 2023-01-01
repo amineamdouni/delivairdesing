@@ -15,8 +15,8 @@ import {
 import { StyleSheet } from "react-native";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-export default function Home() {
+import Footer from "./Footer";
+export default function Home({navigation}) {
   const [data, setData] = useState([]);
 
   const getPosts = () => {
@@ -219,6 +219,7 @@ export default function Home() {
         {/* shipper profile ends here */}
         <Divider my={2} />
       </ScrollView>
+      <Footer navigation={navigation} />
     </Box>
   );
 }

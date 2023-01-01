@@ -34,7 +34,7 @@ export default function Login({ navigation }) {
     console.log(username);
     return alert("Hello " + username + " Password : " + password);
   };
-
+console.log(navigation);
   return (
     <Center
       _dark={{ bg: "blueGray.900" }}
@@ -145,7 +145,7 @@ export default function Login({ navigation }) {
                   <Button
                     className="LoginButton"
 
-                    onPress={()=>{navigation.navigate('tabs')}}
+                    onPress={()=>{navigation.navigate('home')}}
 
                     style={style.LoginButton}
                   >
