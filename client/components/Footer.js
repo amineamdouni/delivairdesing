@@ -53,7 +53,9 @@ export default function Footer({ navigation, focused }) {
           styles={style.middleButton}
           icon={<MaterialCommunityIcons name="plus" size={30} />}
         />
-        <TouchableOpacity onPress={() => setSelected("radar")}>
+        <TouchableOpacity onPress={() => {
+             navigation.navigate("track");
+            setSelected("radar")}}>
           <MaterialCommunityIcons
             style={{ marginLeft: 30, marginTop: 10 }}
             name="radar"
@@ -61,7 +63,11 @@ export default function Footer({ navigation, focused }) {
             size={50}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setSelected("account")}>
+        <TouchableOpacity onPress={() =>{ 
+             
+             setSelected("account")
+             navigation.navigate('profile')
+        }}>
           <MaterialCommunityIcons
             style={{ marginLeft: 30, marginTop: 10 }}
             name="account"

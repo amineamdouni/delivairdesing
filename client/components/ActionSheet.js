@@ -18,7 +18,7 @@ import {
 import { useState } from "react";
 export default function ActionSheet({ navigation, focused,icon,styles }) {
   const { isOpen, onOpen, onClose } = useDisclose();
- console.log(navigation);
+ console.log(navigation,'navigat');
   return (
     <Center>
       <Button onPress={onOpen} style={styles}>
@@ -74,7 +74,7 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           <Actionsheet.Item
             backgroundColor={"#B1C4CB"}
             startIcon={<FontAwesome5 name="user-friends" size={26} />}
-            onPress={() => navigation.navigate("conatct")}
+            onPress={() => navigation.navigate("contact")}
           >
             <TouchableOpacity>
               <Text>Contact List</Text>

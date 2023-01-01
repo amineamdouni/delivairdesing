@@ -24,8 +24,8 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Footer from "./Footer";
 export default function Profile({ navigation }) {
-  <Center>
+ return( <Center>
     <Text>Profile page</Text>
     <Footer/>
-  </Center>;
+  </Center>)
 }
