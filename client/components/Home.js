@@ -12,21 +12,28 @@ import {
   Heading,
   Avatar,
   ScrollView,
-  Modal
+  Menu,
+  Modal,
+  Pressable
 } from "native-base";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { ImageBackground, StyleSheet } from "react-native";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
 import DatePicker from 'react-native-modern-datepicker';
 import { TouchableOpacity } from "react-native";
-
+const date=new Date()
 const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
 
 export default function Home({ navigation }) {
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate());
   const [modalVisible, setModalVisible] = React.useState(false);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
@@ -37,7 +44,7 @@ export default function Home({ navigation }) {
           <Modal.CloseButton />
          
           <DatePicker
-      onSelectedChange={date => setSelectedDate(date)}
+      onSelectedChange={date => setSelectedDate(date.slice(0,date.length-6))}
     />
         </Modal.Content>
       </Modal>
@@ -55,7 +62,43 @@ export default function Home({ navigation }) {
           <HStack>
             
             <Container>
-              <Button style={style.role}><Text color={"black"}>Role</Text></Button>
+              <Menu
+              w="100"
+              h="150"
+              
+              borderRadius={8}
+              trigger={(triggerProps) => {
+                return (
+                
+                                 <Button   accessibilityLabel="More options menu"  {...triggerProps} style={style.role}><Text color={"black"}>Role </Text></Button>
+
+                 
+                );
+              }}
+            >
+              <Menu.Item>
+                {" "}
+                <VStack>
+                  <Text>
+                    {" "}
+                   
+                    Sender
+                  </Text>
+                </VStack>
+              </Menu.Item>
+
+              <Menu.Item onPress={() => SignOut()}>
+                {" "}
+                <VStack>
+
+                  <Text>
+                    {" "}
+                   
+                    Shipper
+                  </Text>
+                </VStack>
+              </Menu.Item>
+            </Menu>
             </Container>
             <Container>
               <Button style={style.role}><Text color={"black"}>Weight</Text></Button>
@@ -67,12 +110,12 @@ export default function Home({ navigation }) {
             <Button style={style.date} onPress={() => {
         setModalVisible(!modalVisible);
       }}>
-         <Text color={'blacl'}> Date</Text> 
+         <Text color={'black'}> Date</Text> 
         </Button>
               <Box style={style.inputdate}>
               <VStack space="4" justifyContent="center" alignItems="center">
        
-       <Text>{selectedDate}</Text>
+       <Text style= {{  borderRadius:5,borderColor:"d6d6d6" , borderWidth:1 ,height:30,width:150, left:13}}>{selectedDate}</Text>
       </VStack>
             
               </Box>
@@ -99,7 +142,7 @@ export default function Home({ navigation }) {
         
         <Box>
           <Container>
-            <Text>Hello</Text>
+            <Text>Bayalet </Text>
           </Container>
         </Box>
       </ScrollView>
@@ -207,6 +250,7 @@ const style = StyleSheet.create({
     height: 36,
     left: -270,
     top: 175,
+    bordercolor:"black"
     
   },
   inputto: {
