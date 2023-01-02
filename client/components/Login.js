@@ -46,12 +46,9 @@ export default function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        //console.log él res to see all the token informations
         navigation.navigate("home");
         alert("welcome " + email);
       })
