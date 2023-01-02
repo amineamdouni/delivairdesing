@@ -22,9 +22,10 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-export default function Profile({ navigation }) {
-  <Center>
+import Footer from "./Footer";
+export default function Profile() {
+ return( <Center>
     <Text>Profile page</Text>
-  </Center>;
+    <Footer/>
+  </Center>)
 }

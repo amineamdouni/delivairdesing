@@ -22,9 +22,10 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import Footer from "./Footer";
 export default function Chat({ navigation }) {
-  <Center>
+  return(<Center>
     <Text fontSize="6xl">Chat page</Text>
-  </Center>;
+    <Footer navigation={navigation}/>
+  </Center>)
 };

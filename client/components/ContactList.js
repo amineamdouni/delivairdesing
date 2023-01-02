@@ -24,7 +24,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Contact({ navigation }) {
-  <Center>
+ return( <Center>
     <Text>contact page</Text>
-  </Center>;
+  </Center>);
 }
