@@ -22,9 +22,12 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import Footer from "./Footer";
 export default function Track({ navigation }) {
-  <Center>
-    <Text>Track page</Text>
-  </Center>;
+ return (
+   <Center>
+     <Text>track page</Text>
+     <Footer/>
+   </Center>
+ );
 }
