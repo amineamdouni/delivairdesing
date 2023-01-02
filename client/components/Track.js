@@ -27,7 +27,7 @@ export default function Track({ navigation }) {
  return (
    <Center>
      <Text>track page</Text>
-     <Footer/>
+     <Footer navigation={navigation}/>
    </Center>
  );
 }
