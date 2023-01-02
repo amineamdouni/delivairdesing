@@ -3,8 +3,6 @@ import React,{useState,useEffect} from "react";
 
 
 import { Text, HStack, Switch, useColorMode, extendTheme } from "native-base";
-
-import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { NavigationContainer } from "@react-navigation/native";
