@@ -31,7 +31,9 @@ export default function Profile({ navigation }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        console.log(res)
+
+        console.log(res);
+
         alert("Signed out");
         navigation.navigate("login");
       })
@@ -82,10 +84,11 @@ export default function Profile({ navigation }) {
                   </Text>
                 </VStack>
               </Menu.Item>
-              <Menu.Item>
+
+              <Menu.Item onPress={() => SignOut()}>
                 {" "}
-                <VStack 
-                onPress={SignOut}>
+                <VStack>
+
                   <Text>
                     {" "}
                     <MaterialCommunityIcons
