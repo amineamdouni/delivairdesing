@@ -52,7 +52,7 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         //console.log él res to see all the token informations
-        navigation.navigate("tabs");
+        navigation.navigate("home");
         alert("welcome " + email);
       })
       .catch((err) => {
