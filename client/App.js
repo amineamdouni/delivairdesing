@@ -1,12 +1,14 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 
 import { Text, HStack, Switch, useColorMode, extendTheme } from "native-base";
 
 import { NavigationContainer } from "@react-navigation/native";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Stacks from "./components/StackNavigator";
 import { NativeBaseProvider } from "native-base";
 
+
+const auth = getAuth();
 // Define the config
 const config = {
   useSystemColorMode: false,
@@ -19,6 +21,22 @@ const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
 
 export const theme = extendTheme({ config });
 export default function App() {
+  const [user, setUser] = useState([]);
+  const [initializing, setInitializing] = useState(true);
+  useEffect(() =>
+    onAuthStateChanged(auth, (user) => {
+      console.log(user)
+      // console.log("user connected is ", user.email);
+      setUser(user);
+      if (initializing) {
+        setInitializing(false);
+      }
+      // if (user.email === undefined) {
+      //   navigation.navigate("login");
+      // }
+    })
+  );
+
   return (
     <NativeBaseProvider>
       <NavigationContainer>

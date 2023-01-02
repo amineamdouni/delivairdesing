@@ -23,7 +23,7 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Footer from "./Footer";
-export default function Profile({ navigation }) {
+export default function Profile() {
  return( <Center>
     <Text>Profile page</Text>
     <Footer/>
