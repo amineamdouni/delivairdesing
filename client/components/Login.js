@@ -50,7 +50,9 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         //console.log él res to see all the token informations
+
         navigation.navigate("home");
+
         alert("welcome " + email);
       })
       .catch((err) => {
@@ -168,6 +170,9 @@ export default function Login({ navigation }) {
                   <Button
                     className="LoginButton"
                     onPress={() => {
+
+                      // navigation.navigate('tabs')
+
                       handleLogin();
                     }}
                     style={style.LoginButton}

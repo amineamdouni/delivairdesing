@@ -27,7 +27,7 @@ import {
 
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
-//------- this need to be secured guys---
+//--------- We need to secure this amine !------
 const firebaseConfig = {
   apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
   authDomain: "delivair-959e9.firebaseapp.com",
@@ -49,17 +49,16 @@ export default function SignUp() {
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
   const [user, setUser] = useState("");
-  const checkAlert = () => {
-    return alert(username + " " + Email + " " + password + " " + confirm);
-  };
+ 
 
+  //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
       .then((Credential) => {
         setUser(Credential.user.uid);
-        alert(user);
+        navigation.navigate("tabs");
       })
       .catch((err) => {
         alert(err);
