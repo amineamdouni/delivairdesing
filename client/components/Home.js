@@ -15,23 +15,9 @@ import {
 import { StyleSheet } from "react-native";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
 import Footer from "./Footer";
 export default function Home({navigation}) {
-
   const [data, setData] = useState([]);
-
-  //---- press on ROLE button ta7t él search to logout
-  // const handleSignout = () => {
-  //   signOut(auth)
-  //     .then(() => {
-  //       alert("Signed out");
-  //       navigation.navigate("Login");
-  //     })
-  //     .catch((error) => {
-  //       alert(err);
-  //     });
-  // };
 
   const getPosts = () => {
     axios
@@ -39,7 +25,7 @@ export default function Home({navigation}) {
       .then((res) => {
         setData(res.data);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   };
   useEffect(() => getPosts(), []);
 

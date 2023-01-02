@@ -18,7 +18,6 @@ import {
 import { useState } from "react";
 export default function ActionSheet({ navigation, focused,icon,styles }) {
   const { isOpen, onOpen, onClose } = useDisclose();
- console.log(navigation,'navigat');
   return (
     <Center>
       <Button onPress={onOpen} style={styles}>

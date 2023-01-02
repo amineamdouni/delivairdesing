@@ -20,18 +20,18 @@ import { useState } from "react";
 export default function Footer({ navigation, focused }) {
   const { isOpen, onOpen, onClose } = useDisclose();
   const [selected, setSelected] = useState('home');
-  console.log(navigation);
+
   return (
-    <VStack style={style.footer}>
-      <HStack>
+    <VStack style={style.footer} shadow={15} >
+      <HStack justifyContent="space-between" shadow={9}>
         <TouchableOpacity onPress={async() => {
             navigation.navigate('home')
             setSelected("home")}}>
           <MaterialCommunityIcons
-            style={{ marginLeft: 15, marginTop: 10 }}
+            // style={{ marginLeft: 15, marginTop: 10 }}
             name="home-outline"
             color={selected === "home" ? "grey" : "#000000"}
-            size={50}
+            size={30}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -41,10 +41,10 @@ export default function Footer({ navigation, focused }) {
           }}
         >
           <MaterialCommunityIcons
-            style={{ marginLeft: 30, marginTop: 10 }}
-            name="chat"
+            // style={{ marginLeft: 30, marginTop: 10 }}
+            name="chat-outline"
             color={selected === "chat" ? "grey" : "#000000"}
-            size={50}
+            size={30}
           />
         </TouchableOpacity>
 
@@ -57,10 +57,10 @@ export default function Footer({ navigation, focused }) {
              navigation.navigate("track");
             setSelected("radar")}}>
           <MaterialCommunityIcons
-            style={{ marginLeft: 30, marginTop: 10 }}
+            // style={{ marginLeft: 60, marginTop: 10 }}
             name="radar"
             color={selected === "radar" ? "grey" : "#000000"}
-            size={50}
+            size={30}
           />
         </TouchableOpacity>
         <TouchableOpacity onPress={() =>{ 
@@ -69,10 +69,10 @@ export default function Footer({ navigation, focused }) {
              navigation.navigate('profile')
         }}>
           <MaterialCommunityIcons
-            style={{ marginLeft: 30, marginTop: 10 }}
-            name="account"
+            // style={{ marginLeft: 60, marginTop: 10 }}
+            name="account-outline"
             color={selected === "account" ? "grey" : "#000000"}
-            size={50}
+            size={30}
           />
         </TouchableOpacity>
       </HStack>
@@ -83,26 +83,27 @@ const style = StyleSheet.create({
   footer: {
     position: "absolute",
     height: 150,
-    left: 0,
     backgroundColor: "#B1C4CB",
-    top: windowHeight - 60,
+    top: windowHeight - 70,
     width: windowWidth,
+    padding:10,
+    borderRadius:15,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
+    
   },
   actionSheet: {
     backgroundColor: "#B1C4CB",
-
     backgroundPosition: "center",
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
   },
   middleButton: {
-    marginLeft: 30,
     width: 55,
     height: 55,
     backgroundColor: "#E8C6C8",
     borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
     marginBottom: 200,
   },
 });
