@@ -117,7 +117,7 @@ export default function Profile({navigation}) {
                     </View>
                     
                 </View>
-                <Text style={[styles.subText, styles.recent]}>Contact list </Text>
+                <Text style={[styles.subText, styles.recent,{marginTop:30}]}>Contact list </Text>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                         <View style={styles.mediaImageContainer}>
                             <Image source={{uri:"https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg"}} style={styles.image} resizeMode="cover"></Image>
@@ -144,7 +144,7 @@ export default function Profile({navigation}) {
            
         </SafeAreaView>
         
-        <Footer/></NativeBaseProvider>
+        <Footer navigation={navigation}/></NativeBaseProvider>
 
     );
 }
@@ -155,6 +155,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#FFF"
     },
     text: {
+        fontSize: 20,
         fontFamily: "HelveticaNeue",
         color: "#52575D"
     },
@@ -170,7 +171,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 16
     },
     subText: {
-        fontSize: 12,
+        fontSize: 24,
         color: "#AEB5BC",
         textTransform: "uppercase",
         fontWeight: "500"
@@ -215,7 +216,7 @@ const styles = StyleSheet.create({
     infoContainer: {
         alignSelf: "center",
         alignItems: "center",
-        marginTop: 16
+        
     },
     statsContainer: {
         flexDirection: "row",
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
     },
     recent: {
         marginLeft: 78,
-        marginTop: 80,
+       
         marginBottom: 6,
         fontSize: 13
     },

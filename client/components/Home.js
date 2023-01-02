@@ -25,7 +25,7 @@ export default function Home({navigation}) {
       .then((res) => {
         setData(res.data);
       })
-      .catch((err) => alert(err));
+      .catch((err) => console.log(err));
   };
   useEffect(() => getPosts(), []);
 
