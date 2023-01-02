@@ -23,15 +23,41 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+//--------- We need to secure this amine !------
+const firebaseConfig = {
+  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+  authDomain: "delivair-959e9.firebaseapp.com",
+  projectId: "delivair-959e9",
+  storageBucket: "delivair-959e9.appspot.com",
+  messagingSenderId: "1084409904306",
+  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+};
+
+const app = initializeApp(firebaseConfig);
+
+//-------------------------
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+const auth = getAuth();
+
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
-export default function Login() {
-  const [username, setUsername] = useState("");
+export default function Login({ navigation }) {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const checkAlert = () => {
-    console.log(username);
-    return alert("Hello " + username + " Password : " + password);
+
+
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        //console.log él res to see all the token informations
+        navigation.navigate("home");
+        alert("welcome " + email);
+      })
+      .catch((err) => {
+        alert("Please check your credentials or you may not be signed in");
+      });
   };
 
   return (
@@ -63,34 +89,34 @@ export default function Login() {
           <VStack space={10} alignItems="center">
             <Heading size="lg">Login</Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
-              <Text style={style.Text}>Username</Text>
-              <Box alignItems="center">
-                <Input
-                  mx="4"
-                  placeholder="Username"
-                  style={style.Input}
-                  size="l"
-                  shadow="12"
+              <Text style={style.Text}>Email</Text>
 
-                  onChangeText={(text) => setUsername(text)}
-                />
-              </Box>
+              <Input
+                mx="4"
+                placeholder="Email"
+                style={style.Input}
+                size="l"
+                onChangeText={(text) => setEmail(text)}
+              />
+
               <Text style={style.Text}>Password</Text>
-              <Box alignItems="center">
-                <Input
-                  type="password"
-                  mx="4"
-                  placeholder="Password"
-                  style={style.Input}
-                  onChangeText={(text) => setPassword(text)}
-                  size="l"
-                  shadow="12"
-                />
-              </Box>
+
+              <Input
+                type="password"
+                mx="4"
+                placeholder="Password"
+                style={style.Input}
+                onChangeText={(text) => setPassword(text)}
+                size="l"
+              />
 
               <HStack space={90} justifyContent="center" style={style.forgot}>
                 <Center>
-                  <Link href="https://docs.nativebase.io" isExternal>
+                  <Link
+                    onPress={() => {
+                      navigation.navigate("signup");
+                    }}
+                  >
                     <Text color="primary.500" underline fontSize={"15px"}>
                       Register Now
                     </Text>
@@ -143,7 +169,10 @@ export default function Login() {
                 <Center>
                   <Button
                     className="LoginButton"
-                    onPress={checkAlert}
+                    onPress={() => {
+                      // navigation.navigate('tabs')
+                      handleLogin();
+                    }}
                     style={style.LoginButton}
                   >
                     Login
@@ -166,25 +195,24 @@ const style = StyleSheet.create({
     width: "110%",
     height: "100%",
     justifyContent: "center",
+    backgroundColor: "",
   },
   Input: {
     backgroundColor: "white",
     borderColor: "black",
     borderWidth: 1,
-    borderRadius: 5,
-
+    borderRadius: 7,
   },
   LoginButton: {
     backgroundColor: "#9EA7B6",
     marginTop: "20%",
     borderRadius: 5,
     width: "70%",
-    shadowColor: 'black',
+    shadowColor: "black",
     shadowOpacity: 0.8,
     elevation: 1,
-    shadowRadius: 8 ,
-    shadowOffset : { width: 6, height: 5},
-
+    shadowRadius: 8,
+    shadowOffset: { width: 6, height: 5 },
   },
   Text: {
     padding: 5,
@@ -197,6 +225,6 @@ const style = StyleSheet.create({
     padding: 5,
   },
   logoSignUp: {
-    marginTop:40,
+    marginTop: 40,
   },
 });
