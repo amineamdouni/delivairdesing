@@ -15,11 +15,11 @@ import {
 import { StyleSheet } from "react-native";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { getAuth, signOut } from "firebase/auth";
 
-const auth = getAuth();
 
-export default function Home() {
+import Footer from "./Footer";
+export default function Home({navigation}) {
+
   const [data, setData] = useState([]);
 
   //---- press on ROLE button ta7t él search to logout
@@ -195,45 +195,11 @@ export default function Home() {
             </Container>
           </Container>
           <Divider my={2} />
-        </Box>
-        {/* sender profile ends here */}
-        {/* shipper profile starts here */}
-        <Box backgroundColor="#F2F6F6">
-          <Container>
-            <HStack space={2}>
-              <Center style={style.left}>
-                <Avatar
-                  source={{
-                    uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TFHEL7FG-4e2c417ed04b-72",
-                  }}
-                />
-              </Center>
-              <Container style={style.Middle}>
-                <Heading size="sm">Aziz Sellini</Heading>
-                <Text>2 mins ago</Text>
-                <Text>📍Ariana,Tunis</Text>
-              </Container>
-              <Container>
-                <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                  Shipper
-                </Text>
-                <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                  8kg
-                </Text>
-                <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                  Sweden
-                </Text>
-              </Container>
-            </HStack>
-            <Container style={{ paddingLeft: 50 }} fontWeight="400">
-              <Text>Departure Time:</Text>
-              <Text>01 January 2023 at 11PM</Text>
-            </Container>
-          </Container>
-        </Box>
-        {/* shipper profile ends here */}
-        <Divider my={2} />
-      </ScrollView>
+
+        </ScrollView>
+      </Box>
+      <Footer navigation={navigation} />
+
     </Box>
   );
 }
