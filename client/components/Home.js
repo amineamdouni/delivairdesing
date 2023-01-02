@@ -12,19 +12,35 @@ import {
   Heading,
   Avatar,
   ScrollView,
+  Modal
 } from "native-base";
 import { ImageBackground, StyleSheet } from "react-native";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
+import DatePicker from 'react-native-modern-datepicker';
+import { TouchableOpacity } from "react-native";
 
 const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
 
 export default function Home({ navigation }) {
+  const [selectedDate, setSelectedDate] = useState('');
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
   return (
     <>
+    <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+         
+          <DatePicker
+      onSelectedChange={date => setSelectedDate(date)}
+    />
+        </Modal.Content>
+      </Modal>
       <ScrollView>
         <ImageBackground source={imaage}>
           <Box>
@@ -48,9 +64,17 @@ export default function Home({ navigation }) {
               <Button style={style.role}><Text color={"black"}>Country</Text></Button>
             </Container>
             <Container>
-              <Button style={style.date}><Text color={"black"}>Date</Text></Button>
+            <Button style={style.date} onPress={() => {
+        setModalVisible(!modalVisible);
+      }}>
+         <Text color={'blacl'}> Date</Text> 
+        </Button>
               <Box style={style.inputdate}>
-                <Input mx="3" keyboardType="date" placeholder="DD/MM/YYYY" w="100%" />
+              <VStack space="4" justifyContent="center" alignItems="center">
+       
+       <Text>{selectedDate}</Text>
+      </VStack>
+            
               </Box>
             </Container>
             <Container>
