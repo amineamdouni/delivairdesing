@@ -145,7 +145,7 @@ export default function Profile({ navigation }) {
                     </View>
                 </View> */}
 
-          <View style={{ marginTop: 32 }}>
+          <View style={{ marginTop: 80}}>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -161,36 +161,39 @@ export default function Profile({ navigation }) {
                         </View> */}
             </ScrollView>
           </View>
-          <Text style={[styles.subText, styles.recent]}>User information</Text>
+          {/* <Text style={[styles.subText, styles.recent] }>User information</Text> */}
+         
           <View style={{ alignItems: "center" }}>
             <View style={styles.recentItem}>
               {/* <View style={styles.activityIndicator}></View> */}
               <View style={{ width: 250 }}>
                 <Text
-                  style={[styles.text, { color: "#41444B", fontWeight: "300" }]}
+                  style={[styles.text, { color: "#41444B", fontWeight: "400" }]}
                 >
-                  <Text style={{ fontWeight: "400" }}>First Name :</Text> Med
+                  <Text style={{ fontWeight: "800" }}>First Name :</Text> Med
                   Aziz
                 </Text>
+                
               </View>
             </View>
-
+           
             <View style={styles.recentItem}>
+               
               <View style={{ width: 250 }}>
                 <Text
-                  style={[styles.text, { color: "#41444B", fontWeight: "300" }]}
+                  style={[styles.text, { color: "#41444B", fontWeight: "400" }]}
                 >
-                  <Text style={{ fontWeight: "400" }}>Last Name :</Text> Selini
+                  <Text style={{ fontWeight: "800" }}>Last Name :</Text> Selini
                 </Text>
               </View>
             </View>
-
+           
             <View style={styles.recentItem}>
               <View style={{ width: 250 }}>
                 <Text
-                  style={[styles.text, { color: "#41444B", fontWeight: "300" }]}
+                  style={[styles.text, { color: "#41444B", fontWeight: "400" }]}
                 >
-                  <Text style={{ fontWeight: "400" }}>Phone Number :</Text> +
+                  <Text style={{ fontWeight: "800" }}>Phone Number :</Text> +
                   216 52 224 782
                 </Text>
               </View>
@@ -198,9 +201,9 @@ export default function Profile({ navigation }) {
             <View style={styles.recentItem}>
               <View style={{ width: 250 }}>
                 <Text
-                  style={[styles.text, { color: "#41444B", fontWeight: "300" }]}
+                  style={[styles.text, { color: "#41444B", fontWeight: "400" }]}
                 >
-                  <Text style={{ fontWeight: "400" }}>Email :</Text>{" "}
+                  <Text style={{ fontWeight: "800" }}>Email :</Text>{" "}
                   medaziz@gmail.com
                 </Text>
               </View>
@@ -373,14 +376,14 @@ const styles = StyleSheet.create({
   },
   recent: {
     marginLeft: 78,
-    marginTop: 80,
+    marginTop: 90,
     marginBottom: 6,
     fontSize: 13,
   },
   recentItem: {
     flexDirection: "row",
     alignItems: "flex-start",
-    marginBottom: 16,
+    marginBottom: 35,
   },
   activityIndicator: {
     backgroundColor: "#CABFAB",
