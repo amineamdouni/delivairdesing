@@ -36,18 +36,43 @@ export default function Home({ navigation }) {
           </Box>
         </ImageBackground>
         <Box style={style.inputBox}>
-          <HStack >
-          <Container >
-            <Button style={style.role}>Role</Button>
-          </Container>
-          <Container>
-            <Button style={style.role}>Weight</Button>
-          </Container>
-          <Container>
-            <Button style={style.role}>Country</Button>
-          </Container>
+          <HStack>
+            
+            <Container>
+              <Button style={style.role}><Text color={"black"}>Role</Text></Button>
+            </Container>
+            <Container>
+              <Button style={style.role}><Text color={"black"}>Weight</Text></Button>
+            </Container>
+            <Container>
+              <Button style={style.role}><Text color={"black"}>Country</Text></Button>
+            </Container>
+            <Container>
+              <Button style={style.date}><Text color={"black"}>Date</Text></Button>
+              <Box style={style.inputdate}>
+                <Input mx="3" keyboardType="date" placeholder="DD/MM/YYYY" w="100%" />
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.from }><Text color={"black"}>From</Text></Button>
+              <Box style={style.inputfrom}>
+              <Input mx="3" placeholder="from" w="100%" />
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.to}><Text color={"black"}>To</Text></Button>
+              <Box style={style.inputto}>
+                <Input placeholder="to" ></Input>
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.submit}>Submit</Button>
+            </Container>
+            
           </HStack>
         </Box>
+        
+        
         <Box>
           <Container>
             <Text>Hello</Text>
@@ -97,6 +122,15 @@ const style = StyleSheet.create({
     fontSize: 30,
   },
   inputBox: {
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    shadowColor: "black",
     width: 328,
     height: 466,
     left: 45,
@@ -105,11 +139,67 @@ const style = StyleSheet.create({
     marginTop: -230,
   },
   role: {
-    width: 60,
-    height: 35,
-    left: 52,
+    marginLeft: 10,
+    width: 75,
+    height: 36,
+    left: 35,
     top: 30,
-    backgroundColor:"#E7C7C8",
-    borderRadius:14
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
   },
+  date: {
+    width: 75,
+    height: 36,
+    left: -210,
+    top: 130,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  from: {
+    width: 75,
+    height: 36,
+    left: -360,
+    top: 210,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  to: {
+    width: 75,
+    height: 36,
+    left: -510,
+    top: 290,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  inputdate: {
+    
+    width: 150,
+    height: 36,
+    left: -120,
+    top: 95,
+  },
+  inputfrom: {
+    width: 150,
+    height: 36,
+    left: -270,
+    top: 175,
+    
+  },
+  inputto: {
+    width: 150,
+    height: 36,
+    left: -410,
+    top: 255,
+    
+  },
+  submit: {
+    width: 150,
+    height: 36,
+    left: -480,
+    top: 390,
+    borderRadius:20,
+    width:90,
+    backgroundColor: "black",
+  }
+
 });
