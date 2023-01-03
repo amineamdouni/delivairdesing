@@ -6,10 +6,11 @@ import {
   Center,
   Heading,
   VStack,
-  Box,
+  Box,Avatar,
   Button,
   Image,
   Input,
+  ScrollView,
   Flex,
   Divider,
   Icon,
@@ -20,12 +21,211 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  ImageBackground,
+  Dimensions,
+
 } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign,Ionicons } from "@expo/vector-icons";
 import Footer from "./Footer";
-export default function Chat({ navigation }) {
-  return(<Center>
-    <Text fontSize="6xl">Chat page</Text>
-    <Footer navigation={navigation}/>
-  </Center>)
+import { SearchBar } from "react-native-screens";
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+const imaage = {
+  uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
+
+export default function Chat({ navigation }) {
+  return (
+    
+    <Box style={{ backgroundColor: "#EAC7CA" }}>
+      <Box style={styles.header}>
+        <Heading fontSize="2xl" style={styles.heading}>
+          Messages
+        </Heading>
+      </Box>
+      <Box style={styles.container}>
+        <Box style={styles.containerTop}>
+          <Box style={styles.SearchBar}>
+            <Input
+              placeholder="Search"
+              variant="filled"
+              width="100%"
+              borderRadius="10"
+              borderWidth={1}
+              borderColor="black"
+              fontSize="lg"
+              py="1"
+              px="2"
+              InputLeftElement={
+                <Icon
+                  ml="2"
+                  size="4"
+                  color="gray.400"
+                  as={<Ionicons name="ios-search" />}
+                />
+              }
+            />
+          </Box>
+
+          <ScrollView horizontal={true}>
+            <Box style={styles.contact}>
+              <HStack>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                >
+                  <Avatar.Badge bg="green.500" />
+                </Avatar>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                >
+                  <Avatar.Badge bg="green.500" />
+                </Avatar>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                >
+                  <Avatar.Badge bg="green.500" />
+                </Avatar>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                ></Avatar>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                ></Avatar>
+                <Avatar
+                  marginLeft={5}
+                  size="lg"
+                  source={{
+                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                  }}
+                ></Avatar>
+              </HStack>
+            </Box>
+          </ScrollView>
+        </Box>
+        <Box height={windowHeight}>
+          <VStack>
+            <HStack style={styles.message}>
+              <Avatar
+                marginLeft={5}
+                size="lg"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                }}
+              >
+                
+              </Avatar>
+              <VStack style={styles.textContainer}>
+                <Text fontWeight={700} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+                <Text fontWeight={300} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+              </VStack>
+            </HStack>
+          </VStack>
+          <VStack>
+            <HStack style={styles.message}>
+              <Avatar
+                marginLeft={5}
+                size="lg"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                }}
+              >
+                
+              </Avatar>
+              <VStack style={styles.textContainer}>
+                <Text fontWeight={700} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+                <Text fontWeight={300} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+              </VStack>
+            </HStack>
+          </VStack>
+          <VStack>
+            <HStack style={styles.message}>
+              <Avatar
+                marginLeft={5}
+                size="lg"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                }}
+              >
+                
+              </Avatar>
+              <VStack style={styles.textContainer}>
+                <Text fontWeight={700} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+                <Text fontWeight={300} fontSize={20}>
+                  Lorem ipsum dolor
+                </Text>
+              </VStack>
+            </HStack>
+          </VStack>
+        </Box>
+      </Box>
+    </Box>
+  );
+}
+
+const styles = StyleSheet.create({
+  heading: {
+    marginStart: 10,
+    fontWeight: "bold",
+    color: "white",
+  },
+  containerTop: {
+    backgroundColor: "white",
+    borderRadius: 40,
+  },
+  message:{
+    
+    padding:15
+  },
+  header: {
+    backgroundColor: "#EAC7CA",
+    width: windowWidth,
+    top: windowHeight - (windowHeight - 60),
+    height: windowHeight - (windowHeight - 80),
+    marginBottom: 30,
+  },
+  container: {
+    backgroundColor: "#F5F6F1",
+    height: windowHeight,
+    borderTopStartRadius: 40,
+    borderTopEndRadius: 40,
+  },
+  contact: {
+    marginTop: 20,
+    marginLeft: 5,
+    padding: 20,
+  },
+textContainer:{
+paddingStart:20 
+},
+  SearchBar: { marginTop: 20, paddingEnd: 10, paddingStart: 10 },
+});
