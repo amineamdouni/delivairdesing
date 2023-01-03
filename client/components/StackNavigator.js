@@ -9,7 +9,7 @@ import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
-
+import Form from "./Forme";
 import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
@@ -29,6 +29,7 @@ export default function Stacks() {
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
+      <Stack.Screen name="form" component={Form} />
 
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="chat" component={Chat} />
