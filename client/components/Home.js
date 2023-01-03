@@ -21,6 +21,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import DropDownPicker from 'react-native-dropdown-picker';
 import { ImageBackground, StyleSheet } from "react-native";
 import axios from "axios";
 import React, { useState, useEffect } from "react";
@@ -37,6 +38,12 @@ export default function Home({ navigation }) {
   const [modalVisible, setModalVisible] = React.useState(false);
   const initialRef = React.useRef(null);
   const finalRef = React.useRef(null);
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(null);
+  const [items, setItems] = useState([
+    {label: 'Apple', value: 'apple'},
+    {label: 'Banana', value: 'banana'}
+  ]);
   return (
     <>
     <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
@@ -62,43 +69,18 @@ export default function Home({ navigation }) {
           <HStack>
             
             <Container>
-              <Menu
-              w="100"
-              h="150"
-              
-              borderRadius={8}
-              trigger={(triggerProps) => {
-                return (
-                
-                                 <Button   accessibilityLabel="More options menu"  {...triggerProps} style={style.role}><Text color={"black"}>Role </Text></Button>
-
-                 
-                );
-              }}
-            >
-              <Menu.Item>
-                {" "}
-                <VStack>
-                  <Text>
-                    {" "}
-                   
-                    Sender
-                  </Text>
-                </VStack>
-              </Menu.Item>
-
-              <Menu.Item onPress={() => SignOut()}>
-                {" "}
-                <VStack>
-
-                  <Text>
-                    {" "}
-                   
-                    Shipper
-                  </Text>
-                </VStack>
-              </Menu.Item>
-            </Menu>
+            <DropDownPicker
+         style={style.role}
+         translation={{
+          PLACEHOLDER: "role"
+        }}
+      open={open}
+      value={value}
+      items={items}
+      setOpen={setOpen}
+      setValue={setValue}
+      setItems={setItems}
+    />
             </Container>
             <Container>
               <Button style={style.role}><Text color={"black"}>Weight</Text></Button>
