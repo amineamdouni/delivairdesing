@@ -37,8 +37,20 @@ const add = async (req,res)=>{
   }
 }
 
+const verify = (req,res)=>{
+   console.log(typeof req.body.verified);
+   users.update({
+      where: {user_id:+req.params.id },
+      data: { verified:req.body.verified},
+    }).then((result) => {
+      res.json(result);
+    })
+   .catch ((err)=> {
+    res.json(err)
+  })
+}
 
 
 
 
-module.exports = { get, add };
+module.exports = { get, add ,verify};
