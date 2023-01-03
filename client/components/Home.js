@@ -12,19 +12,42 @@ import {
   Heading,
   Avatar,
   ScrollView,
+  Menu,
+  Modal,
+  Pressable
 } from "native-base";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { ImageBackground, StyleSheet } from "react-native";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
-
+import DatePicker from 'react-native-modern-datepicker';
+import { TouchableOpacity } from "react-native";
+const date=new Date()
 const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
 
 export default function Home({ navigation }) {
+  const [selectedDate, setSelectedDate] = useState(date.getFullYear()+'/'+date.getMonth()+'/'+date.getDate());
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
   return (
     <>
+    <Modal isOpen={modalVisible} onClose={() => setModalVisible(false)} initialFocusRef={initialRef} finalFocusRef={finalRef}>
+        <Modal.Content>
+          <Modal.CloseButton />
+         
+          <DatePicker
+      onSelectedChange={date => setSelectedDate(date.slice(0,date.length-6))}
+    />
+        </Modal.Content>
+      </Modal>
       <ScrollView>
         <ImageBackground source={imaage}>
           <Box>
@@ -36,21 +59,90 @@ export default function Home({ navigation }) {
           </Box>
         </ImageBackground>
         <Box style={style.inputBox}>
-          <HStack >
-          <Container >
-            <Button style={style.role}>Role</Button>
-          </Container>
-          <Container>
-            <Button style={style.role}>Weight</Button>
-          </Container>
-          <Container>
-            <Button style={style.role}>Country</Button>
-          </Container>
+          <HStack>
+            
+            <Container>
+              <Menu
+              w="100"
+              h="150"
+              
+              borderRadius={8}
+              trigger={(triggerProps) => {
+                return (
+                
+                                 <Button   accessibilityLabel="More options menu"  {...triggerProps} style={style.role}><Text color={"black"}>Role </Text></Button>
+
+                 
+                );
+              }}
+            >
+              <Menu.Item>
+                {" "}
+                <VStack>
+                  <Text>
+                    {" "}
+                   
+                    Sender
+                  </Text>
+                </VStack>
+              </Menu.Item>
+
+              <Menu.Item onPress={() => SignOut()}>
+                {" "}
+                <VStack>
+
+                  <Text>
+                    {" "}
+                   
+                    Shipper
+                  </Text>
+                </VStack>
+              </Menu.Item>
+            </Menu>
+            </Container>
+            <Container>
+              <Button style={style.role}><Text color={"black"}>Weight</Text></Button>
+            </Container>
+            <Container>
+              <Button style={style.role}><Text color={"black"}>Country</Text></Button>
+            </Container>
+            <Container>
+            <Button style={style.date} onPress={() => {
+        setModalVisible(!modalVisible);
+      }}>
+         <Text color={'black'}> Date</Text> 
+        </Button>
+              <Box style={style.inputdate}>
+              <VStack space="4" justifyContent="center" alignItems="center">
+       
+       <Text style= {{  borderRadius:5,borderColor:"d6d6d6" , borderWidth:1 ,height:30,width:150, left:13}}>{selectedDate}</Text>
+      </VStack>
+            
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.from }><Text color={"black"}>From</Text></Button>
+              <Box style={style.inputfrom}>
+              <Input mx="3" placeholder="from" w="100%" />
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.to}><Text color={"black"}>To</Text></Button>
+              <Box style={style.inputto}>
+                <Input placeholder="to" ></Input>
+              </Box>
+            </Container>
+            <Container>
+              <Button style={style.submit}>Submit</Button>
+            </Container>
+            
           </HStack>
         </Box>
+        
+        
         <Box>
           <Container>
-            <Text>Hello</Text>
+            <Text>Bayalet </Text>
           </Container>
         </Box>
       </ScrollView>
@@ -97,6 +189,15 @@ const style = StyleSheet.create({
     fontSize: 30,
   },
   inputBox: {
+    shadowOffset: {
+      width: 0,
+      height: 3,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 4.65,
+
+    elevation: 6,
+    shadowColor: "black",
     width: 328,
     height: 466,
     left: 45,
@@ -105,11 +206,68 @@ const style = StyleSheet.create({
     marginTop: -230,
   },
   role: {
-    width: 60,
-    height: 35,
-    left: 52,
+    marginLeft: 10,
+    width: 75,
+    height: 36,
+    left: 35,
     top: 30,
-    backgroundColor:"#E7C7C8",
-    borderRadius:14
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
   },
+  date: {
+    width: 75,
+    height: 36,
+    left: -210,
+    top: 130,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  from: {
+    width: 75,
+    height: 36,
+    left: -360,
+    top: 210,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  to: {
+    width: 75,
+    height: 36,
+    left: -510,
+    top: 290,
+    backgroundColor: "#E7C7C8",
+    borderRadius: 14,
+  },
+  inputdate: {
+    
+    width: 150,
+    height: 36,
+    left: -120,
+    top: 95,
+  },
+  inputfrom: {
+    width: 150,
+    height: 36,
+    left: -270,
+    top: 175,
+    bordercolor:"black"
+    
+  },
+  inputto: {
+    width: 150,
+    height: 36,
+    left: -410,
+    top: 255,
+    
+  },
+  submit: {
+    width: 150,
+    height: 36,
+    left: -480,
+    top: 390,
+    borderRadius:20,
+    width:90,
+    backgroundColor: "black",
+  }
+
 });
