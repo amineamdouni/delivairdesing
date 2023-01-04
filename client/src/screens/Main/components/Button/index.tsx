@@ -38,7 +38,7 @@ export default function Button({ showFlyInfo, onPress }: Props) {
       >
         <S.ButtomContent>
           <S.ButtomText>
-            {showFlyInfo ? "Go to Home screen" : "Confirm $1,536.00"}
+            {showFlyInfo ? "Back to Home Screen" : "Confirm"}
           </S.ButtomText>
         </S.ButtomContent>
       </S.Buttom>

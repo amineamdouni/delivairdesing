@@ -20,7 +20,7 @@ import { useState } from "react";
 export default function Footer({ navigation, focused }) {
   const { isOpen, onOpen, onClose } = useDisclose();
   const [selected, setSelected] = useState('home');
-
+console.log(navigation);
   return (
     <VStack style={style.footer} shadow={15} >
       <HStack justifyContent="space-between" shadow={9}>

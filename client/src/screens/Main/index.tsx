@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   FadeOut,
   FlipOutXUp,
@@ -8,46 +8,61 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+import {  FontAwesome5 } from "@expo/vector-icons";
+import {  Text, Container, Box, Input } from "native-base";
+import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
 
-import logo from "../../assets/images/logo.png";
 import airplane from "../../assets/images/airplane.png";
-import profile from "../../assets/images/profile.jpeg";
-import nopic from "../../assets/images/nopic.jpeg";
 
 import Button from "./components/Button";
 import CardSelect from "./components/CardSelect";
 import StatusContent from "./components/StatusContent";
 import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
-
-export default function Main() {
+import axios from "axios";
+const date = new Date();
+export default function Main({navigation}:any) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+  const [selectedDate, setSelectedDate] = useState(
+    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
+  );
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);
   const airplaneShadowY = useSharedValue(0);
   const airplaneShadowX = useSharedValue(0);
   const airplaneScale = useSharedValue(1);
   const airplaneTranlateY = useSharedValue(0);
-
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [showCardSelect, setShowCardSelect] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [showFlyInfo, setShowFlyInfo] = useState(false);
-
+const [posts,setPosts]=useState([])
   const handleConfirm = () => {
     if (showCardSelect) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
+      filterPosts(from,to)
     } else {
       setShowCardSelect(true);
     }
   };
+const filterPosts=(departure,arrival)=>{
+let filtered=posts.filter((e):any=>(e.departCountry==departure && e.arriveCountry==arrival))
+console.log(filtered);
 
-  useEffect(() => {
+setPosts(filtered)
+}
+  useEffect(() => {axios.get('').then(res=>setPosts(res.data)).catch(err=>console.log(err)
+  )
     if (confirm) {
       backgroundColor.value = withTiming("#F1F1F1", { duration: 600 });
       setTimeout(() => {
@@ -72,9 +87,21 @@ export default function Main() {
   }));
 
   const airplaneAnimatedStyle = useAnimatedStyle(() => {
-    airplaneShadowX.value = interpolate(airplaneShadowY.value, [0, 200], [0, -450]);
-    airplaneScale.value = interpolate(airplaneShadowY.value, [0, 200], [1, 0.8]);
-    airplaneTranlateY.value = interpolate(airplaneShadowY.value, [0, 200], [0, 60]);
+    airplaneShadowX.value = interpolate(
+      airplaneShadowY.value,
+      [0, 200],
+      [0, -450]
+    );
+    airplaneScale.value = interpolate(
+      airplaneShadowY.value,
+      [0, 200],
+      [1, 0.8]
+    );
+    airplaneTranlateY.value = interpolate(
+      airplaneShadowY.value,
+      [0, 200],
+      [0, 60]
+    );
 
     return {
       transform: [
@@ -82,7 +109,10 @@ export default function Main() {
         { scale: airplaneScale.value },
         { translateY: airplaneTranlateY.value },
       ],
-      shadowOffset: { height: airplaneShadowY.value, width: airplaneShadowX.value },
+      shadowOffset: {
+        height: airplaneShadowY.value,
+        width: airplaneShadowX.value,
+      },
     };
   });
 
@@ -98,14 +128,14 @@ export default function Main() {
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>from</S.SmallText>
-                  <S.LargeText>LAS</S.LargeText>
+                  <S.LargeText>{from}</S.LargeText>
                 </S.TextContent>
                 <S.HourContent>
                   <Entypo name="chevron-right" size={30} color="white" />
                 </S.HourContent>
                 <S.TextContent alingment="right">
                   <S.SmallText>to</S.SmallText>
-                  <S.LargeText>NYC</S.LargeText>
+                  <S.LargeText>{to}</S.LargeText>
                 </S.TextContent>
               </S.TextRowContent>
             </S.Content>
@@ -127,40 +157,48 @@ export default function Main() {
           delay={4000}
           zIndex={888}
         />
-        
+
         {!confirm && (
           <S.InfoContent exiting={FadeOut.duration(600)}>
-            <S.Duration>
-              43h 15m <S.Desc>total duration</S.Desc>
-            </S.Duration>
-            <S.Row>
-              <S.ColumnView>
-                <S.Duration>
-                  Jessie J.{"\n"}
-                  <S.Desc>jessy@gmail.com</S.Desc>
-                </S.Duration>
-              </S.ColumnView>
-              <S.Profile source={profile} />
-            </S.Row>
-            <S.Row>
-              <S.ColumnView>
-                <S.Duration>
-                  Andrea R.{"\n"}
-                  <S.Desc>andrea@gmail.com</S.Desc>
-                </S.Duration>
-              </S.ColumnView>
-              <S.Profile source={nopic} />
-            </S.Row>
-            <S.TotalText>Total you will pay</S.TotalText>
-            <S.TotalValue>$ 1,536.00</S.TotalValue>
+            <A.Center style={{ margin: 50 }}>
+              <Text fontSize={20} style={{paddingBottom:10}}>some Text </Text>
+              <A.HStack>
+                <Text color={"black"}>
+              
+                  <FontAwesome5 name="plane-departure" />
+                </Text>
+
+                <Input
+                  onChangeText={(text) => setFrom(text)}
+                  size="l"
+                  mx="3"
+                  placeholder="from"
+                  w="100%"
+                />
+              </A.HStack>
+              <A.Divider my="6" />
+              <A.HStack>
+                <Text color={"black"}>
+                  <FontAwesome5 name="plane-arrival" />
+                </Text>
+
+                <Input
+                  onChangeText={(text) => setTo(text)}
+                  size="l"
+                  mx="3"
+                  placeholder="to"
+                  w="100%"
+                />
+              </A.HStack>
+            </A.Center>
           </S.InfoContent>
         )}
-        {(!confirm || showFlyInfo) && (
-          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+        {(!confirm ) && (
+          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
-        {showFlyInfo && <FlyContent />}
+        {showFlyInfo && <FlyContent posts={posts} navigation={navigation} />}
       </S.Container>
     </>
   );

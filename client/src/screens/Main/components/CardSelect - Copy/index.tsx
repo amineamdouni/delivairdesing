@@ -68,7 +68,7 @@ export default function CardSelect() {
         entering={FlipInXDown.duration(600)}
         exiting={FlipOutXDown.duration(600)}
       >
-        <S.Title> Important products notice</S.Title>
+        
         <S.CardScroll
           bounces={false}
           showsVerticalScrollIndicator={false}

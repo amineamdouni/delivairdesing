@@ -23,7 +23,7 @@ export const Buttom = styled.TouchableOpacity.attrs({
 `;
 
 export const ButtomContent = styled(LinearGradient).attrs({
-  colors: ["#6E8DFF", "#4995FE"],
+  colors: ["#ABCED8", "#ABCED8"],
   start: { x: 0.5, y: 0 },
   end: { x: 1, y: 0 },
 })`

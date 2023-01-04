@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StatusBar } from "react-native";
+import { StatusBar,ScrollView,SafeAreaView } from "react-native";
 import {
   FlipInXDown,
   useAnimatedStyle,
@@ -9,12 +9,17 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
+import { Text ,Box} from "native-base";
 
-import logo from "../../../../assets/images/logo.png";
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
+import Footer from "../../../../../components/Footer";
+import CardSelect from "../CardSelect - Copy";
 
-export default function FlyContent() {
+
+export default function FlyContent({navigation,posts}) {
+  console.log(posts);
+  
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -31,16 +36,14 @@ export default function FlyContent() {
     headertranslateY.value = withTiming(0, { duration: 700 });
     headerContentTranslateY.value = withTiming(0, { duration: 900 });
     headerContentopacity.value = withTiming(1, { duration: 700 });
+    
   }, []);
 
   return (
     <S.Container>
       <StatusBar barStyle="light-content" />
-      <S.Header style={headerAnimatedStyled}>
-        <S.HeaderInfoText>Swipe down to see options</S.HeaderInfoText>
-      </S.Header>
+      <S.Header style={headerAnimatedStyled}></S.Header>
       <S.HeaderContent style={headerContentAnimatedStyled}>
-        <S.Logo source={logo} resizeMode="contain" />
         <S.HeaderText bold>Your order has submited</S.HeaderText>
         <S.HeaderText>We are waiting for booking confirmation</S.HeaderText>
       </S.HeaderContent>
@@ -48,62 +51,44 @@ export default function FlyContent() {
         <S.FlyInfoContent intensity={70}>
           <S.TextRowContent>
             <S.TextContent>
-              <S.SmallText>Los Angeles</S.SmallText>
               <S.LargeText>LAS</S.LargeText>
-              <S.SmallText>24 Apr, 16:30</S.SmallText>
             </S.TextContent>
             <S.HourContent>
               <Entypo name="chevron-right" size={30} color="white" />
-              <S.SmallText bold mt={10}>
-                4h 15m
-              </S.SmallText>
             </S.HourContent>
             <S.TextContent alingment="right">
-              <S.SmallText>New York</S.SmallText>
               <S.LargeText>NYC</S.LargeText>
-              <S.SmallText>20:45</S.SmallText>
             </S.TextContent>
           </S.TextRowContent>
-          <S.TicketInfo>
-            <S.TicketView>
-              <S.Desc>Flight</S.Desc>
-              <S.Value>AR 580</S.Value>
-            </S.TicketView>
-            <S.TicketView>
-              <S.Desc>Class</S.Desc>
-              <S.Value>Premium</S.Value>
-            </S.TicketView>
-            <S.TicketView>
-              <S.Desc>Aircraft</S.Desc>
-              <S.Value>B 737-900</S.Value>
-            </S.TicketView>
-            <S.TicketView>
-              <S.Desc>Possibilty</S.Desc>
-              <S.Value>AR 580</S.Value>
-            </S.TicketView>
-          </S.TicketInfo>
-          <S.Row>
-            <S.ColumnView>
-              <S.Duration>
-                Jessie J.{"\n"}
-                <S.Desc>jessy@gmail.com</S.Desc>
-              </S.Duration>
-            </S.ColumnView>
-            <S.Profile source={profile} />
-          </S.Row>
-          <S.Row>
-            <S.ColumnView>
-              <S.Duration>
-                Andrea R.{"\n"}
-                <S.Desc>andrea@gmail.com</S.Desc>
-              </S.Duration>
-            </S.ColumnView>
-            <S.Profile source={nopic} />
-          </S.Row>
-          <S.TotalText>Total price</S.TotalText>
-          <S.TotalValue>$ 1,536.00</S.TotalValue>
+          <S.TicketInfo></S.TicketInfo>
+          <SafeAreaView>
+            <ScrollView>
+              <Box>
+                {[
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                  "",
+                ].map((e, i) => (
+                  <CardSelect/>
+                ))}
+              </Box>
+            </ScrollView>
+          </SafeAreaView>
         </S.FlyInfoContent>
       </S.FlyInfo>
+      <Footer navigation={navigation} />
     </S.Container>
   );
 }

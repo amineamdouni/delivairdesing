@@ -27,7 +27,7 @@ export const FlyInfo = styled(Animated.View)`
 `;
 
 export const Content = styled(LinearGradient).attrs({
-  colors: ["#0438AE", "#0438AE", "#859DDF"],
+  colors: ["#ffffff", "#E7C7C8", "#ABCED8"],
   start: { x: 0.5, y: -0.6 },
   end: { x: 0.5, y: 1 },
 })`
