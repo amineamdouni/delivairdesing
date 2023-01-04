@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
 import Login from "./Login";
 import SignUp from "./SingnUp";
 import AddPost from "./AddPost";
@@ -24,7 +23,7 @@ export default function Stacks() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-
+      <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="messages" component={Messages} />
       <Stack.Screen name="chat" component={Chat} />
 
@@ -34,8 +33,6 @@ export default function Stacks() {
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
-
-      <Stack.Screen name="home" component={Home} />
 
       <Stack.Screen name="track" component={Track} />
       <Stack.Screen name="profile" component={Profile} />
