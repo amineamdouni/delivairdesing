@@ -8,7 +8,7 @@ import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
-
+import Form from "./Forme";
 import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
@@ -23,6 +23,9 @@ export default function Stacks() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+      <Stack.Screen name="form" component={Form} />
+
       <Stack.Screen name="messages" component={Messages} />
       <Stack.Screen name="home" component={Home} />
       <Stack.Screen name="chat" component={Chat} />
