@@ -1,12 +1,23 @@
-import React from 'react'
-
+import React , {useEffect,useState} from 'react'
+import axios from 'axios'
 const users = () => {
-
+  const [user,setUser]= useState([]);console.log(user);
+  
+useEffect(()=>{
+    axios.get('http://localhost:5000/users').then(response =>setUser(response.data)).catch(err=>console.log(err)
+    )
+    
+      
+    
+    
+},[])
   const Ban=()=>{
     //ban function
   }
-  const Verify=()=>{
-    //verify function
+  const Verify=(id)=>{
+   axios.put(`http://localhost:5000/users/${id}`,{'verified':true}).then(res=>console.log('succ')
+   ).catch(err=>console.log(err)
+   )
 
   }
   const Search =()=>{
@@ -137,35 +148,35 @@ const users = () => {
               </tr>
             </thead>
             <tbody>
-             {['','','',''].map(e=>(<><tr>
+             {user.map((e,i)=>(<><tr>
                 <td>
                   <div className="d-flex px-2">
                     <div >
                       <img  className="avatar avatar-sm rounded-circle bg-gray-100 me-2 my-2"
-                        src="https://res.cloudinary.com/duqxezt6m/image/upload/v1671620369/IMG_0168_uuvouj_nhmx3p.jpg"
+                        src={e.image}
                         alt="spotify" style={{width:"60px",height:"60px"}}
                       />
                     </div>
                     <div className="my-auto">
-                      <h6 className="mb-0 text-sm">Med Aziz Selini</h6>
+                      <h6 className="mb-0 text-sm">{e.userName}</h6>
                     </div>
                   </div>
                 </td>
                 <td className="align-middle">
                   <p className="text-sm font-weight-normal mb-0">
-                    yes
+                    { e.verified?'yes':'no' }
                   </p>
                 </td>
                 <td className="align-middle">
                   <span className="text-sm font-weight-normal">
-                    Boumhal Bassatine
+                  {e.location}
                   </span>
                 </td>
                 <td className="align-middle">
                   <div className="d-flex">
                    
                     <div className="ms-2">
-                      <p className="text-dark text-sm mb-0">52 224 782</p>
+                      <p className="text-dark text-sm mb-0">{e.phoneNumber}</p>
                     
                     </div>
                   </div>
@@ -175,19 +186,19 @@ const users = () => {
                    
                    <div className="ms-2">
                   <p className="text-sm font-weight-normal mb-0">
-                    azizselini@gmail.com
+                    {e.email}
                   </p>
                   </div>
                   </div>
                 </td>
                 <td className="align-middle">
                   <p className="text-sm font-weight-normal mb-0">
-                   *****
+                   {e.ratings}
                   </p>
                 </td>
                 <td className="align-middle " >
                 
-                <button className="btn btn-outline-dark btn-sm">verify</button>
+                <button className="btn btn-outline-dark btn-sm" onClick={()=>Verify(e.user_id)}>verify</button>
                 <button className="btn btn-outline-danger btn-sm">ban</button>
                 </td>
                 
