@@ -17,7 +17,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "expo-blur": "~11.1.0",
+    "expo-linear-gradient": "~11.3.0",
+    "react-native-reanimated": "~2.8.0",
     "@react-navigation/bottom-tabs": "^6.5.2",
+    "styled-components": "^5.3.5",
     "@react-navigation/native": "^6.1.1",
     "@react-navigation/native-stack": "^6.9.7",
     "axios": "^1.2.2",
@@ -34,10 +38,16 @@
     "react-native-web": "~0.18.7"
   },
   "devDependencies": {
-    "@babel/core": "^7.19.3"
+    "@babel/core": "^7.19.3",
+    "@types/react": "~17.0.21",
+    "@types/react-native": "~0.67.6",
+    "@types/styled-components-react-native": "^5.1.3",
+    "typescript": "~4.3.5"
   },
   "bugs": {
     "url": "https://github.com/GeekyAnts/nativebase-templates/issues"
+  },"resolutions": {
+    "@types/react": "~17.0.21"
   },
   "homepage": "https://github.com/GeekyAnts/nativebase-templates#readme",
   "author": "Aditya Jamuar",
