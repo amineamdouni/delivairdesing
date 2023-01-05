@@ -20,6 +20,8 @@ import Track from "./Track";
 import Footer from "./Footer";
 import ActionSheet from "./ActionSheet";
 import Messages from "./Messages";
+import ProfileTest from "./Profiletest";
+
 const Stack = createNativeStackNavigator();
 
 export default function Stacks() {
@@ -27,10 +29,10 @@ export default function Stacks() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-
+      <Stack.Screen name="ProfileTest" component={ProfileTest} />
+      <Stack.Screen name="profile" component={Profile} />
       <Stack.Screen name="form" component={Form} />
 
-  
       <Stack.Screen name="home" component={Home} />
 
       <Stack.Screen name="chat" component={Chat} />
@@ -44,7 +46,6 @@ export default function Stacks() {
       <Stack.Screen name="history" component={History} />
 
       <Stack.Screen name="track" component={Track} />
-      <Stack.Screen name="profile" component={Profile} />
     </Stack.Navigator>
   );
 }
