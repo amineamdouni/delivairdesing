@@ -6,8 +6,12 @@ import {
   StyleSheet,
   Text,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
-import { Image, Center } from "native-base";
+import {
+AntDesign
+} from "@expo/vector-icons";
+import { Image, Center, Avatar, Box } from "native-base";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
@@ -136,27 +140,40 @@ const SignUpForm = () => {
       style={styles.image}
     >
       <View style={styles.container}>
-        <Center>
-          {image ? (
+        <Center   >
+         <TouchableOpacity onPress={pickImage}>{image ? (
             
-            <Image
-              size={150}
+            <Avatar 
+            bottom={100}
+            bg="lightBlue.400"
+              size={100}
               borderRadius={100}
               source={{ uri: image }}
               alt="Alternate Text"
-            />
+            >
+            </Avatar>
           ) : (
-            <Image
-              size={150}
+            <Avatar
+            borderColor={"black"}
+            borderWidth ={1}
+            bottom={100}
+              size={100}
               borderRadius={100}
               source={{
-                uri: "https://wallpaperaccess.com/full/317501.jpg",
+                uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
               }}
               alt="Alternate Text"
             />
-          )}
+          )}</TouchableOpacity> <ProgressBar
+          progress={progress}
+          height={7}
+          backgroundColor="#4a0072"
+        />
+        <View style={styles.activityIndicator}><AntDesign size={16} name="edit"></AntDesign></View>
         </Center>
-        <Text style={styles.title}>Welcome! let's create your profile</Text>
+       
+        <Text style={styles.title2}>Welcome! let's create your profile</Text> 
+        <Box right={1}>
         <Text style={styles.title}>Username</Text>
         <TextInput
           placeholder="Username"
@@ -171,15 +188,11 @@ const SignUpForm = () => {
           onChangeText={(text) => setPhone(text)}
           style={styles.input}
         />
-        <Text style={styles.title}>Add avatar</Text>
+       
 
-        <View style={{ marginTop: -50 }}>
-          <Button title="Choose Image" onPress={pickImage} />
-          <ProgressBar
-            progress={progress}
-            height={7}
-            backgroundColor="#4a0072"
-          />
+        <View >
+        
+          
         </View>
 
         <Text style={styles.title}>Add your Location</Text>
@@ -188,10 +201,12 @@ const SignUpForm = () => {
           value={location}
           onChangeText={(text) => setLocation(text)}
           style={styles.input}
-        />
-        <Button title="Submit" onPress={uploadImage} style={styles.button} />
+        /></Box>
+      <Box top={20} >
+      <Button title="confirm" onPress={uploadImage} color={"#E7C7C8"} borderRadius={"1"} /></Box>
       </View>
-    </ImageBackground>
+       </ImageBackground>
+       
   );
 };
 
@@ -203,12 +218,19 @@ const styles = StyleSheet.create({
 
     backgroundSize: "cover",
   },
+  title2: {
+    bottom:50,
+    fontSize: 18,
+    fontWeight: "bold",
+    color:"white"
+  },
   title: {
-    fontSize: 24,
+    fontSize: 15,
     marginBottom: 20,
   },
   input: {
-    width: 200,
+    borderRadius:10,
+    width: 350,
     height: 44,
     padding: 10,
     borderWidth: 1,
@@ -216,12 +238,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
+    
     height: 1000,
-    width: 409,
+    width: 420,
     marginBottom: 0,
   },
   button: {
-    marginTop: 10,
+    top:300,
+  },
+  activityIndicator: {
+    backgroundColor: "#d8d8d8",  
+    height: 20,
+    width: 20,
+    borderRadius: 10,
+    bottom:141,
+    right:28,
+    borderColor:"black",
+    borderWidth: 1,
+
+    
   },
 });
 
