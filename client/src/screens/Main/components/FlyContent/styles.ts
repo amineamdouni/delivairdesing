@@ -21,7 +21,7 @@ export const Header = styled(Animated.View)`
   width: 100%;
   height: 320px;
   align-items: center;
-  background: #0438ae;
+  background: #e7c7c8;
 `;
 
 export const HeaderInfoText = styled(Animated.Text)<Props>`
@@ -39,7 +39,7 @@ export const HeaderContent = styled(Animated.View)`
   align-items: center;
   padding-top: 10px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(231, 199, 200, 0.1);
 `;
 
 export const HeaderText = styled.Text<Props>`

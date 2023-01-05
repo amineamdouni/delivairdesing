@@ -1,254 +1,256 @@
+//import liraries
+import * as React from "react";
 import {
+  View,
   Text,
-  VStack,
-  Divider,
-  Box,
-  Input,
-  Center,
-  HStack,
-  Button,
-  Container,
-  Heading,
-  Avatar,
-  ScrollView,
-} from "native-base";
-import { StyleSheet } from "react-native";
-import axios from "axios";
-import { useState, useEffect } from "react";
-import Footer from "./Footer";
-export default function AllPosts({ navigation }) {
-  const [data, setData] = useState([]);
+  StyleSheet,
+  StatusBar,
+  Image,
+  FlatList,
+  Dimensions,
+  Animated,
+  SafeAreaView,
+} from "react-native";
 
-  const getPosts = () => {
-    axios
-      .get("http:/192.168.1.6:5000/posts/")
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
-  };
-  useEffect(() => getPosts(), []);
+const { width } = Dimensions.get("screen");
+import { EvilIcons } from "@expo/vector-icons";
+import {
+  FlingGestureHandler,
+  Directions,
+  State,
+} from "react-native-gesture-handler";
 
+const Data = [
+  {
+    title: "Upcoming technology",
+    location: "Moon Knight",
+    date: "September 14, 2022",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672839276/Capture_cmiyp9.png",
+  },
+  {
+    title: "Confluence Integration ",
+    location: " Eliza Martin",
+    date: " February 2, 2022",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842200/IMG-20220202-WA0018_ynpbmv.jpg",
+  },
+  {
+    title: "What Is Cryptocurrency ?",
+    location: "Selimkhandipu",
+    date: " September 18, 2022",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842259/3d416d2430854196a8531a38f2af2582_qephil.jpg",
+  },
+  {
+    title: "Using Video Conferencing",
+    location: " Kiera Ellis",
+    date: "August 24, 2020",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842331/time-business-news-default_uls7es.jpg",
+  },
+  {
+    title: "All About Printed Circuit ",
+    location: "Ali Raza",
+    date: "December 6, 2020",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842387/All-About-Printed-Circuit-Boards-What-You-Need-To-Know-800x445_ce5bqh.jpg",
+  },
+  {
+    title: "KSF SPACE TOGETHER !",
+    location: "KSF Space Lunar Rover",
+    date: " south pole of the Moon in 2023",
+    poster:
+      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842440/ksf-lunar-mission-nanosatellite-cubesat_bmunxa.jpg",
+  },
+];
+
+const OVERFLOW_HEIGHT = 70;
+const SPACING = 10;
+const ITEM_WIDTH = width * 0.76;
+const ITEM_HEIGHT = ITEM_WIDTH * 1.7;
+const VISIBLE_ITEMS = 3;
+
+const OverflowItems = ({ data, scrollXAnimated }) => {
+  const inputRange = [-1, 0, 1];
+  const translateY = scrollXAnimated.interpolate({
+    inputRange,
+    outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
+  });
   return (
-    <Box>
-      <Box>
-        <Center style={style.Header}>
-          <VStack
-            my="4"
-            space={5}
-            w="100%"
-            maxW="360px"
-            divider={
-              <Box px="2">
-                <Divider />
-              </Box>
+    <View style={styles.overflowContainer}>
+      <Animated.View style={{ transform: [{ translateY }] }}>
+        {data.map((item, index) => {
+          return (
+            <View key={index} style={styles.itemContainer}>
+              <Text style={[styles.title]} numberOfLines={1}>
+                {item.title}
+              </Text>
+              <View style={styles.itemContainerRow}>
+                <Text style={[styles.location]}>
+                  <EvilIcons
+                    name="location"
+                    size={16}
+                    color="black"
+                    style={{ marginRight: 5 }}
+                  />
+                  {item.location}
+                </Text>
+                <Text style={[styles.date]}>{item.date}</Text>
+              </View>
+            </View>
+          );
+        })}
+      </Animated.View>
+    </View>
+  );
+};
+
+export default function Events() {
+  const [data, setData] = React.useState(Data);
+  const scrollXIndex = React.useRef(new Animated.Value(0)).current;
+  const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
+  const [index, setIndex] = React.useState(0);
+  const setActiveIndex = React.useCallback((activeIndex) => {
+    setIndex(activeIndex);
+    scrollXIndex.setValue(activeIndex);
+  });
+  React.useEffect(() => {
+    Animated.spring(scrollXAnimated, {
+      toValue: scrollXIndex,
+      useNativeDriver: true,
+    }).start();
+  });
+  return (
+    <FlingGestureHandler
+      key="left"
+      direction={Directions.LEFT}
+      onHandlerStateChange={(ev) => {
+        if (ev.nativeEvent.state === State.END) {
+          if (index === data.length - 1) {
+            return;
+          }
+          setActiveIndex(index + 1);
+        }
+      }}
+    >
+      <FlingGestureHandler
+        key="right"
+        direction={Directions.RIGHT}
+        onHandlerStateChange={(ev) => {
+          if (ev.nativeEvent.state === State.END) {
+            if (index === 0) {
+              return;
             }
-          >
-            <VStack w="100%" space={5} alignSelf="center">
-              <Input
-                style={style.search}
-                placeholder="Search"
-                variant="filled"
-                borderRadius="30"
-                py="1"
-                px="2"
-              />
-            </VStack>
-          </VStack>
-        </Center>
-        <Center style={style.graybox}>
-          <Box style={{ color: "black" }}>
-            <HStack>
-              <Button style={style.searchButtons}>
-                <Text>Country</Text>
-              </Button>
-              <Button style={style.searchButtons}>
-                <Text>Time</Text>
-              </Button>
-              <Button style={style.searchButtons}>
-                <Text>Role</Text>
-              </Button>
-              <Button style={style.searchButtons}>
-                <Text>Weight</Text>
-              </Button>
-            </HStack>
-          </Box>
-        </Center>
-        <ScrollView>
-          {data.map((e) => {
-            return (
-              <Box>
-                <Container>
-                  <HStack space={2}>
-                    <Center style={style.left}>
-                      <Avatar
-                        source={{
-                          uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                        }}
-                      />
-                    </Center>
-                    <Container style={style.Middle}>
-                      <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text>{e.postTime}</Text>
-                      <Text>📍Ariana,Tunis</Text>
-                    </Container>
-                    <Container>
-                      <Text
-                        style={{
-                          backgroundColor:
-                            e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
-                          margin: 5,
-                        }}
-                      >
-                        {e.type}
-                      </Text>
-                      <Text
-                        style={{
-                          backgroundColor:
-                            e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
-                          margin: 5,
-                        }}
-                      >
-                        3kg
-                      </Text>
-                      <Text
-                        style={{
-                          backgroundColor:
-                            e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
-                          margin: 5,
-                        }}
-                      >
-                        Germany
-                      </Text>
-                    </Container>
-                  </HStack>
-                  <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                    <Text
-                      style={{
-                        backgroundColor:
-                          e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
-                        margin: 5,
-                      }}
-                    >
-                      Departure Time:
-                    </Text>
-                    <Text
-                      style={{
-                        backgroundColor:
-                          e.type === "reciver" ? "#B8E1BF" : "#EAC7CA",
-                        margin: 5,
-                      }}
-                    >
-                      {e.departTime}
-                    </Text>
-                  </Container>
-                </Container>
-                <Divider my={2} />
-              </Box>
-            );
-          })}
-          {/* sender profile begins here */}
-          <Box>
-            <Container>
-              <HStack space={2}>
-                <Center style={style.left}>
-                  <Avatar
-                    source={{
-                      uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
+            setActiveIndex(index - 1);
+          }
+        }}
+      >
+        <SafeAreaView style={styles.container}>
+          <StatusBar hidden />
+          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
+          <FlatList
+            data={data}
+            keyExtractor={(_, index) => String(index)}
+            horizontal
+            inverted
+            contentContainerStyle={{
+              flex: 1,
+              justifyContent: "center",
+              padding: SPACING * 2,
+            }}
+            scrollEnabled={false}
+            removeClippedSubviews={false}
+            CellRendererComponent={({
+              item,
+              index,
+              children,
+              style,
+              ...props
+            }) => {
+              const newStyle = [style, { zIndex: data.length - index }];
+              return (
+                <View style={newStyle} index={index} {...props}>
+                  {children}
+                </View>
+              );
+            }}
+            renderItem={({ item, index }) => {
+              const inputRange = [index - 1, index, index + 1];
+              const translateX = scrollXAnimated.interpolate({
+                inputRange,
+                outputRange: [50, 0, -100],
+              });
+              const scale = scrollXAnimated.interpolate({
+                inputRange,
+                outputRange: [0.8, 1, 1.3],
+              });
+              const opacity = scrollXAnimated.interpolate({
+                inputRange,
+                outputRange: [1 - 1 / VISIBLE_ITEMS, 1, 0],
+              });
+              return (
+                <Animated.View
+                  style={{
+                    position: "absolute",
+                    left: -ITEM_WIDTH / 2,
+                    opacity,
+                    transform: [
+                      {
+                        translateX,
+                      },
+                      { scale },
+                    ],
+                  }}
+                >
+                  <Image
+                    source={{ uri: item.poster }}
+                    style={{
+                      width: ITEM_WIDTH,
+                      height: ITEM_HEIGHT,
                     }}
                   />
-                </Center>
-                <Container style={style.Middle}>
-                  <Heading size="sm">Med Amine Amdouni</Heading>
-                  <Text>2 mins ago</Text>
-                  <Text>📍Ariana,Tunis</Text>
-                </Container>
-                <Container>
-                  <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                    Sender
-                  </Text>
-                  <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                    3kg
-                  </Text>
-                  <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                    Germany
-                  </Text>
-                </Container>
-              </HStack>
-              <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                <Text>Departure Time:</Text>
-                <Text>01 January 2023 at 11PM</Text>
-              </Container>
-            </Container>
-            <Divider my={2} />
-          </Box>
-          {/* sender profile ends here */}
-          {/* shipper profile starts here */}
-          <Box backgroundColor="#F2F6F6">
-            <Container>
-              <HStack space={2}>
-                <Center style={style.left}>
-                  <Avatar
-                    source={{
-                      uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TFHEL7FG-4e2c417ed04b-72",
-                    }}
-                  />
-                </Center>
-                <Container style={style.Middle}>
-                  <Heading size="sm">Aziz Sellini</Heading>
-                  <Text>2 mins ago</Text>
-                  <Text>📍Ariana,Tunis</Text>
-                </Container>
-                <Container>
-                  <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                    Shipper
-                  </Text>
-                  <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                    8kg
-                  </Text>
-                  <Text style={{ backgroundColor: "#EAC7CA", margin: 5 }}>
-                    Sweden
-                  </Text>
-                </Container>
-              </HStack>
-              <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                <Text>Departure Time:</Text>
-                <Text>01 January 2023 at 11PM</Text>
-              </Container>
-            </Container>
-          </Box>
-          {/* shipper profile ends here */}
-          <Divider my={2} />
-        </ScrollView>
-      </Box>
-      <Footer navigation={navigation} />
-    </Box>
+                </Animated.View>
+              );
+            }}
+          />
+        </SafeAreaView>
+      </FlingGestureHandler>
+    </FlingGestureHandler>
   );
 }
 
-const style = StyleSheet.create({
-  Header: {
-    backgroundColor: "#EBC8CB",
-    paddingTop: 30,
+// define your styles
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+
+    backgroundColor: "#fff",
   },
-  search: {
-    width: 100,
-    height: 30,
+  title: {
+    fontSize: 28,
+    fontWeight: "900",
+    textTransform: "uppercase",
+    letterSpacing: -1,
   },
-  graybox: {
-    color: "black",
-    backgroundColor: "#EAEAEA",
+  location: {
+    fontSize: 16,
   },
-  searchButtons: {
-    color: "black",
-    backgroundColor: "#D9D9D9",
-    margin: 3,
+  date: {
+    fontSize: 12,
   },
-  Middle: {
-    width: 220,
+  itemContainer: {
+    height: OVERFLOW_HEIGHT,
+    padding: SPACING,
   },
-  left: {
-    width: 50,
-    margin: 10,
+  itemContainerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  overflowContainer: {
+    height: OVERFLOW_HEIGHT,
+    overflow: "hidden",
   },
 });

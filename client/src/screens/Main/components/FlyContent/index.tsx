@@ -14,7 +14,8 @@ import { Text ,Box} from "native-base";
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
 import Footer from "../../../../../components/Footer";
-import CardSelect from "../CardSelect";
+import AllPosts from "../../../../../components/AllPosts";
+import CardSelect from "../CardSelect - Copy";
 
 
 export default function FlyContent({navigation,posts}) {
@@ -61,31 +62,13 @@ export default function FlyContent({navigation,posts}) {
             </S.TextContent>
           </S.TextRowContent>
           <S.TicketInfo></S.TicketInfo>
-          <SafeAreaView>
-            <ScrollView>
-              <Box>
-                {[
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                  "",
-                ].map((e, i) => (
-                  <CardSelect/>
-                ))}
-              </Box>
-            </ScrollView>
-          </SafeAreaView>
+         
+           
+             
+                  <CardSelect />
+               
+            
+          
         </S.FlyInfoContent>
       </S.FlyInfo>
       <Footer navigation={navigation} />
