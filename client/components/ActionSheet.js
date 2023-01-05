@@ -28,7 +28,7 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           <Actionsheet.Item
             backgroundColor={"#B1C4CB"}
             startIcon={<MaterialCommunityIcons name="home-outline" size={26} />}
-            onPress={() => navigation.navigate("home")}
+            onPress={() => navigation.navigate("main")}
           >
             <TouchableOpacity>
               <Text>Home</Text>

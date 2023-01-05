@@ -8,7 +8,11 @@ import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
+
+import Main from "../src/screens/Main";
+
 import Form from "./Forme";
+
 import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
@@ -26,10 +30,12 @@ export default function Stacks() {
 
       <Stack.Screen name="form" component={Form} />
 
-      <Stack.Screen name="messages" component={Messages} />
+  
       <Stack.Screen name="home" component={Home} />
-      <Stack.Screen name="chat" component={Chat} />
 
+      <Stack.Screen name="chat" component={Chat} />
+      <Stack.Screen name="messages" component={Messages} />
+      <Stack.Screen name="main" component={Main} />
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="signup" component={SignUp} />
       <Stack.Screen name="addpost" component={AddPost} />
