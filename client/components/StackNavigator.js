@@ -2,14 +2,17 @@ import React, { useState } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
 import Login from "./Login";
 import SignUp from "./SingnUp";
 import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
+
 import Main from "../src/screens/Main";
+
+import Form from "./Forme";
+
 import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
@@ -23,9 +26,16 @@ export default function Stacks() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+
       <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="profile" component={Profile} />
       <Stack.Screen name="home" component={Main} />
+
+
+      <Stack.Screen name="form" component={Form} />
+
+  
+     
 
       <Stack.Screen name="chat" component={Chat} />
       <Stack.Screen name="messages" component={Messages} />
