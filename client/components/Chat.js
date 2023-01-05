@@ -188,6 +188,7 @@ export default function Chat({ navigation }) {
           </VStack>
         </Box>
       </Box>
+      <Footer navigation={navigation}/>
     </Box>
   );
 }
