@@ -28,6 +28,7 @@ export default function Stacks() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
 
+      <Stack.Screen name="form" component={Form} />
       <Stack.Screen name="track" component={Track} />
 
       <Stack.Screen name="profile" component={Profile} />
@@ -35,7 +36,6 @@ export default function Stacks() {
       <Stack.Screen name="addpost" component={AddPost} />
       
 
-      <Stack.Screen name="form" component={Form} />
 
   
       <Stack.Screen name="home" component={Home} />
