@@ -14,7 +14,7 @@ import { Text ,Box} from "native-base";
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
 import Footer from "../../../../../components/Footer";
-import CardSelect from "../CardSelect - Copy";
+import CardSelect from "../CardSelect";
 
 
 export default function FlyContent({navigation,posts}) {
