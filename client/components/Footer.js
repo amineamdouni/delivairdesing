@@ -28,9 +28,9 @@ console.log(navigation);
             navigation.navigate('home')
             setSelected("home")}}>
           <MaterialCommunityIcons
-            // style={{ marginLeft: 15, marginTop: 10 }}
+           
             name="home-outline"
-            color={selected === "home" ? "grey" : "#000000"}
+            color={selected === "home" ? "black" : "grey"}
             size={30}
           />
         </TouchableOpacity>
@@ -41,9 +41,9 @@ console.log(navigation);
           }}
         >
           <MaterialCommunityIcons
-            // style={{ marginLeft: 30, marginTop: 10 }}
+          
             name="chat-outline"
-            color={selected === "chat" ? "grey" : "#000000"}
+            color={selected === "chat" ? "black" : "grey"}
             size={30}
           />
         </TouchableOpacity>
@@ -51,15 +51,15 @@ console.log(navigation);
         <ActionSheet
           navigation={navigation}
           styles={style.middleButton}
-          icon={<MaterialCommunityIcons name="plus" size={30} />}
+          icon={<MaterialCommunityIcons   name="plus" size={25} />}
         />
         <TouchableOpacity onPress={() => {
              navigation.navigate("track");
             setSelected("radar")}}>
           <MaterialCommunityIcons
-            // style={{ marginLeft: 60, marginTop: 10 }}
+            
             name="radar"
-            color={selected === "radar" ? "grey" : "#000000"}
+            color={selected === "radar" ? "black" : "grey"}
             size={30}
           />
         </TouchableOpacity>
@@ -69,9 +69,9 @@ console.log(navigation);
              navigation.navigate('profile')
         }}>
           <MaterialCommunityIcons
-            // style={{ marginLeft: 60, marginTop: 10 }}
+            
             name="account-outline"
-            color={selected === "account" ? "grey" : "#000000"}
+            color={selected === "account" ? "black" : "grey"}
             size={30}
           />
         </TouchableOpacity>
@@ -100,10 +100,16 @@ const style = StyleSheet.create({
     backgroundRepeat: "no-repeat",
   },
   middleButton: {
+    borderColor: "white",
+    borderWidth: 4,
+    borderRadius: 15,
+    width: windowWidth,
     width: 55,
     height: 55,
     backgroundColor: "#E8C6C8",
     borderRadius: 30,
     marginBottom: 200,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
