@@ -33,7 +33,9 @@ export default function Stacks() {
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
+
       <Stack.Screen name="home" component={Home} />
+
       <Stack.Screen name="track" component={Track} />
       <Stack.Screen name="profile" component={Profile} />
     </Stack.Navigator>
