@@ -24,7 +24,8 @@ const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(null);
+ const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
   useEffect(() =>
@@ -41,7 +42,7 @@ export default function App() {
   );
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser,selected,setSelected }}>
       <NativeBaseProvider>
         <NavigationContainer>
           <Stacks />

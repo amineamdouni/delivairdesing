@@ -9,17 +9,17 @@ import {
   Image,
   Center,
 } from "native-base";
-
+import { UserContext } from "../UserContext";
 import { StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import ActionSheet from "./ActionSheet";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 import { MaterialCommunityIcons,AntDesign,FontAwesome5 } from "@expo/vector-icons";
-import { useState } from "react";
+import { useState,useContext } from "react";
 export default function Footer({ navigation, focused }) {
   const { isOpen, onOpen, onClose } = useDisclose();
-  const [selected, setSelected] = useState('home');
+ const{  selected, setSelected } =useContext(UserContext)
 console.log(navigation);
   return (
     <VStack style={style.footer} shadow={15} >
