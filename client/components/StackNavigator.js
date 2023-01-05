@@ -27,7 +27,7 @@ export default function Stacks() {
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-
+<Stack.Screen name="login" component={Login} />
       <Stack.Screen name="form" component={Form} />
       <Stack.Screen name="track" component={Track} />
 
@@ -42,7 +42,7 @@ export default function Stacks() {
 
       <Stack.Screen name="chat" component={Chat} />
       <Stack.Screen name="messages" component={Messages} />
-      <Stack.Screen name="login" component={Login} />
+
       <Stack.Screen name="signup" component={SignUp} />
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
