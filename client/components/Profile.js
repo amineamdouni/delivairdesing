@@ -25,12 +25,11 @@ import {
 } from "native-base";
 import Footer from "./Footer";
 import { getAuth, signOut } from "firebase/auth";
-const us = process.env;
-console.log(us,'us');
+
 const auth = getAuth();
 export default function Profile({ navigation }) {
   const {user} =useContext(UserContext)
-  console.log(user,'username');
+
   function SignOut() {
     signOut(auth)
       .then((res) => {
