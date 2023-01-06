@@ -21,6 +21,8 @@ import Messages from "./Messages";
 const Stack = createNativeStackNavigator();
 
 export default function Stacks() {
+  const {user}=useContext(UserContext)
+
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="track" component={Track} />
