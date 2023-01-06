@@ -78,13 +78,17 @@ export default function FlyContent({ navigation, posts }) {
                 </S.LargeText>
 
                 <Box marginRight={-50}>
-                  <S.HeaderInfoText>
-                    Phone Number : <Text> + 216 52 224 782</Text>
+                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
+                Phone Number :<Text style={{fontSize:17}}> + 216 52 224 782</Text>
                   </S.HeaderInfoText>
                 </Box>
-                <Box marginRight={-50}>
-                  <S.HeaderInfoText>
-                    Email :<Text> medaziz@gmail.com</Text>
+                <Box bottom={5} marginRight={-50} right={6}>
+                  <S.HeaderInfoText style={{fontSize:17 , fontWeight: "bold"}}>Email :<Text style={{fontSize:17}}> medaziz@gmail.com</Text>
+                  </S.HeaderInfoText>
+                </Box>
+                <Box bottom={10} right={2} marginRight={-50}>
+                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
+                Location :<Text style={{fontSize:17}}> Boumhal El bassattine</Text>
                   </S.HeaderInfoText>
                 </Box>
               </Center>

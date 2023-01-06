@@ -132,14 +132,14 @@ export default function Main({ navigation }: any) {
               <S.LargeText>DelivAir</S.LargeText>
               <S.TextRowContent>
                 <S.TextContent>
-                  <S.SmallText>from</S.SmallText>
+                  <S.SmallText>From</S.SmallText>
                   <S.LargeText>{from}</S.LargeText>
                 </S.TextContent>
                 <S.HourContent>
                   <Entypo name="chevron-right" size={30} color="white" />
                 </S.HourContent>
                 <S.TextContent alingment="right">
-                  <S.SmallText>to</S.SmallText>
+                  <S.SmallText>To</S.SmallText>
                   <S.LargeText>{to}</S.LargeText>
                 </S.TextContent>
               </S.TextRowContent>
@@ -166,41 +166,49 @@ export default function Main({ navigation }: any) {
         {!confirm && (
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
-              <Text fontSize={20} style={{ paddingBottom: 10 }}>
-                some Text{" "}
+              <Text fontSize={18} style={{ paddingBottom: 100 }}>
+              Please enter destination {" "}
               </Text>
               <A.HStack>
-                <Text color={"black"}>
-                  <FontAwesome5 name="plane-departure" />
+                <Text color={"black"}top={3}>
+                  <FontAwesome5  size={20} name="plane-departure" />
                 </Text>
 
                 <Input
                   onChangeText={(text) => setFrom(text)}
                   size="l"
                   mx="3"
-                  placeholder="from"
+                  placeholder="From"
                   w="100%"
-                />
+                  borderColor="black" 
+                  backgroundColor= "white"                    
+                  borderWidth= "1"
+                  borderRadius= "7"
+                                />
               </A.HStack>
               <A.Divider my="6" />
               <A.HStack>
-                <Text color={"black"}>
-                  <FontAwesome5 name="plane-arrival" />
+                <Text color={"black"} top={3}>
+                  <FontAwesome5  size={20}  name="plane-arrival"  />
                 </Text>
 
                 <Input
                   onChangeText={(text) => setTo(text)}
                   size="l"
                   mx="3"
-                  placeholder="to"
+                  placeholder="To"
                   w="100%"
+                  borderColor="black" 
+                  backgroundColor= "white"                    
+                  borderWidth= "1"
+                  borderRadius= "7"
                 />
               </A.HStack>
             </A.Center>
           </S.InfoContent>
         )}
         {!confirm && (
-          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
