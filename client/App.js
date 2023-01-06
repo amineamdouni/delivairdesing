@@ -19,29 +19,48 @@ const config = {
 };
 
 // extend the theme
-
+import {amine} from "./host.js"
 const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
-
 export const theme = extendTheme({ config });
-export default function App() {
-  const [user, setUser] = useState([]);
+export default function App () {
+  const [connected,setConnected]=useState(null)
+  const [user, setUser] = useState(null);
+ const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
-  useEffect(() =>
-    onAuthStateChanged(auth, (user) => {
+  console.log(user);
+  useEffect(async() =>{
+     onAuthStateChanged(auth,async (user) => {
       console.log(user.email);
-      setUser(user.email);
+    
+      if (user.email === undefined) {
+        navigation.navigate("login");
+      }
+      else{await setConnected(user.email)}
       if (initializing) {
         setInitializing(false);
       }
-      // if (user.email === undefined) {
-      //   navigation.navigate("login");
-      // }
     })
+    console.log(user,'user connected');
+   
+    await axios
+      .get(`http://192.168.104.21:5000/users/devlopxzimpo@gmail.com`)
+      .then((res) => {
+        console.log("succ");
+        setUser({ dbUser: res.data });
+      })
+      .catch((err) => console.log(JSON.stringify(err), "err"));
+
+    
+    
+    
+    
+  },[]
   );
+  // useEffect(()=>{},[])
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser,selected,setSelected }}>
       <NativeBaseProvider>
         <NavigationContainer>
           <Stacks />

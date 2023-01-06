@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { UserContext } from "../UserContext";
 import Login from "./Login";
 import SignUp from "./SingnUp";
 import AddPost from "./AddPost";
@@ -13,29 +13,30 @@ import Main from "../src/screens/Main";
 
 import Form from "./Forme";
 
-import Home from "./Home";
 import Chat from "./Chat";
 import Profile from "./Profile";
 import Track from "./Track";
-import FlyContent from "../src/screens/Main/components/FlyContent";
+
 import Messages from "./Messages";
 import ProfileTest from "./Profiletest";
 
 const Stack = createNativeStackNavigator();
 
 export default function Stacks() {
-  const [selected, setSelected] = useState("home");
+  const {user}=useContext(UserContext)
 
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+
       <Stack.Screen name="ProfileTest" component={ProfileTest} />
 
+
+      <Stack.Screen name="track" component={Track} />
+
       <Stack.Screen name="login" component={Login} />
-      <Stack.Screen name="profile" component={Profile} />
       <Stack.Screen name="home" component={Main} />
 
       <Stack.Screen name="form" component={Form} />
-      <Stack.Screen name="track" component={Track} />
 
       <Stack.Screen name="main" component={Main} />
       <Stack.Screen name="addpost" component={AddPost} />

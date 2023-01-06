@@ -13,6 +13,16 @@ const get = async (req, res) => {
   }
 };
 
+const getOne = async (req, res) => {
+  try {
+    users.findFirst({where:{email:req.params.email}}).then((result) => {
+      res.json(result);
+    });
+  } catch (err) {
+    res.json(err);
+  }
+};
+
 
 const add = async (req,res)=>{
   try{
@@ -53,4 +63,4 @@ const verify = (req,res)=>{
 
 
 
-module.exports = { get, add ,verify};
+module.exports = { get, add ,verify,getOne};
