@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StatusBar,ScrollView,SafeAreaView } from "react-native";
+import { StatusBar,ScrollView,SafeAreaView,  } from "react-native";
 import {
   FlipInXDown,
   useAnimatedStyle,
@@ -9,7 +9,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import { Text ,Box} from "native-base";
+import { Text ,Box,View} from "native-base";
 
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
@@ -60,18 +60,20 @@ export default function FlyContent({navigation,posts}) {
             <S.TextContent alingment="right">
               <S.LargeText>NYC</S.LargeText>
             </S.TextContent>
+
+
           </S.TextRowContent>
           <S.TicketInfo></S.TicketInfo>
          
-           
-             
-                  <CardSelect />
-               
-            
-          
+          <CardSelect />
+
+         
+
         </S.FlyInfoContent>
       </S.FlyInfo>
-      <Footer navigation={navigation} />
+   
+       
+      
     </S.Container>
   );
 }

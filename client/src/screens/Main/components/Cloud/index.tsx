@@ -42,10 +42,10 @@ export default function Cloud({
       setTimeout(
         () =>
           (translateX.value = withTiming(-offeset, {
-            duration: 6000,
+            duration: 3000,
             easing: Easing.linear,
           })),
-        8000 + delay
+        4000 + delay
       );
     }
   }, [confirmed]);

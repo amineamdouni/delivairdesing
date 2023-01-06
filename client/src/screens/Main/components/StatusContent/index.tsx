@@ -42,11 +42,11 @@ export default function StatusContent() {
 
       iconOpacity.value = withSequence(
         withTiming(1),
-        withDelay(2400, withTiming(0)),
+        withDelay(1200, withTiming(0)),
         withTiming(1),
-        withDelay(2400, withTiming(0)),
+        withDelay(1200, withTiming(0)),
         withTiming(1),
-        withDelay(2400, withTiming(0)),
+        withDelay(1200, withTiming(0)),
         withTiming(1)
       );
 
@@ -58,7 +58,7 @@ export default function StatusContent() {
 
       wave2Scale.value = withDelay(
         800,
-        withRepeat(withTiming(1, { duration: 2500, easing: Easing.linear }), -1, false)
+        withRepeat(withTiming(1, { duration: 1200, easing: Easing.linear }), -1, false)
       );
 
       waveBackground.value = withDelay(
@@ -72,7 +72,7 @@ export default function StatusContent() {
 
           setTimeout(
             () => listRef.current.scrollToIndex({ index, animated: true }),
-            index === 2 ? 3000 : 0
+            index === 2 ? 1500 : 0
           );
 
           if (index === 1) {
@@ -81,13 +81,13 @@ export default function StatusContent() {
           }
 
           if (index === 2) {
-            setTimeout(() => setIcon("check"), 2900);
+            setTimeout(() => setIcon("check"), 1450);
           }
         } else {
           clearInterval(interval);
         }
-      }, 3000);
-    }, 300);
+      }, 1500);
+    }, 150);
   }, []);
 
   const buttonAnimatedStyle = useAnimatedStyle(() => ({
@@ -129,8 +129,8 @@ export default function StatusContent() {
   });
 
   return (
-    <S.Container exiting={FadeOut.duration(600)} style={buttonAnimatedStyle}>
-      <S.ScrollTextView entering={FadeInDown.duration(600).delay(300)}>
+    <S.Container exiting={FadeOut.duration(300)} style={buttonAnimatedStyle}>
+      <S.ScrollTextView entering={FadeInDown.duration(300).delay(150)}>
         <FlatList
           ref={listRef}
           data={texts}
@@ -139,7 +139,7 @@ export default function StatusContent() {
           renderItem={({ item }) => <S.StatusText>{item}</S.StatusText>}
         />
       </S.ScrollTextView>
-      <S.IconViewOut entering={ZoomIn.duration(600).delay(300)}>
+      <S.IconViewOut entering={ZoomIn.duration(300).delay(150)}>
         <S.IconView>
           <S.IconContent style={iconAnimatedStyle}>
             {icon === "check" ? (
