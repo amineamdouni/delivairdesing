@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import {
   Alert,
   Text,
@@ -20,6 +21,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  TouchableOpacity
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -37,7 +39,8 @@ const app = initializeApp(firebaseConfig);
 
 //-------------------------
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail} from "firebase/auth";
+
 const auth = getAuth();
 
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
@@ -56,7 +59,32 @@ export default function Login({ navigation }) {
         alert("Please check your credentials or you may not be signed in");
       });
   };
+  const resetPassword =()=>{
 
+if (email!=null)
+{
+  sendPasswordResetEmail(auth, email)
+  .then(() => {
+    alert ("password reset email has been sent successfully")
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+  alert(errorMessage);
+  });
+
+
+
+
+}
+else{
+
+alert ("Please enter a valid email")
+
+}
+
+
+  }
   return (
     <Center
       _dark={{ bg: "blueGray.900" }}
@@ -119,7 +147,18 @@ export default function Login({ navigation }) {
                     </Text>
                   </Link>
                 </Center>
-                <Center fontSize={"15px"}>Forgot Password ?</Center>
+
+          <TouchableOpacity
+          style ={{
+            margin:10,
+            alignItems : "center"
+          }}
+          onPress={()=>resetPassword()}>
+<Text>
+Forget Password ?
+</Text>
+  </TouchableOpacity>
+                
               </HStack>
 
               <Box w={160}>

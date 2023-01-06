@@ -2,7 +2,7 @@ import React from 'react'
 
 const login = () => {
   return (
-  
+
     <div className="wrapper "  >
       <div className='col-3' ></div><div className='col'>
     <div className="logo">
@@ -15,11 +15,11 @@ const login = () => {
     <form className="p-3 mt-3">
       <div className="form-field d-flex align-items-center">
         <span className="far fa-user" />
-        <input type="text" name="userName" id="userName" placeholder="Username" />
+        <input  className='border border-dark' type="text" name="userName" id="userName" placeholder="Username" />
       </div>
       <div className="form-field d-flex align-items-center">
         <span className="fas fa-key" />
-        <input type="password" name="password" id="pwd" placeholder="Password" />
+        <input  className='border border-dark' type="password" name="password" id="pwd" placeholder="Password" />
       </div>
       <div className='row'><div className='col-2'></div><div className='col-10 btn mt-3'>
       Login

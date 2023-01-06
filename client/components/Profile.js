@@ -168,7 +168,7 @@ export default function Profile({ navigation }) {
          
           <View style={{ alignItems: "center" }}>
             <View style={styles.recentItem}>
-              {/* <View style={styles.activityIndicator}></View> */}
+              <View style={styles.activityIndicator}></View>
               <View style={{ width: 250 }}>
                 <Text
                   style={[styles.text, { color: "#41444B", fontWeight: "400" }]}

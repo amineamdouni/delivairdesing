@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 
 import { Text, HStack, Switch, useColorMode, extendTheme } from "native-base";
 
 import axios from "axios";
 
 import { NavigationContainer } from "@react-navigation/native";
-
+import { UserContext } from "./UserContext";
 import Stacks from "./components/StackNavigator";
 import { NativeBaseProvider } from "native-base";
 
@@ -41,11 +41,13 @@ export default function App() {
   );
 
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <Stacks />
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <UserContext.Provider value={{ user, setUser }}>
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stacks />
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </UserContext.Provider>
   );
 }
 
@@ -66,4 +68,3 @@ function ToggleDarkMode() {
     </HStack>
   );
 }
-
