@@ -183,6 +183,7 @@ const SignUpForm = () => {
         />
         <Text style={styles.title}>Phone Number</Text>
         <TextInput
+        keyboardType="number"
           placeholder="Phone Number"
           value={phone}
           onChangeText={(text) => setPhone(text)}
