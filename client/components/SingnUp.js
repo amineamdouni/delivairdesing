@@ -58,7 +58,7 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, Email, password)
       .then((Credential) => {
         setUser(Credential.user.uid);
-        navigation.navigate("tabs");
+        navigation.navigate("form");
       })
       .catch((err) => {
         alert(err);

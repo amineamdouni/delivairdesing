@@ -61,7 +61,10 @@ export default function StatusContent() {
         withRepeat(withTiming(1, { duration: 2500, easing: Easing.linear }), -1, false)
       );
 
-      waveBackground.value = withDelay(8000, withTiming("rgba(241, 241, 241, 0.4)"));
+      waveBackground.value = withDelay(
+        8000,
+        withTiming("rgba(231,199,200)")
+      );
 
       const interval = setInterval(() => {
         if (index < texts.length - 1) {
@@ -140,9 +143,9 @@ export default function StatusContent() {
         <S.IconView>
           <S.IconContent style={iconAnimatedStyle}>
             {icon === "check" ? (
-              <Entypo name="check" size={50} color="black" />
+              <Entypo name="check" size={50} color="white" />
             ) : (
-              <Ionicons name={icon} size={45} color="#d3d3d3" />
+              <Ionicons name={icon} size={45} color="white" />
             )}
           </S.IconContent>
         </S.IconView>

@@ -59,7 +59,7 @@ const FriendItem = ({ name, email, phone, country, profileImage, onDelete }) => 
    <Text style={styles.friendPhone}> <FontAwesome name="phone" size={14} color="black" ></FontAwesome> : {phone}</Text>
       <Text style={styles.friendCountry}><MaterialCommunityIcons name="home-map-marker" size={14} color="black" ></MaterialCommunityIcons> : {country}</Text>
     </View>
-    <AntDesign name="deleteuser"  size={19}onPress={onDelete} ></AntDesign>
+    <AntDesign name="deleteuser"  color={"#e7c7c8"}  size={19}onPress={onDelete} ></AntDesign>
   </View>
 );
 
