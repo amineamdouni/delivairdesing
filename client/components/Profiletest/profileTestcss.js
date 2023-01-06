@@ -2,13 +2,6 @@ import { BlurView } from "expo-blur";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
-interface Props {
-  alingment?: "left" | "right";
-  mt?: number;
-  bold?: boolean;
-  noResize?: boolean;
-}
-
 export const Container = styled.View`
   flex: 1;
   width: 100%;
@@ -19,15 +12,15 @@ export const Container = styled.View`
 
 export const Header = styled(Animated.View)`
   width: 100%;
-  height: 320px;
+  height: 250px;
   align-items: center;
-  background: #e7c7c8;
+  background: #ebc8cb;
 `;
 
-export const HeaderInfoText = styled(Animated.Text)<Props>`
-  color: white;
+export const HeaderInfoText = styled(Animated.Text)`
+  color: black;
   font-size: 16px;
-  margin-top: 50px;
+  margin-top: 40px;
   opacity: 0.5;
 `;
 
@@ -35,14 +28,14 @@ export const HeaderContent = styled(Animated.View)`
   width: 85%;
   height: 200px;
   border-radius: 20px;
-  margin-top: -220px;
+  margin-top: -200px;
   align-items: center;
   padding-top: 10px;
   overflow: hidden;
-  background: rgba(231, 199, 200, 0.1);
+  background: rgba(255, 255, 255, 0.1);
 `;
 
-export const HeaderText = styled.Text<Props>`
+export const HeaderText = styled.Text`
   color: white;
   font-size: 16px;
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
@@ -60,7 +53,20 @@ export const FlyInfo = styled(Animated.View)`
   overflow: hidden;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  margin-top: -85px;
+  margin-top: -125px;
+`;
+export const FlyInfoTwo = styled(Animated.View)`
+  width: 85%;
+  margin-top: 30px;
+`;
+export const FlyInfoThree = styled(Animated.View)`
+  width: 85%;
+  margin-top: 30px;
+`;
+
+export const FlyInfoFour = styled(Animated.View)`
+  width: 85%;
+  margin-top: 30px;
 `;
 
 export const FlyInfoContent = styled(BlurView)`
@@ -75,18 +81,18 @@ export const TextRowContent = styled.View`
   justify-content: space-between;
 `;
 
-export const TextContent = styled.View<Props>`
+export const TextContent = styled.View`
   align-items: ${({ alingment = "left" }) =>
     alingment === "left" ? "flex-start" : "flex-end"};
 `;
 
-export const HourContent = styled.View<Props>`
+export const HourContent = styled.View`
   align-items: center;
   justify-content: flex-end;
   padding-bottom: 8px;
 `;
 
-export const SmallText = styled.Text<Props>`
+export const SmallText = styled.Text`
   color: white;
   margin-top: ${({ mt }) => (mt ? mt : 0)}px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
@@ -94,16 +100,16 @@ export const SmallText = styled.Text<Props>`
 `;
 
 export const LargeText = styled.Text`
-  color: white;
+  color: black;
   font-size: 35px;
 `;
 
 export const TicketInfo = styled.View`
   width: 100%;
-  height: 80px;
+  height: 30px;
   flex-direction: row;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 300px;
 `;
 
 export const TicketView = styled.View`

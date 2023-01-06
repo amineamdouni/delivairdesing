@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import {
   StyleSheet,
   View,
@@ -12,6 +12,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { UserContext } from "../UserContext";
 import {
   Menu,
   HamburgerIcon,
@@ -26,8 +27,9 @@ import Footer from "./Footer";
 import { getAuth, signOut } from "firebase/auth";
 
 const auth = getAuth();
-
 export default function Profile({ navigation }) {
+  const {user} =useContext(UserContext)
+
   function SignOut() {
     signOut(auth)
       .then((res) => {

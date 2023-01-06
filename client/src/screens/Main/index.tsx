@@ -8,8 +8,8 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import {  FontAwesome5 } from "@expo/vector-icons";
-import {  Text, Container, Box, Input } from "native-base";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Text, Container, Box, Input } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -25,7 +25,7 @@ import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
 import axios from "axios";
 const date = new Date();
-export default function Main({navigation}:any) {
+export default function Main({ navigation }: any) {
   const [modalVisible, setModalVisible] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -44,25 +44,30 @@ export default function Main({navigation}:any) {
   const [confirm, setConfirm] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [showFlyInfo, setShowFlyInfo] = useState(false);
-const [posts,setPosts]=useState([])
+  const [posts, setPosts] = useState([]);
   const handleConfirm = () => {
     if (showCardSelect) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      filterPosts(from,to)
+      filterPosts(from, to);
     } else {
       setShowCardSelect(true);
     }
   };
-const filterPosts=(departure,arrival)=>{
-let filtered=posts.filter((e):any=>(e.departCountry==departure && e.arriveCountry==arrival))
-console.log(filtered);
+  const filterPosts = (departure, arrival) => {
+    let filtered = posts.filter(
+      (e): any => e.departCountry == departure && e.arriveCountry == arrival
+    );
+    console.log(filtered);
 
-setPosts(filtered)
-}
-  useEffect(() => {axios.get('').then(res=>setPosts(res.data)).catch(err=>console.log(err)
-  )
+    setPosts(filtered);
+  };
+  useEffect(() => {
+    axios
+      .get("")
+      .then((res) => setPosts(res.data))
+      .catch((err) => console.log(err));
     if (confirm) {
       backgroundColor.value = withTiming("#F1F1F1", { duration: 600 });
       setTimeout(() => {
@@ -161,10 +166,11 @@ setPosts(filtered)
         {!confirm && (
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
-              <Text fontSize={20} style={{paddingBottom:10}}>some Text </Text>
+              <Text fontSize={20} style={{ paddingBottom: 10 }}>
+                some Text{" "}
+              </Text>
               <A.HStack>
                 <Text color={"black"}>
-              
                   <FontAwesome5 name="plane-departure" />
                 </Text>
 
@@ -193,8 +199,8 @@ setPosts(filtered)
             </A.Center>
           </S.InfoContent>
         )}
-        {(!confirm ) && (
-          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+        {!confirm && (
+          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}

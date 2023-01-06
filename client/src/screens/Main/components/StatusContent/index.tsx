@@ -19,7 +19,7 @@ import { Ionicons, Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
 
-const texts = ["Connected...", "Secure payment...", "Purchased"];
+const texts = ["Connected...", "searching ...", "result found"];
 
 export default function StatusContent() {
   const buttonScale = useSharedValue(1);
@@ -73,8 +73,8 @@ export default function StatusContent() {
           );
 
           if (index === 1) {
-            setIcon("link-sharp");
-            setTimeout(() => setIcon("shield-checkmark-outline"), 2900);
+            setIcon("search-outline");
+          
           }
 
           if (index === 2) {
