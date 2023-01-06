@@ -21,7 +21,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -39,7 +39,11 @@ const app = initializeApp(firebaseConfig);
 
 //-------------------------
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail} from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 
 const auth = getAuth();
 
@@ -59,32 +63,21 @@ export default function Login({ navigation }) {
         alert("Please check your credentials or you may not be signed in");
       });
   };
-  const resetPassword =()=>{
-
-if (email!=null)
-{
-  sendPasswordResetEmail(auth, email)
-  .then(() => {
-    alert ("password reset email has been sent successfully")
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  alert(errorMessage);
-  });
-
-
-
-
-}
-else{
-
-alert ("Please enter a valid email")
-
-}
-
-
-  }
+  const resetPassword = () => {
+    if (email != null) {
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          alert("password reset email has been sent successfully");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          alert(errorMessage);
+        });
+    } else {
+      alert("Please enter a valid email");
+    }
+  };
   return (
     <Center
       _dark={{ bg: "blueGray.900" }}
@@ -148,17 +141,15 @@ alert ("Please enter a valid email")
                   </Link>
                 </Center>
 
-          <TouchableOpacity
-          style ={{
-            margin:10,
-            alignItems : "center"
-          }}
-          onPress={()=>resetPassword()}>
-<Text>
-Forget Password ?
-</Text>
-  </TouchableOpacity>
-                
+                <TouchableOpacity
+                  style={{
+                    margin: 10,
+                    alignItems: "center",
+                  }}
+                  onPress={() => resetPassword()}
+                >
+                  <Text>Forget Password ?</Text>
+                </TouchableOpacity>
               </HStack>
 
               <Box w={160}>
