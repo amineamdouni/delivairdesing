@@ -13,7 +13,7 @@ import { Text, Container, Box, Input } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
-
+import Footer from "../../../components/Footer";
 import * as S from "./styles";
 
 import airplane from "../../assets/images/airplane.png";
@@ -69,21 +69,21 @@ export default function Main({ navigation }: any) {
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
-      backgroundColor.value = withTiming("#F1F1F1", { duration: 600 });
+      backgroundColor.value = withTiming("#F1F1F1", { duration: 300 });
       setTimeout(() => {
         airplaneRotateZ.value = withSequence(
-          withTiming(-10, { duration: 4000 }),
           withTiming(-10, { duration: 2000 }),
-          withTiming(0, { duration: 2000 })
+          withTiming(-10, { duration: 1000 }),
+          withTiming(0, { duration: 1000 })
         );
 
-        airplaneShadowY.value = withTiming(200, { duration: 8000 });
-      }, 6000);
+        airplaneShadowY.value = withTiming(200, { duration: 4000 });
+      }, 3000);
       setTimeout(() => {
         setShowStatus(false);
-        backgroundColor.value = withTiming("white", { duration: 800 });
-        setTimeout(() => setShowFlyInfo(true), 600);
-      }, 14000);
+        backgroundColor.value = withTiming("white", { duration: 400 });
+        setTimeout(() => setShowFlyInfo(true), 300);
+      }, 7000);
     }
   }, [confirm]);
 
@@ -151,15 +151,15 @@ export default function Main({ navigation }: any) {
           style={airplaneAnimatedStyle}
           resizeMode="contain"
         />
-        <Cloud confirmed={confirm} bottom={200} delay={2000} />
-        <Cloud confirmed={confirm} bottom={-100} delay={4000} />
+        <Cloud confirmed={confirm} bottom={200} delay={1000} />
+        <Cloud confirmed={confirm} bottom={-100} delay={2000} />
         <Cloud confirmed={confirm} size="lg" bottom={-600} zIndex={9999} />
         <Cloud
           confirmed={confirm}
           noShadow
           size="lg"
           bottom={-500}
-          delay={4000}
+          delay={2000}
           zIndex={888}
         />
 
@@ -204,7 +204,14 @@ export default function Main({ navigation }: any) {
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
-        {showFlyInfo && <FlyContent posts={posts} navigation={navigation} />}
+        {showFlyInfo && (
+          <>
+            <FlyContent posts={posts} navigation={navigation} />
+            <Box style={{zIndex:10000,right:195,bottom:40}}>
+              <Footer navigation={navigation} />
+            </Box>
+          </>
+        )}
       </S.Container>
     </>
   );

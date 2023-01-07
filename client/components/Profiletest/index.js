@@ -188,9 +188,7 @@ export default function FlyContent({ navigation, posts }) {
             </S.FlyInfoThree>
           </ScrollView>
           {/* <S.TicketInfo></S.TicketInfo> */}
-          <SafeAreaView>
-            <ScrollView></ScrollView>
-          </SafeAreaView>
+         
         </S.FlyInfoContent>
       </S.FlyInfo>
       <Footer navigation={navigation} />
