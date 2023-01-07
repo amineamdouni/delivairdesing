@@ -3,13 +3,14 @@ import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
 
 export const Container = styled(Animated.View)`
-  width: 100%;
-  height: 63%;
+  width: 120%;
+  height: 100%;
+  top:40%
   align-items: center;
   position: absolute;
   bottom: 0px;
-  background-color: white;
-  box-shadow: 0px 20px 20px rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+  
   z-index: 999;
 `;
 
@@ -39,7 +40,7 @@ export const Button = styled.TouchableOpacity.attrs({
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.15);
 `;
 
-export const CardScroll = styled(Animated.ScrollView)``;
+export const CardScroll = styled(Animated.ScrollView)`width:100%`;
 
 export const BottomGradient = styled(LinearGradient).attrs({
   colors: ["rgba(255, 255, 255, 0)", "white"],
