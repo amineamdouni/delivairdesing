@@ -15,63 +15,69 @@ import ActionSheet from "./ActionSheet";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-import { MaterialCommunityIcons,AntDesign,FontAwesome5 } from "@expo/vector-icons";
-import { useState,useContext } from "react";
+import {
+  MaterialCommunityIcons,
+  AntDesign,
+  FontAwesome5,
+} from "@expo/vector-icons";
+import { useState, useContext } from "react";
 export default function Footer({ navigation, focused }) {
   const { isOpen, onOpen, onClose } = useDisclose();
- const{  selected, setSelected } =useContext(UserContext)
+  const { selected, setSelected } = useContext(UserContext);
 
   return (
-    <VStack style={style.footer} shadow={15} >
+    <VStack style={style.footer} shadow={20}>
       <HStack justifyContent="space-between" shadow={9}>
-        <TouchableOpacity onPress={async() => {
-            navigation.navigate('home')
-            setSelected("home")}}>
+        <TouchableOpacity
+          onPress={async () => {
+            navigation.navigate("home");
+            setSelected("home");
+          }}
+        >
           <MaterialCommunityIcons
-           
             name="home-outline"
-            color={selected === "home" ? "black" : "grey"}
+            color={selected === "home" ? "black" : "#5FC8C0"}
             size={30}
           />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             setSelected("chat");
-            navigation.navigate('chat')
+            navigation.navigate("chat");
           }}
         >
           <MaterialCommunityIcons
-          
             name="chat-outline"
-            color={selected === "chat" ? "black" : "grey"}
+            color={selected === "chat" ? "black" : "#5FC8C0"}
             size={30}
           />
         </TouchableOpacity>
-
         <ActionSheet
           navigation={navigation}
           styles={style.middleButton}
-          icon={<MaterialCommunityIcons   name="plus" size={25} />}
+          icon={<MaterialCommunityIcons name="plus" size={25} />}
         />
-        <TouchableOpacity onPress={() => {
-             navigation.navigate("track");
-            setSelected("radar")}}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("track");
+            setSelected("radar");
+          }}
+        >
           <MaterialCommunityIcons
-            
             name="radar"
-            color={selected === "radar" ? "black" : "grey"}
+            color={selected === "radar" ? "#5FC8C0" : "#5FC8C0"}
             size={30}
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() =>{ 
-             
-             setSelected("account")
-             navigation.navigate('profile')
-        }}>
+        <TouchableOpacity
+          onPress={() => {
+            setSelected("account");
+            navigation.navigate("profile");
+          }}
+        >
           <MaterialCommunityIcons
-            
             name="account-outline"
-            color={selected === "account" ? "black" : "grey"}
+            color={selected === "account" ? "black" : "#5FC8C0"}
             size={30}
           />
         </TouchableOpacity>
@@ -83,15 +89,15 @@ const style = StyleSheet.create({
   footer: {
     position: "absolute",
     height: 150,
-    backgroundColor: "#B1C4CB",
+    backgroundColor: "white",
     top: windowHeight - 70,
     width: windowWidth,
-    padding:10,
-    borderRadius:15,
+    padding: 10,
+    borderRadius: 15,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 5
-    
+    elevation: 5,
+    shadowColor: "#5FC8C0",
   },
   actionSheet: {
     backgroundColor: "#B1C4CB",
@@ -111,5 +117,9 @@ const style = StyleSheet.create({
     marginBottom: 200,
     alignItems: "center",
     justifyContent: "center",
+    shadow: 9,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    shadowColor: "#5FC8C0",
   },
 });

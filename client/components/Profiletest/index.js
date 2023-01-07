@@ -13,11 +13,13 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { Entypo, Ionicons } from "@expo/vector-icons";
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
-import { Text, Box, Image, Center } from "native-base";
-
+import { Text, Box, Image, Center, HStack } from "native-base";
+import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
+import { getAuth, signOut } from "firebase/auth";
+const auth = getAuth();
 
 export default function FlyContent({ navigation, posts }) {
   console.log(posts);
@@ -40,14 +42,64 @@ export default function FlyContent({ navigation, posts }) {
     headerContentopacity.value = withTiming(1, { duration: 700 });
   }, []);
 
+  function SignOut() {
+    signOut(auth)
+      .then((res) => {
+        console.log(res);
+
+        alert("Signed out");
+        navigation.navigate("login");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
+
   return (
     <S.Container>
       <StatusBar barStyle="light-content" />
       <S.Header style={headerAnimatedStyled}></S.Header>
       <S.HeaderContent style={headerContentAnimatedStyled}>
-        <Center>
-         <Text color={"#36454F"} fontSize={30} fontWeight={"light"}>DelivAir</Text>
-        </Center>
+        <HStack justifyContent="space-between" space={220}>
+          <Center>
+            <Text color={"black"} fontSize={30} fontWeight={"light"}>
+              DelivAir
+            </Text>
+          </Center>
+
+          <Box alignItems="center">
+            <Menu
+              w="130"
+              trigger={(triggerProps) => {
+                return (
+                  <Pressable
+                    accessibilityLabel="More options menu"
+                    {...triggerProps}
+                  >
+                    <ChevronDownIcon size={5} color="black" />
+                  </Pressable>
+                );
+              }}
+            >
+              <Menu.Item>
+                <HStack>
+                  <MaterialCommunityIcons
+                    name="account-edit-outline"
+                    color="green"
+                    size={17}
+                  />
+                  <Text>Edit Profile</Text>
+                </HStack>
+              </Menu.Item>
+              <Menu.Item onPress={() => SignOut()}>
+                <HStack>
+                  <MaterialCommunityIcons name="logout" color="red" size={17} />
+                  <Text>Logout</Text>
+                </HStack>
+              </Menu.Item>
+            </Menu>
+          </Box>
+        </HStack>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
         <S.FlyInfoContent intensity={70}>
@@ -72,17 +124,36 @@ export default function FlyContent({ navigation, posts }) {
                 </S.LargeText>
 
                 <Box marginRight={-50}>
-                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
-                Phone Number :<Text style={{color:"#36454F", fontSize:17}}> + 216 52 224 782</Text>
+                  <S.HeaderInfoText
+                    style={{ fontSize: 17, fontWeight: "bold" }}
+                  >
+                    Phone Number :
+                    <Text style={{ color: "#36454F", fontSize: 17 }}>
+                      {" "}
+                      + 216 52 224 782
+                    </Text>
                   </S.HeaderInfoText>
                 </Box>
                 <Box bottom={5} marginRight={-50} right={6}>
-                  <S.HeaderInfoText style={{fontSize:17 , fontWeight: "bold"}}>Email :<Text style={{color:"#36454F", fontSize:17}}> medaziz@gmail.com</Text>
+                  <S.HeaderInfoText
+                    style={{ fontSize: 17, fontWeight: "bold" }}
+                  >
+                    Email :
+                    <Text style={{ color: "#36454F", fontSize: 17 }}>
+                      {" "}
+                      medaziz@gmail.com
+                    </Text>
                   </S.HeaderInfoText>
                 </Box>
                 <Box bottom={10} right={2} marginRight={-50}>
-                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
-                Location :<Text style={{ color:"#36454F",fontSize:17}}> Boumhal El bassattine</Text>
+                  <S.HeaderInfoText
+                    style={{ fontSize: 17, fontWeight: "bold" }}
+                  >
+                    Location :
+                    <Text style={{ color: "#36454F", fontSize: 17 }}>
+                      {" "}
+                      Boumhal El bassattine
+                    </Text>
                   </S.HeaderInfoText>
                 </Box>
               </Center>
@@ -91,7 +162,12 @@ export default function FlyContent({ navigation, posts }) {
             <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
               <Center marginRight={-50}>
                 <S.HeaderInfoText
-                  style={{color:"black", fontSize: 30, fontWeight: "bold", marginBottom: 30 }}
+                  style={{
+                    color: "black",
+                    fontSize: 30,
+                    fontWeight: "bold",
+                    marginBottom: 30,
+                  }}
                 >
                   Contact List
                 </S.HeaderInfoText>
@@ -186,7 +262,6 @@ export default function FlyContent({ navigation, posts }) {
             </S.FlyInfoThree>
           </ScrollView>
           {/* <S.TicketInfo></S.TicketInfo> */}
-         
         </S.FlyInfoContent>
       </S.FlyInfo>
       <Footer navigation={navigation} />
