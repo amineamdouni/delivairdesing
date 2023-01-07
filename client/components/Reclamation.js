@@ -24,6 +24,7 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function Reclamation({ navigation }) {
+  
  return (
    <Center>
      <Text>reclamation page</Text>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   StatusBar,
   ScrollView,
@@ -20,10 +20,17 @@ import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
-
+import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
   console.log(posts);
-
+ const { user, connected } = useContext(UserContext);
+ const [, updateState] = useState();
+ const forceUpdate = useCallback(() => updateState({}), []);
+ 
+ useEffect(() => {
+  forceUpdate()
+   console.log(user, "profile");
+ }, [user]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -48,7 +55,7 @@ export default function FlyContent({ navigation, posts }) {
         console.log(res);
 
         alert("Signed out");
-        navigation.navigate("login");
+   
       })
       .catch((error) => {
         alert(error);
@@ -62,11 +69,11 @@ export default function FlyContent({ navigation, posts }) {
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text color={"black"} fontSize={30} fontWeight={"light"}>
+            <Text onPress={() => SignOut()} color={"black"} fontSize={30} fontWeight={"light"}>
               DelivAir
             </Text>
           </Center>
-
+{/* 
           <Box alignItems="center">
             <Menu
               w="130"
@@ -98,7 +105,7 @@ export default function FlyContent({ navigation, posts }) {
                 </HStack>
               </Menu.Item>
             </Menu>
-          </Box>
+          </Box> */}
         </HStack>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>

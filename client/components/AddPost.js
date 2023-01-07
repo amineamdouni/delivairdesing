@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect,useCallback } from "react";
+import { UserContext } from "../UserContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios, { Axios } from "axios";
 import {
@@ -30,6 +31,15 @@ const date = new Date();
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
 export default function AddPost({ navigation }) {
+
+  const { user, connected } = useContext(UserContext);
+ const [, updateState] = useState();
+ const forceUpdate = useCallback(() => updateState({}), []);
+ 
+ useEffect(() => {
+  forceUpdate()
+   console.log(user, "addPost");
+ }, [user]);
   const [flight, setFlight] = useState({"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-04 13:25+01:00","scheduledTimeUtc":"2023-01-04 12:25Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-04 15:10+01:00","actualTimeLocal":"2023-01-04 15:41+01:00","scheduledTimeUtc":"2023-01-04 14:10Z","actualTimeUtc":"2023-01-04 14:41Z","terminal":"1","quality":["Basic","Live"]},"lastUpdatedUtc":"2023-01-04 14:55Z","number":"TU 514","callSign":"TAR514","status":"Arrived","codeshareStatus":"IsOperator","isCargo":false,"aircraft":{"reg":"TS-IMY","modeS":"02A198","model":"Airbus A320 NEO"},"airline":{"name":"Tunisair"}},{"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-08 19:50+01:00","scheduledTimeUtc":"2023-01-08 18:50Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-08 21:35+01:00","scheduledTimeUtc":"2023-01-08 20:35Z","terminal":"1","quality":["Basic"]},"lastUpdatedUtc":"2022-06-10 08:16Z","number":"TU 514","status":"Unknown","codeshareStatus":"Unknown","isCargo":false,"aircraft":{"model":"Airbus A320"},"airline":{"name":"Tunisair"}});
   const [text, setText] = useState("");
   const [onChangeValue, setOnChangeValue] = React.useState(0);

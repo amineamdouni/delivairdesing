@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -37,8 +37,17 @@ if (!firebase.apps.length) {
 const app = initializeApp(firebaseConfig);
 
 //------------firebase-----------
-
+import { UserContext } from "../UserContext";
 const SignUpForm = () => {
+
+  const { user, connected } = useContext(UserContext);
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  useEffect(() => {
+    forceUpdate();
+    console.log(user, "forme");
+  }, [user]);
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
   // const [image, setImage] = useState(null);
