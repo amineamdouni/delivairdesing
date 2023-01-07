@@ -95,7 +95,7 @@ console.disableYellowBox=true;
       <Text style={styles.text}>Next</Text>
     </TouchableOpacity>
   </View>
-  </View><Footer/>
+  </View><Footer navigation={navigation}/>
   </View>
   )
  
