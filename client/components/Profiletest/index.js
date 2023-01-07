@@ -46,13 +46,7 @@ export default function FlyContent({ navigation, posts }) {
       <S.Header style={headerAnimatedStyled}></S.Header>
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <Center>
-          <Image
-            size={70}
-            source={{
-              uri: "https://i.ibb.co/sKsW4LD/Minimal-World-Travel-Blog-Suitcase-Logo-1.png",
-            }}
-            alt="Alternate Text"
-          />
+         <Text color={"#36454F"} fontSize={30} fontWeight={"light"}>DelivAir</Text>
         </Center>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
@@ -78,13 +72,17 @@ export default function FlyContent({ navigation, posts }) {
                 </S.LargeText>
 
                 <Box marginRight={-50}>
-                  <S.HeaderInfoText>
-                    Phone Number : <Text> + 216 52 224 782</Text>
+                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
+                Phone Number :<Text style={{color:"#36454F", fontSize:17}}> + 216 52 224 782</Text>
                   </S.HeaderInfoText>
                 </Box>
-                <Box marginRight={-50}>
-                  <S.HeaderInfoText>
-                    Email :<Text> medaziz@gmail.com</Text>
+                <Box bottom={5} marginRight={-50} right={6}>
+                  <S.HeaderInfoText style={{fontSize:17 , fontWeight: "bold"}}>Email :<Text style={{color:"#36454F", fontSize:17}}> medaziz@gmail.com</Text>
+                  </S.HeaderInfoText>
+                </Box>
+                <Box bottom={10} right={2} marginRight={-50}>
+                  <S.HeaderInfoText style={{fontSize:17 ,fontWeight: "bold"}}>
+                Location :<Text style={{ color:"#36454F",fontSize:17}}> Boumhal El bassattine</Text>
                   </S.HeaderInfoText>
                 </Box>
               </Center>
@@ -93,7 +91,7 @@ export default function FlyContent({ navigation, posts }) {
             <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
               <Center marginRight={-50}>
                 <S.HeaderInfoText
-                  style={{ fontSize: 30, fontWeight: "bold", marginBottom: 30 }}
+                  style={{color:"black", fontSize: 30, fontWeight: "bold", marginBottom: 30 }}
                 >
                   Contact List
                 </S.HeaderInfoText>

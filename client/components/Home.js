@@ -559,6 +559,7 @@ const style = StyleSheet.create({
     bordercolor: "black",
   },
   inputto: {
+    
     width: 150,
     height: 36,
     left: -410,

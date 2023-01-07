@@ -30,7 +30,7 @@ const date = new Date();
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
 export default function AddPost({ navigation }) {
-  const [flight, setFlight] = useState(null);
+  const [flight, setFlight] = useState({"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-04 13:25+01:00","scheduledTimeUtc":"2023-01-04 12:25Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-04 15:10+01:00","actualTimeLocal":"2023-01-04 15:41+01:00","scheduledTimeUtc":"2023-01-04 14:10Z","actualTimeUtc":"2023-01-04 14:41Z","terminal":"1","quality":["Basic","Live"]},"lastUpdatedUtc":"2023-01-04 14:55Z","number":"TU 514","callSign":"TAR514","status":"Arrived","codeshareStatus":"IsOperator","isCargo":false,"aircraft":{"reg":"TS-IMY","modeS":"02A198","model":"Airbus A320 NEO"},"airline":{"name":"Tunisair"}},{"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-08 19:50+01:00","scheduledTimeUtc":"2023-01-08 18:50Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-08 21:35+01:00","scheduledTimeUtc":"2023-01-08 20:35Z","terminal":"1","quality":["Basic"]},"lastUpdatedUtc":"2022-06-10 08:16Z","number":"TU 514","status":"Unknown","codeshareStatus":"Unknown","isCargo":false,"aircraft":{"model":"Airbus A320"},"airline":{"name":"Tunisair"}});
   const [text, setText] = useState("");
   const [onChangeValue, setOnChangeValue] = React.useState(0);
   const [onChangeEndValue, setOnChangeEndValue] = React.useState(0);
@@ -38,9 +38,9 @@ export default function AddPost({ navigation }) {
   const [value, setValue] = useState(null);
 
   const [items, setItems] = useState([
-    { label: "Apple", value: "apple" },
-    { label: "Karmousa", value: "karmousa" },
-    { label: "Banana", value: "banana" },
+    { label: "Cash", value: "Cash" },
+    { label: "PayPal", value: "PayPal" },
+    { label: "Skrill", value: "Skrill" },
   ]);
   const check = (input) => {
     axios
@@ -66,8 +66,9 @@ export default function AddPost({ navigation }) {
           alt="Alternate Text"
         />
       </Center>
-      <Center flex={1} px="3">
-        <Text bottom={180} right={100} width={150}>
+  
+      <Center top={5} flex={1} px="3">
+        <Text fontSize={17} bottom={180} right={100} width={150}>
           Flight name :
         </Text>
         <Input
@@ -86,7 +87,7 @@ export default function AddPost({ navigation }) {
         {
           <Button
             mx="1"
-            backgroundColor={"#ABCED8"}
+            backgroundColor={"#5FC8C0"}
             bottom={190}
             left={130}
             width={100}
@@ -98,10 +99,10 @@ export default function AddPost({ navigation }) {
             Check
           </Button>
         }
-        <Text bottom={170} right={100} width={150}>
+        <Text fontSize={17}  bottom={170} right={100} width={150}>
           Weight :{" "}
         </Text>
-        <Text bottom={190} left={1} width={150} textAlign="center">
+        <Text fontSize={17}  bottom={190} left={1} width={150} textAlign="center">
           {" "}
           {onChangeValue} KG{" "}
         </Text>
@@ -109,7 +110,7 @@ export default function AddPost({ navigation }) {
           <Stack space={4} alignItems="center" w="75%" maxW="300">
             <Slider
               defaultValue={0}
-              colorScheme="#ABCED8"
+              colorScheme="#5FC8C0"
               onChange={(v) => {
                 setOnChangeValue(Math.floor(v / 4));
               }}
@@ -118,14 +119,14 @@ export default function AddPost({ navigation }) {
               }}
             >
               <Slider.Track>
-                <Slider.FilledTrack backgroundColor={"#ABCED8"} />
+                <Slider.FilledTrack backgroundColor={"#5FC8C0"} />
               </Slider.Track>
               <Slider.Thumb />
             </Slider>
           </Stack>
         </Box>
 
-        <Text bottom={140} right={100} width={150}>
+        <Text fontSize={17}  bottom={140} right={100} width={150}>
           Payment method :
         </Text>
         <Box style={{ bottom: 170, left: 105 }}>
@@ -146,14 +147,13 @@ export default function AddPost({ navigation }) {
             setValue={setValue}
             setItems={setItems}
           />
-        </Box>
+          
+      </Box>
         {flight && (
           <Box
             style={{
-              bottom: 90,
-              borderRadius: 10,
-              borderColor: "black",
-              borderWidth: 1,
+              bottom: 30,
+              
             }}
           >
             <HStack>
@@ -162,43 +162,43 @@ export default function AddPost({ navigation }) {
                 color="coolGray.800"
                 size={15}
               ></FontAwesome5>
-              <Text fontWeight={700}> Departure country :</Text>
-              <Text> {flight.departure.airport.municipalityName} </Text>
+              <Text fontSize={17} fontWeight={700}> Departure country :</Text>
+              <Text fontSize={17}> {flight.departure.airport.municipalityName} </Text>
             </HStack>
-            <HStack>
+            <HStack marginTop={3}>
               <MaterialCommunityIcons
                 name="clock-time-eight-outline"
                 color="coolGray.800"
                 size={17}
               ></MaterialCommunityIcons>
-              <Text fontWeight={700}> Departure time :</Text>
-              <Text> {flight.departure.scheduledTimeLocal} </Text>
+              <Text fontSize={17} fontWeight={700}> Departure time :</Text>
+              <Text fontSize={17}> {flight.departure.scheduledTimeLocal} </Text>
             </HStack>
-            <HStack>
+            <HStack marginTop={3}>
               <FontAwesome5
                 name="plane-arrival"
                 color="coolGray.800"
-                size={15}
+                size={17}
               ></FontAwesome5>
-              <Text fontWeight={700}> Arrival country :</Text>
-              <Text> {flight.arrival.airport.municipalityName} </Text>
+              <Text fontSize={17} fontWeight={700}>Arrival country :</Text>
+              <Text fontSize={17}> {flight.arrival.airport.municipalityName} </Text>
             </HStack>
-            <HStack>
+            <HStack marginTop={3}>
               <MaterialCommunityIcons
                 name="clock-time-nine-outline"
                 color="coolGray.800"
                 size={17}
               ></MaterialCommunityIcons>
-              <Text fontWeight={700}> Arrival time :</Text>
-              <Text> {flight.arrival.scheduledTimeLocal} </Text>
+              <Text fontSize={17} fontWeight={700}> Arrival time :</Text>
+              <Text fontSize={17}> {flight.arrival.scheduledTimeLocal} </Text>
             </HStack>
           </Box>
         )}
         <Button
-          backgroundColor={"#ABCED8"}
+          backgroundColor={"#5FC8C0"}
           borderColor={"black"}
           borderWidth={1}
-          top={59}
+          top={45}
           borderRadius={10}
           onPress={() =>
             post({

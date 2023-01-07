@@ -18,10 +18,10 @@ export const Header = styled(Animated.View)`
 `;
 
 export const HeaderInfoText = styled(Animated.Text)`
-  color: black;
+  color: #36454F;
   font-size: 16px;
   margin-top: 40px;
-  opacity: 0.5;
+
 `;
 
 export const HeaderContent = styled(Animated.View)`
