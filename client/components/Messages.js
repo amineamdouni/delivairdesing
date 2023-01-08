@@ -10,9 +10,38 @@ import {
   FlatList,
 } from "react-native";
 import axios from "axios";
+import io from "socket.io-client";
 
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
+
+  // const socket = io("http://192.168.1.9:3000/");
+  // socket.on("connect", () => {
+  //   //amine we can console log the connection here (socket.id)
+  // });
+
+  // const handleSending = async () => {
+  //   console.log("clicked");
+  //   const msg = newMsg;
+
+  //   socket.emit("send-msg", {
+  //     to: "63b54b3536c92210d680f473",
+  //     from: "63b5490436c92210d680f46d",
+  //     msg,
+  //   });
+  //   await axios
+  //     .post("http://192.168.1.9:3000/api/messages/addmsg/", {
+  //       to: "63b54b3536c92210d680f473",
+  //       from: "63b5490436c92210d680f46d",
+  //       msg,
+  //     })
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+
+  //   const msgs = [...messages];
+  //   msgs.push({ fromSelf: true, message: msg });
+  //   setMessages(msgs);
+  // };
 
   useEffect(() => {
     axios
