@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useCallback, useContext, useState,useEffect } from 'react';
 import { View, Text, Image, Button, FlatList, StyleSheet } from 'react-native';
+import { UserContext } from '../UserContext';
 import {
   Entypo,
   AntDesign,
@@ -65,7 +66,14 @@ const FriendItem = ({ name, email, phone, country, profileImage, onDelete }) => 
 
 const FriendsList = () => {
   const [friendsList, setFriendsList] = useState(friends);
+const { user, connected } = useContext(UserContext);
+const [, updateState] = useState();
+const forceUpdate = useCallback(() => updateState({}), []);
 
+useEffect(() => {
+  forceUpdate();
+  console.log(user, "ContactList");
+}, [user]);
   const handleDelete = email => {
     setFriendsList(friendsList.filter(friend => friend.email !== email));
   };

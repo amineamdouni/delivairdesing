@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useContext,useEffect, useCallback } from "react";
 import {
   Alert,
   Text,
@@ -33,8 +33,16 @@ const windowHeight = Dimensions.get("window").height;
 const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
-
+import { UserContext } from "../UserContext";
 export default function Chat({ navigation }) {
+  const { user, connected } = useContext(UserContext);
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+
+  useEffect(() => {
+    forceUpdate();
+    console.log(user, "Chat");
+  }, [user]);
   return (
     
     <Box style={{ backgroundColor: "#EAC7CA" }}>
