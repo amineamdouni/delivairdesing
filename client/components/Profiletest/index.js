@@ -53,7 +53,7 @@ export default function FlyContent({ navigation, posts }) {
     signOut(auth)
       .then((res) => {
         console.log(res);
-
+navigation.navigate('login')
         alert("Signed out");
    
       })
@@ -69,11 +69,11 @@ export default function FlyContent({ navigation, posts }) {
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text onPress={() => SignOut()} color={"black"} fontSize={30} fontWeight={"light"}>
+            <Text  color={"black"} fontSize={30} fontWeight={"light"}>
               DelivAir
             </Text>
           </Center>
-{/* 
+
           <Box alignItems="center">
             <Menu
               w="130"
@@ -105,7 +105,7 @@ export default function FlyContent({ navigation, posts }) {
                 </HStack>
               </Menu.Item>
             </Menu>
-          </Box> */}
+          </Box>
         </HStack>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
