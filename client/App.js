@@ -29,38 +29,44 @@ export default function App () {
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
   console.log(user);
-  useEffect(async() =>{
-     onAuthStateChanged(auth,async (user) => {
-      console.log(user.email);
+  useEffect(() =>{
+     onAuthStateChanged(auth, (user) => {
+      console.log(user);
     
-      if (user.email === undefined) {
+      if (!user ) {
         navigation.navigate("login");
       }
-      else{await setConnected(user.email)}
+      else{ setConnected(user.email)}
       if (initializing) {
         setInitializing(false);
       }
     })
-    console.log(user,'user connected');
-   
-    await axios
-      .get(`http://192.168.104.21:5000/users/devlopxzimpo@gmail.com`)
-      .then((res) => {
-        console.log("succ");
-        setUser({ dbUser: res.data });
-      })
-      .catch((err) => console.log(JSON.stringify(err), "err"));
+    console.log(connected,'user connected');
+   if(!connected){
+    console.log('nothin');
+   }else if (connected){
+    console.log('logeed');
+     axios
+       .get(`http://192.168.104.15:5000/users/${connected}`)
+       .then((res) => {
+         console.log("succ");
+         setUser( res.data );
+       })
+       .catch((err) => console.log("err"));
 
     
     
     
+   }
     
-  },[]
+    
+  },[connected]
   );
-  // useEffect(()=>{},[])
+
+console.log(connected,'heill')
 
   return (
-    <UserContext.Provider value={{ user, setUser,selected,setSelected }}>
+    <UserContext.Provider value={{ user, setUser,selected,setSelected,connected }}>
       <NativeBaseProvider>
         <NavigationContainer>
           <Stacks />

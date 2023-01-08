@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { UserContext } from "../UserContext";
@@ -23,24 +23,37 @@ import Home from "./Home";
 
 const Stack = createNativeStackNavigator();
 
-export default function Stacks() {
-  const { user } = useContext(UserContext);
+ const Stacks= ()=> {
+  const { user,connected } = useContext(UserContext);
+useEffect(()=>{
+  console.log(user,'stack');
+  
+},[user])
 
-  return (
+if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+  <Stack.Screen name="login" component={Login} />
+  <Stack.Screen name="signup" component={SignUp} />
+
+
+</Stack.Navigator>)}
+ else return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="messages" component={Messages} />
+
+      <Stack.Screen name="home" component={Main} />
+
       <Stack.Screen name="track" component={Track} />
       <Stack.Screen name="form" component={Form} />
-      <Stack.Screen name="login" component={Login} />
       <Stack.Screen name="profile" component={ProfileTest} />
-      <Stack.Screen name="home" component={Main} />
-      <Stack.Screen name="main" component={Main} />
+  
       <Stack.Screen name="addpost" component={AddPost} />
       <Stack.Screen name="chat" component={Chat} />
-      <Stack.Screen name="signup" component={SignUp} />
+
+      <Stack.Screen name="messages" component={Messages} />
+
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
     </Stack.Navigator>
   );
 }
+export default Stacks
