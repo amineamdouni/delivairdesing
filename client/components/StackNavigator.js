@@ -30,26 +30,23 @@ useEffect(()=>{
   
 },[user])
 
-if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
-  <Stack.Screen name="login" component={Login} />
-  <Stack.Screen name="signup" component={SignUp} />
+// if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
 
 
-</Stack.Navigator>)}
- else return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
-
-      <Stack.Screen name="home" component={Main} />
-
+// </Stack.Navigator>)}
+//  else 
+ return (
+   <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="track" component={Track} />
+      <Stack.Screen name="login" component={Login} />
+      <Stack.Screen name="signup" component={SignUp} />
+      <Stack.Screen name="home" component={Main} />
       <Stack.Screen name="form" component={Form} />
       <Stack.Screen name="profile" component={ProfileTest} />
   
       <Stack.Screen name="addpost" component={AddPost} />
       <Stack.Screen name="chat" component={Chat} />
-
       <Stack.Screen name="messages" component={Messages} />
-
       <Stack.Screen name="reclamation" component={Reclamation} />
       <Stack.Screen name="contact" component={Contact} />
       <Stack.Screen name="history" component={History} />
