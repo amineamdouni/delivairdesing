@@ -56,11 +56,11 @@ export default Messages = () => {
           let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
           return (
             <View style={[styles.item, itemStyle]}>
-              {!inMessage && renderDate(item.date)}
+              {!inMessage && renderDate(item.createdAt)}
               <View style={[styles.balloon]}>
                 <Text>{item.message}</Text>
               </View>
-              {inMessage && renderDate(item.date)}
+              {inMessage && renderDate(item.createdAt)}
             </View>
           );
         }}
