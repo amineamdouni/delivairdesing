@@ -9,7 +9,24 @@ const ReclamationForm = () => {
     name: Yup.string().required('Name is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     reclamation: Yup.string().required('Reclamation is required'),
-  });}
+  });
+
+
+
+  return (
+    <ImageBackground
+    source={{
+      uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
+    }}
+    style={styles.image}
+  >
+    <View style={styles.formContainer}>
+         <Text style={styles.title}>Reclamation !</Text>
+       
+    </View>
+    </ImageBackground>
+  );
+};
 
 
 
