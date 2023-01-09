@@ -31,7 +31,7 @@ export default function App() {
   const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
-  console.log(one, "changede");
+ 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log(user);
