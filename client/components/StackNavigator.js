@@ -61,7 +61,7 @@ const Stacks = () => {
           headerShown: true,
           title: "DelivAir",
           headerTitleStyle: { fontWeight: "light" },
-          headerLeft: () => <Text>hzil</Text>,
+        
           headerStyle: { backgroundColor: "#FFC8CE" },
         }}
       />
