@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, HStack, Center, Heading } from "native-base";
 import {
   StyleSheet,
@@ -11,34 +11,35 @@ import {
   Button,
 } from "react-native";
 import axios from "axios";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
   const [newMsg, setNewMsg] = useState();
+  const [arrivalMessage, setArrivalMessage] = useState(null);
+  const scrollRef = useRef();
 
   const socket = io("http://192.168.104.28:3000/");
-  socket.on("connect", () => {
+  socket.on("connection", () => {
     console.log("hello from socket", socket.id);
     //amine we can console log the connection here (socket.id)
   });
 
   const handleSending = async () => {
-    console.log(newMsg);
+    console.log(newMsg["text"]);
 
     socket.emit("send-msg", {
-      to: "63b54b3536c92210d680f473",
-      from: "63b5490436c92210d680f46d",
-      newMsg,
+      from: "63b54b3536c92210d680f473",
+      to: "63b5490436c92210d680f46d",
+      message: newMsg["text"],
     });
     await axios
       .post("http://192.168.104.28:3000/api/messages/addmsg/", {
         from: "63b5490436c92210d680f46d",
         to: "63b54b3536c92210d680f473",
-        message: newMsg,
+        message: newMsg["text"],
       })
       .then((res) => {
-        console.log(res);
         console.log("success");
       })
       .catch((err) => console.log(err));
@@ -51,8 +52,8 @@ export default Messages = () => {
   useEffect(() => {
     axios
       .post("http://192.168.104.28:3000/api/messages/getmsg/", {
-        from: "63b5490436c92210d680f46d",
-        to: "63b54b3536c92210d680f473",
+        to: "63b5490436c92210d680f46d",
+        from: "63b54b3536c92210d680f473",
       })
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err));
@@ -61,6 +62,22 @@ export default Messages = () => {
   const renderDate = (date) => {
     return <Text style={styles.time}>{date}</Text>;
   };
+
+  useEffect(() => {
+    if (socket.current) {
+      socket.current.on("msg-recieve", (msg) => {
+        setArrivalMessage({ fromSelf: false, message: msg });
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <View style={styles.container}>
@@ -79,7 +96,6 @@ export default Messages = () => {
         style={styles.list}
         data={messages}
         keyExtractor={(item) => {
-          console.log(item);
           return item._id;
         }}
         renderItem={(message) => {
