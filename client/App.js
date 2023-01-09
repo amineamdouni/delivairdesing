@@ -33,33 +33,21 @@ export default function App() {
   //Checking if there is a user connected
  
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-    
-
-      if (!user) {
-        navigation.navigate("login");
-      } else {
-        setConnected(user.email);
-      }
-      if (initializing) {
-        setInitializing(false);
-      }
-    });
- 
-    if (!connected) {
-      console.log("nothin");
-    } else if (connected) {
-    
-      axios
-        .get(`http://192.168.1.105:5000/users/${connected}`)
-        .then((res) => {
-          console.log("succ");
-          setUser(res.data);
-        })
-        .catch((err) => console.log(err));
-    }
+     onAuthStateChanged(auth, (user) => {
+       console.log("user connected is ", user.email);
+      
+       
+       if (initializing) {
+         setInitializing(false);
+       }
+       if (user === null) {
+         navigation.navigate("login");
+       }
+       
+     });
   }, [connected]);
 
+console.log(user,'user');
   
 
   return (
@@ -70,6 +58,7 @@ export default function App() {
         selected,
         setSelected,
         connected,
+        setConnected,
         oneUser,
         setOneUser,
         onePost,
@@ -86,7 +75,6 @@ export default function App() {
     </UserContext.Provider>
   );
 }
-
 // Color Switch Component
 function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();

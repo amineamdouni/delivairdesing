@@ -49,29 +49,33 @@ export default function SignUp({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
-  const { setUser } = useContext(UserContext);
+  const { setUser, setConnected } = useContext(UserContext);
 
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
     setDataInput([info]);
-    createUserWithEmailAndPassword(auth, Email, password).then(res=>{
-axios
-  .post("http://192.168.104.15:3000/api/users/register", {
-    email:Email,
-    password,
-    username,
-  })
-  .then((Credential) => {
-    setUser("user");
-    navigation.navigate("profile");
-  })
-  .catch((err) => {
-    alert(err);
-  });
-    }).catch(err => {console.log(err);})
-      
-      
+    createUserWithEmailAndPassword(auth, Email, password)
+      .then((res) => {
+        axios
+          .post("http://192.168.104.13:3000/api/users/register", {
+            email: Email,
+            password,
+            username,
+          })
+          .then((res) => {
+          console.log('mongo succ');
+          setConnected(res.data.user.email)
+          setUser(res.data);
+              navigation.navigate("form");
+          })
+          .catch((err) => {
+            alert(err);
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
