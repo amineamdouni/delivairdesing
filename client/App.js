@@ -25,6 +25,7 @@ export const theme = extendTheme({ config });
 export default function App() {
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
+  const [chatUser,setChatUser]=useState(null)
   const [oneUser, setOneUser] = useState(null);
   const [onePost, setOnePost] = useState(null);
   const [to, setTo] = useState(null);
@@ -47,12 +48,13 @@ export default function App() {
      });
   }, [connected]);
 
-console.log(user,'user');
-  
+console.log(user, "user");
+console.log(chatUser,'chat');
 
   return (
     <UserContext.Provider
       value={{
+        chatUser,setChatUser,
         user,
         setUser,
         selected,
