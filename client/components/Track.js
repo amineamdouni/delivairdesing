@@ -103,12 +103,15 @@ console.disableYellowBox=true;
 
 const styles = StyleSheet.create({
   container: {
+    height:10,
+    top:-13,
     flex:1,
     backgroundColor:'#FFC8CE',
 
   },
   header :{
-    height:30,
+    backgroundColor:'#FFC8CE',
+    height:90,
     top:14,
     
     
@@ -117,9 +120,11 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   headerText:{
-    color:'black',
+    right:80,
+    top:12,
+    color:'#ffffff',
     fontSize:22,
-    fontWeight:'light',
+    fontWeight:'bold',
   },
   indicatorContainer:{
     shadowColor: "#000",
@@ -140,7 +145,8 @@ elevation: 10,
     backgroundColor:"white",
   },
   lblContainer:{
-    marginTop:30,
+    
+    marginTop:20,
     padding:10,
     paddingLeft:5,
     width:width-100,
