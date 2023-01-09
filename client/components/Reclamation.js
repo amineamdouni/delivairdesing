@@ -37,6 +37,13 @@ const ReclamationForm = () => {
     style={styles.logo}
     
   />
+    <TextInput
+              style={styles.input}
+              onChangeText={handleChange('name')}
+              onBlur={handleBlur('name')}
+              value={values.name}
+              placeholder="Name"
+            />
 
 </View>)}
       </Formik>
