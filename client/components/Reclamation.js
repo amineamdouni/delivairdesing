@@ -22,7 +22,17 @@ const ReclamationForm = () => {
   >
     <View style={styles.formContainer}>
          <Text style={styles.title}>Reclamation !</Text>
-       
+         <Formik
+        initialValues={{ name: '', email: '', reclamation: '' }}
+        validationSchema={validationSchema}
+        onSubmit={values => {
+          // Send the reclamation here
+          console.log(`Name: ${values.name} Email: ${values.email} Reclamation: ${values.reclamation}`);
+        }}
+      >
+
+        
+      </Formik>
     </View>
     </ImageBackground>
   );
