@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import {  AirbnbRating } from 'react-native-ratings';
+
+import Rating from "./Rating.js"
 import {
   StatusBar,
   ScrollView,
@@ -131,8 +132,8 @@ navigation.navigate('login')
                 >
                   Med Aziz Selini
                 </S.LargeText>
-                <Box  left={5}>
-                <AirbnbRating /></Box>
+                
+             <Rating />
 
 
 
@@ -177,7 +178,10 @@ navigation.navigate('login')
 <SafeAreaView>
   <Box borderRadius={6} bottom={9} height={90} left={3} width={"110%"} borderColor={"black"} borderWidth={1}> 
  
-  <ScrollView >
+  <ScrollView
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}
+                  >
 
   <HStack  space={7}>
   <Avatar left={3} top={2} bg="cyan.500" size="xs" source={{
@@ -186,7 +190,7 @@ navigation.navigate('login')
       <HStack  space={7}>
   <Avatar left={3} top={3} bg="cyan.500" size="xs" source={{
       uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-    }}></Avatar><Text maxWidth={"80%"} top={3}>: He carefully listened to our needs and helped us find exactly what we were looking for.</Text></HStack>
+    }}></Avatar><Text maxWidth={"50%"} top={3}>: He carefully listened to our needs and helped us find exactly what we were looking for.</Text></HStack>
     </ScrollView>
   </Box></SafeAreaView>
     
