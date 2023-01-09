@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { UserContext } from "../UserContext";
@@ -24,14 +24,14 @@ import Home from "./Home";
 
 const Stack = createNativeStackNavigator();
 
- const Stacks= ()=> {
-  const { user,connected } = useContext(UserContext);
-useEffect(()=>{
-  console.log(user,'stack');
-  
-},[user])
 
-// if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+const Stacks = () => {
+  const { user, connected } = useContext(UserContext);
+  useEffect(() => {
+    console.log(user, "stack");
+  }, [user]);
+
+  // if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
 
 
 // </Stack.Navigator>)}
@@ -56,3 +56,4 @@ useEffect(()=>{
  );
 }
 export default Stacks
+

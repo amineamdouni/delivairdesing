@@ -126,20 +126,19 @@ const SignUpForm = () => {
   //   console.log(result);
   // };
 
-  // const handleSubmit = () => {
-  //   axios
-  //     .post("http://192.168.104.29:5000/users/add", {
-  //       userName: username,
-  //       phoneNumber: Number(phone),
-  //       location: location,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
+  const handleSubmit= () => {
+    axios.post('http://192.168.104.29:5000/users/add',{
+     userName:username,
+     phoneNumber:Number(phone),
+     location:location,
+    })
+    .then((response) => {
+     console.log(response);
+    })
+    .catch((error) => {
+     console.log(error);
+    })
+   };
 
   return (
     <ImageBackground
@@ -214,6 +213,7 @@ const SignUpForm = () => {
         /></Box>
       <Box top={20} >
       <Button title="confirm" onPress={uploadImage} color={"#E7C7C8"} borderRadius={"1"} /></Box>
+      
       </View>
        </ImageBackground>
        
