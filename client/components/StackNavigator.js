@@ -35,23 +35,27 @@ const Stacks = () => {
   }, [user]);
 
 
-  // if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+  if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
 
+    <Stack.Screen name="login" component={Login} />
+    <Stack.Screen name="signup" component={SignUp} />
 
-// </Stack.Navigator>)}
-//  else 
+</Stack.Navigator>)}
+ else if(user) {
  return (
    <Stack.Navigator screenOptions={{ headerShown: false }}>
+
+     <Stack.Screen name="otherprofile" component={OthersProfile} />
+
+     <Stack.Screen name="messages" component={Messages} />
+
      <Stack.Screen name="track" component={Track} />
-     <Stack.Screen name="login" component={Login} />
-     <Stack.Screen name="signup" component={SignUp} />
      <Stack.Screen name="home" component={Main} />
      <Stack.Screen name="form" component={Form} />
      <Stack.Screen name="profile" component={Profile} />
-     <Stack.Screen name="otherprofile" component={OthersProfile} />
+
      <Stack.Screen name="addpost" component={AddPost} />
      <Stack.Screen name="chat" component={Chat} />
-     <Stack.Screen name="messages" component={Messages} />
      <Stack.Screen name="reclamation" component={Reclamation} />
    <Stack.Screen
         name="contact"
@@ -66,7 +70,7 @@ const Stacks = () => {
       />
      <Stack.Screen name="history" component={History} />
    </Stack.Navigator>
- );
+ );}
 }
 export default Stacks
 

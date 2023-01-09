@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/DelivChat", {
+  .connect("mongodb+srv://root:root@delivair.1zg97hn.mongodb.net/delivair", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -39,19 +39,23 @@ const io = socket(server, {
 global.onlineUsers = new Map();
 
 io.on("connection", (socket) => {
-  console.log("User Socket id : ", socket.id);
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
-    console.log(userId);
     onlineUsers.set(userId, socket.id);
   });
 
   socket.on("send-msg", (data) => {
-    const sendUserSocket = onlineUsers.get(data.to);
-    console.log("userSocket::===>", sendUserSocket);
-    if (sendUserSocket) {
-      //need to save before emitting
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    }
+    // console.log(data);
+    // const sendUserSocket = onlineUsers.get(data.to);
+    // console.log("userSocket::===>", sendUserSocket);
+    // if (sendUserSocket) {
+    //  socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    // }
+     socket.to("63b54b3536c92210d680f473").emit("msg-recieve", data.msg);
+  });
+
+  socket.on("disconnect", () => {
+    socket.disconnect();
+    console.log("🔥: A user disconnected");
   });
 });
