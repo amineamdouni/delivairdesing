@@ -39,19 +39,23 @@ const io = socket(server, {
 global.onlineUsers = new Map();
 
 io.on("connection", (socket) => {
-  console.log("User Socket id : ", socket.id);
   global.chatSocket = socket;
   socket.on("add-user", (userId) => {
-    console.log(userId);
     onlineUsers.set(userId, socket.id);
   });
 
   socket.on("send-msg", (data) => {
-    const sendUserSocket = onlineUsers.get(data.to);
-    console.log("userSocket::===>", sendUserSocket);
-    if (sendUserSocket) {
-      //need to save before emitting
-      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    }
+    // console.log(data);
+    // const sendUserSocket = onlineUsers.get(data.to);
+    // console.log("userSocket::===>", sendUserSocket);
+    // if (sendUserSocket) {
+    //  socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    // }
+     socket.to("63b54b3536c92210d680f473").emit("msg-recieve", data.msg);
+  });
+
+  socket.on("disconnect", () => {
+    socket.disconnect();
+    console.log("🔥: A user disconnected");
   });
 });
