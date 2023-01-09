@@ -69,22 +69,24 @@ navigation.navigate('login')
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text  color={"black"} fontSize={30} fontWeight={"light"}>
-              DelivAir
+            <Text  left={120} color={"white"} fontSize={30} fontWeight={"bold"}>
+             Profile
             </Text>
           </Center>
 
           <Box alignItems="center">
             <Menu
+
               w="130"
               trigger={(triggerProps) => {
                 return (
-                  <Pressable
+                  <Pressable right={4}
+                  
                     accessibilityLabel="More options menu"
                     {...triggerProps}
                   >
                     <ChevronDownIcon size={5} color="black" />
-                  </Pressable>
+                  </Pressable >
                 );
               }}
             >

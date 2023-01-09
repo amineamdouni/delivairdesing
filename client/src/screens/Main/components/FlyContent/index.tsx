@@ -45,8 +45,8 @@ export default function FlyContent({navigation,posts}) {
       <StatusBar barStyle="light-content" />
       <S.Header style={headerAnimatedStyled}></S.Header>
       <S.HeaderContent style={headerContentAnimatedStyled}>
-        <S.HeaderText bold>Your order has submited</S.HeaderText>
-        <S.HeaderText>We are waiting for booking confirmation</S.HeaderText>
+        <S.HeaderText bold>Your destination has been submitted</S.HeaderText>
+        <S.HeaderText>We are waiting for your delivair</S.HeaderText>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
         <S.FlyInfoContent intensity={70}>
@@ -76,24 +76,24 @@ export default function FlyContent({navigation,posts}) {
                     </Center>
                     <Container style={style.Middle}>
                       <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text>e.postTime</Text>
+                      <Text color={'grey'} >2 Days ago </Text>
                       <Text>📍Ariana,Tunis</Text>
                     </Container>
                     <Container>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      <Text style={{  margin: 5 }}>
                         e.type
                       </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      <Text style={{  margin: 5 }}>
                         3kg
                       </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
+                      <Text style={{  margin: 5 }}>
                         Germany
                       </Text>
                     </Container>
                   </HStack>
                   <Container style={{ paddingLeft: 50 }} fontWeight="400">
                     <Text>Departure Time:</Text>
-                    <Text>e.departTime</Text>
+                    <Text>15h:43min</Text>
                   </Container>
                 </Container>
                 <Divider my={2} />
