@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Alert,
@@ -41,15 +41,14 @@ import { initializeApp } from "firebase/app";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 //-----------------------
-
-export default function SignUp() {
+import { UserContext } from "../UserContext";
+export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
-  const [user, setUser] = useState("");
- 
+  const { setUser } = useContext(UserContext);
 
   //SignUp function
   const SignUpUser = () => {
@@ -57,7 +56,7 @@ export default function SignUp() {
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
       .then((Credential) => {
-        setUser(Credential.user.uid);
+        setUser("user");
         navigation.navigate("form");
       })
       .catch((err) => {

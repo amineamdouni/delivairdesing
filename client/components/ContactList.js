@@ -74,7 +74,7 @@ const forceUpdate = useCallback(() => updateState({}), []);
 
 useEffect(() => {
   forceUpdate();
-  console.log(user, "ContactList");
+ 
 }, [user]);
   const handleDelete = email => {
     setFriendsList(friendsList.filter(friend => friend.email !== email));

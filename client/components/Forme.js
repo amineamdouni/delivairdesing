@@ -46,7 +46,7 @@ const SignUpForm = () => {
 
   useEffect(() => {
     forceUpdate();
-    console.log(user, "forme");
+ 
   }, [user]);
   const [username, setUsername] = useState("");
   const [phone, setPhone] = useState("");
@@ -66,14 +66,13 @@ const SignUpForm = () => {
       quality: 1,
     });
 
-    console.log(result);
+
 
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
 
-  console.log(image);
 
   const uploadImage = async () => {
     setProgress(0);
@@ -123,7 +122,7 @@ const SignUpForm = () => {
 
   //   alert(result.uri);
   //   setImage(result);
-  //   console.log(result);
+  //
   // };
 
   const handleSubmit= () => {
@@ -133,7 +132,7 @@ const SignUpForm = () => {
      location:location,
     })
     .then((response) => {
-     console.log(response);
+     console.log(response.data);
     })
     .catch((error) => {
      console.log(error);

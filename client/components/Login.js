@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Alert,
@@ -46,16 +46,18 @@ import {
 } from "firebase/auth";
 
 const auth = getAuth();
-
+import { UserContext } from "../UserContext";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 export default function Login({ navigation }) {
+  const{setUser}=useContext(UserContext)
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
+        setUser('user')
         navigation.navigate("home");
         alert("welcome " + email);
       })
