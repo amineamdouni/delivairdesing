@@ -42,6 +42,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 //-----------------------
 import { UserContext } from "../UserContext";
+import axios from "axios";
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
@@ -54,14 +55,23 @@ export default function SignUp({ navigation }) {
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
     setDataInput([info]);
-    createUserWithEmailAndPassword(auth, Email, password)
-      .then((Credential) => {
-        setUser("user");
-        navigation.navigate("form");
-      })
-      .catch((err) => {
-        alert(err);
-      });
+    createUserWithEmailAndPassword(auth, Email, password).then(res=>{
+axios
+  .post("http://192.168.104.15:3000/api/users/register", {
+    email:Email,
+    password,
+    username,
+  })
+  .then((Credential) => {
+    setUser("user");
+    navigation.navigate("profile");
+  })
+  .catch((err) => {
+    alert(err);
+  });
+    }).catch(err => {console.log(err);})
+      
+      
   };
 
   return (

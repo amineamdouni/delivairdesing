@@ -47,6 +47,7 @@ import {
 
 const auth = getAuth();
 import { UserContext } from "../UserContext";
+import axios from "axios";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 export default function Login({ navigation }) {
@@ -55,15 +56,26 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        setUser('user')
-        navigation.navigate("home");
-        alert("welcome " + email);
-      })
-      .catch((err) => {
-        alert("Please check your credentials or you may not be signed in");
-      });
+    signInWithEmailAndPassword(auth, email, password).then(res=>{
+      console.log('firebase succ');
+ axios
+   .post("http://192.168.104.15:3000/api/users/login", {
+     email,
+     password,
+    
+   })
+   .then((res) => {
+    console.log('succ');
+     setUser("user");
+     navigation.navigate("profile");
+     alert("welcome " + email);
+   })
+   .catch((err) => {
+     alert("Please check your credentials or you may not be signed in");
+   });
+    })
+      
+     
   };
   const resetPassword = () => {
     if (email != null) {
