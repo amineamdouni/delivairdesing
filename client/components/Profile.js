@@ -34,7 +34,7 @@ export default function Profile({ navigation }) {
     signOut(auth)
       .then((res) => {
 
-        console.log(res);
+       
 
         alert("Signed out");
         navigation.navigate("login");

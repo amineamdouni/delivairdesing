@@ -41,7 +41,6 @@ export default function Chat({ navigation }) {
 
   useEffect(() => {
     forceUpdate();
-    console.log(user, "Chat");
   }, [user]);
   return (
     

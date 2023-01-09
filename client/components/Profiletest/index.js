@@ -22,14 +22,14 @@ import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
-  console.log(posts);
- const { user, connected } = useContext(UserContext);
+  
+ const { user, setUser } = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
  
  useEffect(() => {
   forceUpdate()
-   console.log(user, "profile");
+
  }, [user]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -52,7 +52,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        console.log(res);
+      setUser(null)
 navigation.navigate('login')
         alert("Signed out");
    
