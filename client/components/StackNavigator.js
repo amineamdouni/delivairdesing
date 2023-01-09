@@ -49,7 +49,6 @@ const Stacks = () => {
      <Stack.Screen name="form" component={Form} />
      <Stack.Screen name="profile" component={Profile} />
      <Stack.Screen name="otherprofile" component={OthersProfile} />
-
      <Stack.Screen name="addpost" component={AddPost} />
      <Stack.Screen name="chat" component={Chat} />
      <Stack.Screen name="messages" component={Messages} />
