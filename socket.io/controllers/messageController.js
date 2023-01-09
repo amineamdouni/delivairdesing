@@ -34,13 +34,12 @@ function getHumanFriendlyDelta(iso8601_date_string) {
   } else if (deltaHours < 6) {
     return deltaHours + " hours ago";
   } else {
-    return "";
+    return date.toDateString();
   }
 }
 
 module.exports.getMessages = async (req, res, next) => {
   try {
-    console.log("hi");
     const { from, to } = req.body;
 
     const messages = await Messages.find({
