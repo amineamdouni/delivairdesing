@@ -1,4 +1,5 @@
 
+
 import React, { useState, useContext, useEffect } from "react";
 import Text from "native-base";
 
@@ -16,12 +17,12 @@ import Main from "../src/screens/Main";
 import Form from "./Forme";
 
 import Chat from "./Chat";
-import Profile from "./Profile";
+
 import Track from "./Track";
 
 import Messages from "./Messages";
-import ProfileTest from "./Profiletest";
-import ProfileTest from "./OthersProfile";
+import Profile from "./Profiletest";
+import OthersProfile from "./OthersProfile";
 import Home from "./Home";
 
 const Stack = createNativeStackNavigator();
@@ -46,8 +47,8 @@ const Stacks = () => {
      <Stack.Screen name="signup" component={SignUp} />
      <Stack.Screen name="home" component={Main} />
      <Stack.Screen name="form" component={Form} />
-     <Stack.Screen name="profile" component={ProfileTest} />
-     <Stack.Screen name="otherprofile" component={ProfileTest} />
+     <Stack.Screen name="profile" component={Profile} />
+     <Stack.Screen name="otherprofile" component={OthersProfile} />
 
      <Stack.Screen name="addpost" component={AddPost} />
      <Stack.Screen name="chat" component={Chat} />
