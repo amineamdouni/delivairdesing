@@ -1,10 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
+import {  AirbnbRating } from 'react-native-ratings';
 import {
   StatusBar,
   ScrollView,
   SafeAreaView,
   View,
   StyleSheet,
+  
 } from "react-native";
 import {
   FlipInXDown,
@@ -15,7 +17,7 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
-import { Text, Box, Image, Center, HStack } from "native-base";
+import { Text, Box, Image, Center, HStack,Avatar } from "native-base";
 import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
@@ -129,7 +131,13 @@ navigation.navigate('login')
                 >
                   Med Aziz Selini
                 </S.LargeText>
+                <Box  left={5}>
+                <AirbnbRating /></Box>
 
+
+
+
+{/* add star rating here  */}
                 <Box marginRight={-50}>
                   <S.HeaderInfoText
                     style={{ fontSize: 17, fontWeight: "bold" }}
@@ -165,60 +173,26 @@ navigation.navigate('login')
                 </Box>
               </Center>
             </S.FlyInfoTwo>
+<S.FlyInfoFour>
+<SafeAreaView>
+  <Box borderRadius={6} bottom={9} height={90} left={3} width={"110%"} borderColor={"black"} borderWidth={1}> 
+ 
+  <ScrollView >
 
-            <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
-              <Center marginRight={-50}>
-                <S.HeaderInfoText
-                  style={{
-                    color: "black",
-                    fontSize: 30,
-                    fontWeight: "bold",
-                    marginBottom: 30,
-                  }}
-                >
-                  Contact List
-                </S.HeaderInfoText>
-                <Center>
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  >
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-                  </ScrollView>
-                </Center>
-              </Center>
-            </S.FlyInfoThree>
+  <HStack  space={7}>
+  <Avatar left={3} top={2} bg="cyan.500" size="xs" source={{
+      uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+    }}></Avatar><Text top={3}>: was very professional. </Text></HStack>
+      <HStack  space={7}>
+  <Avatar left={3} top={3} bg="cyan.500" size="xs" source={{
+      uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
+    }}></Avatar><Text maxWidth={"80%"} top={3}>: He carefully listened to our needs and helped us find exactly what we were looking for.</Text></HStack>
+    </ScrollView>
+  </Box></SafeAreaView>
+    
+  {/* Add review with scroll and inputs for add other revieiw */}
+</S.FlyInfoFour>
+            
             <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
               <Center marginRight={-50}>
                 <S.HeaderInfoText
@@ -291,5 +265,11 @@ const styles = StyleSheet.create({
     flex: 1,
     height: undefined,
     width: undefined,
+  },
+  imagerev: {
+    flex: 1,
+    borderradius: 25,
+    height: 10,
+    width: 10,
   },
 });
