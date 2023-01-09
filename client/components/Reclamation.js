@@ -30,8 +30,15 @@ const ReclamationForm = () => {
           console.log(`Name: ${values.name} Email: ${values.email} Reclamation: ${values.reclamation}`);
         }}
       >
+           {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
+          <View  style={styles.formFieldsContainer}>
+              <Image
+    source={{ uri: 'https://tse3.mm.bing.net/th?id=OIP.GBfJtHNV9InrMI8pV5OGYgHaHa&pid=Api&P=0' }} // URL or path to the image file
+    style={styles.logo}
+    
+  />
 
-        
+</View>)}
       </Formik>
     </View>
     </ImageBackground>
