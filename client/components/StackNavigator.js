@@ -35,17 +35,18 @@ const Stacks = () => {
   }, [user]);
 
 
-//   if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
+  if( !user){return (
+  <Stack.Navigator screenOptions={{ headerShown: false }}>
 
-// </Stack.Navigator>)}
-//  else if(user) {
-   return (
-     <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Screen name="login" component={Login} />
+    <Stack.Screen name="signup" component={SignUp} />
+
+</Stack.Navigator>)}
+ else if(user) {
+ return (
+   <Stack.Navigator screenOptions={{ headerShown: false }}>
 
      <Stack.Screen name="otherprofile" component={OthersProfile} />
-     
-         <Stack.Screen name="login" component={Login} />
-         <Stack.Screen name="signup" component={SignUp} />
 
      <Stack.Screen name="messages" component={Messages} />
 
@@ -71,6 +72,8 @@ const Stacks = () => {
      <Stack.Screen name="history" component={History} />
    </Stack.Navigator>
  );}
-//}
+}
 export default Stacks
+
+
 

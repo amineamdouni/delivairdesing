@@ -2,15 +2,13 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
   TextInput,
-  Button,
   StyleSheet,
   Text,
   ImageBackground,
   TouchableOpacity,
 } from "react-native";
-import {
-AntDesign
-} from "@expo/vector-icons";
+import { Button } from "native-base";
+import { AntDesign } from "@expo/vector-icons";
 import { Image, Center, Avatar, Box } from "native-base";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
@@ -38,24 +36,25 @@ const app = initializeApp(firebaseConfig);
 
 //------------firebase-----------
 import { UserContext } from "../UserContext";
-const SignUpForm = () => {
-
-  const { user, connected } = useContext(UserContext);
+const SignUpForm = ({ navigation }) => {
+  const { user, connected,setUser } = useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
-
+console.log(connected,'connectedd');
   useEffect(() => {
     forceUpdate();
- 
   }, [user]);
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
-  // const [image, setImage] = useState(null);
+  const [userName, setUsername] = useState("");
+  const [phoneNumber, setPhone] = useState("");
+  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
   const [progress, setProgress] = useState(0);
+
   //------------firebase upload picture---------
 
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  );
   const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
@@ -66,16 +65,14 @@ const SignUpForm = () => {
       quality: 1,
     });
 
-
-
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
 
-
   const uploadImage = async () => {
     setProgress(0);
+    setLoading(true);
     const blob = await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
       xhr.onload = function () {
@@ -102,12 +99,14 @@ const SignUpForm = () => {
         blob.close();
         return;
       },
+
       () => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
           setUploading(false);
           setProgress(100);
           console.log("Download URL: ", url);
           setImage(url);
+          setLoading(false);
           blob.close();
           return url;
         });
@@ -125,19 +124,31 @@ const SignUpForm = () => {
   //
   // };
 
-  const handleSubmit= () => {
-    axios.post('http://192.168.104.29:5000/users/add',{
-     userName:username,
-     phoneNumber:Number(phone),
-     location:location,
-    })
-    .then((response) => {
-     console.log(response.data);
-    })
-    .catch((error) => {
-     console.log(error);
-    })
-   };
+  const handleSubmit = () => {
+    axios
+      .post("http://192.168.104.13:5000/users", {
+        userName,
+        phoneNumber: Number(phoneNumber),
+        location,
+        image,
+        email:connected
+      })
+      .then((response) => {
+        console.log(response.data);
+        axios
+          .get(`http://192.168.104.13:5000/users/${response.data.email}`)
+          .then(res=>{
+
+            console.log(res.data.user_id);
+            setUser(res.data);
+            navigation.navigate("home");
+          });
+      })
+      .catch((error) => {
+        console.log("errr");
+        console.log(error);
+      });
+  };
 
   return (
     <ImageBackground
@@ -147,75 +158,105 @@ const SignUpForm = () => {
       style={styles.image}
     >
       <View style={styles.container}>
-        <Center   >
-         <TouchableOpacity onPress={pickImage}>{image ? (
-            
-            <Avatar 
-            bottom={100}
-            bg="lightBlue.400"
-              size={100}
-              borderRadius={100}
-              source={{ uri: image }}
-              alt="Alternate Text"
-            >
-            </Avatar>
-          ) : (
-            <Avatar
-            borderColor={"black"}
-            borderWidth ={1}
-            bottom={100}
-              size={100}
-              borderRadius={100}
-              source={{
-                uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
-              }}
-              alt="Alternate Text"
-            />
-          )}</TouchableOpacity> <ProgressBar
-          progress={progress}
-          height={7}
-          backgroundColor="#4a0072"
-        />
-        <View style={styles.activityIndicator}><AntDesign size={16} name="edit"></AntDesign></View>
+        <Center>
+          <TouchableOpacity onPress={pickImage}>
+            {image ? (
+              <Avatar
+                bottom={100}
+                bg="lightBlue.400"
+                size={100}
+                borderRadius={100}
+                source={{ uri: image }}
+                alt="Alternate Text"
+              ></Avatar>
+            ) : (
+              <Avatar
+                borderColor={"black"}
+                borderWidth={1}
+                bottom={100}
+                size={100}
+                borderRadius={100}
+                source={{
+                  uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
+                }}
+                alt="Alternate Text"
+              />
+            )}
+          </TouchableOpacity>
+          <ProgressBar
+            progress={progress}
+            height={7}
+            backgroundColor="#4a0072"
+          />
+          <View style={styles.activityIndicator}>
+            <AntDesign size={16} name="edit"></AntDesign>
+          </View>
         </Center>
-       
-        <Text style={styles.title2}>Welcome! let's create your profile</Text> 
+
+        <Text style={styles.title2}>Welcome! let's create your profile</Text>
         <Box right={1}>
-        <Text style={styles.title}>Username</Text>
-        <TextInput
-          placeholder="Username"
-          value={username}
-          onChangeText={(text) => setUsername(text)}
-          style={styles.input}
-        />
-        <Text style={styles.title}>Phone Number</Text>
-        <TextInput
-        keyboardType="number"
-          placeholder="Phone Number"
-          value={phone}
-          onChangeText={(text) => setPhone(text)}
-          style={styles.input}
-        />
-       
+          <Text style={styles.title}>Username</Text>
+          <TextInput
+            placeholder="Username"
+            value={userName}
+            onChangeText={(text) => setUsername(text)}
+            style={styles.input}
+          />
+          <Text style={styles.title}>Phone Number</Text>
+          <TextInput
+            keyboardType="number"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChangeText={(text) => setPhone(text)}
+            style={styles.input}
+          />
 
-        <View >
-        
-          
-        </View>
+          <View></View>
 
-        <Text style={styles.title}>Add your Location</Text>
-        <TextInput
-          placeholder="Location"
-          value={location}
-          onChangeText={(text) => setLocation(text)}
-          style={styles.input}
-        /></Box>
-      <Box top={20} >
-      <Button title="confirm" onPress={uploadImage} color={"#E7C7C8"} borderRadius={"1"} /></Box>
-      
+          <Text style={styles.title}>Add your Location</Text>
+          <TextInput
+            placeholder="Location"
+            value={location}
+            onChangeText={(text) => setLocation(text)}
+            style={styles.input}
+          />
+        </Box>
+        <Box top={20}>
+          <Button
+            isLoading={loading}
+            title="confirm"
+            onPress={handleSubmit}
+            backgroundColor={"#E7C7C8"}
+            isLoadingText="image uploading"
+            borderRadius={"1"}
+            _loading={{
+              bg: "#E7C7C8",
+              _text: {
+                color: "black",
+              },
+            }}
+          >
+            submit
+          </Button>
+          <Button
+            isLoading={loading}
+            title="upload"
+            onPress={uploadImage}
+            backgroundColor={"#E7C7C8"}
+            isLoadingText="image uploading"
+            borderRadius={"1"}
+            _loading={{
+              bg: "#E7C7C8",
+              _text: {
+                color: "black",
+              },
+            }}
+          >
+            upload
+          </Button>
+        </Box>
       </View>
-       </ImageBackground>
-       
+    </ImageBackground>
   );
 };
 
@@ -228,17 +269,17 @@ const styles = StyleSheet.create({
     backgroundSize: "cover",
   },
   title2: {
-    bottom:50,
+    bottom: 50,
     fontSize: 18,
     fontWeight: "bold",
-    color:"white"
+    color: "white",
   },
   title: {
     fontSize: 15,
     marginBottom: 20,
   },
   input: {
-    borderRadius:10,
+    borderRadius: 10,
     width: 350,
     height: 44,
     padding: 10,
@@ -247,25 +288,22 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   image: {
-    
     height: 1000,
     width: 420,
     marginBottom: 0,
   },
   button: {
-    top:300,
+    top: 300,
   },
   activityIndicator: {
-    backgroundColor: "#d8d8d8",  
+    backgroundColor: "#d8d8d8",
     height: 20,
     width: 20,
     borderRadius: 10,
-    bottom:141,
-    right:28,
-    borderColor:"black",
+    bottom: 141,
+    right: 28,
+    borderColor: "black",
     borderWidth: 1,
-
-    
   },
 });
 
