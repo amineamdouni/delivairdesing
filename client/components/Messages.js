@@ -8,52 +8,55 @@ import {
   Image,
   TextInput,
   FlatList,
+  Button,
 } from "react-native";
 import axios from "axios";
 import io from "socket.io-client";
 
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
+  const [newMsg, setNewMsg] = useState();
 
-  // const socket = io("http://192.168.1.9:3000/");
-  // socket.on("connect", () => {
-  //   //amine we can console log the connection here (socket.id)
-  // });
+  const socket = io("http://192.168.104.28:3000/");
+  socket.on("connect", () => {
+    console.log("hello from socket", socket.id);
+    //amine we can console log the connection here (socket.id)
+  });
 
-  // const handleSending = async () => {
-  //   console.log("clicked");
-  //   const msg = newMsg;
+  const handleSending = async () => {
+    console.log(newMsg);
 
-  //   socket.emit("send-msg", {
-  //     to: "63b54b3536c92210d680f473",
-  //     from: "63b5490436c92210d680f46d",
-  //     msg,
-  //   });
-  //   await axios
-  //     .post("http://192.168.1.9:3000/api/messages/addmsg/", {
-  //       to: "63b54b3536c92210d680f473",
-  //       from: "63b5490436c92210d680f46d",
-  //       msg,
-  //     })
-  //     .then((res) => console.log(res))
-  //     .catch((err) => console.log(err));
+    socket.emit("send-msg", {
+      to: "63b54b3536c92210d680f473",
+      from: "63b5490436c92210d680f46d",
+      newMsg,
+    });
+    await axios
+      .post("http://192.168.104.28:3000/api/messages/addmsg/", {
+        from: "63b5490436c92210d680f46d",
+        to: "63b54b3536c92210d680f473",
+        message: newMsg,
+      })
+      .then((res) => {
+        console.log(res);
+        console.log("success");
+      })
+      .catch((err) => console.log(err));
 
-  //   const msgs = [...messages];
-  //   msgs.push({ fromSelf: true, message: msg });
-  //   setMessages(msgs);
-  // };
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: newMsg["text"] });
+    setMessages(msgs);
+  };
 
   useEffect(() => {
     axios
-      .post("http://192.168.1.9:3000/api/messages/getmsg/", {
+      .post("http://192.168.104.28:3000/api/messages/getmsg/", {
         from: "63b5490436c92210d680f46d",
         to: "63b54b3536c92210d680f473",
       })
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err));
   }, []);
-
-  const [newMsg, setNewMsg] = useState();
 
   const renderDate = (date) => {
     return <Text style={styles.time}>{date}</Text>;
@@ -100,11 +103,12 @@ export default Messages = () => {
             style={styles.inputs}
             placeholder="Write a message..."
             underlineColorAndroid="transparent"
-            onChangeText={(msg) => setNewMsg({ msg })}
+            onChangeText={(text) => setNewMsg({ text })}
           />
         </View>
 
         <TouchableOpacity style={styles.btnSend}>
+          <Button onPress={handleSending} title="submit"></Button>
           <Image
             source={{
               uri: "https://img.icons8.com/small/75/ffffff/filled-sent.png",
