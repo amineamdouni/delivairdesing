@@ -44,6 +44,14 @@ const ReclamationForm = () => {
               value={values.name}
               placeholder="Name"
             />
+             <TextInput
+              style={styles.input}
+              onChangeText={handleChange('email')}
+              onBlur={handleBlur('email')}
+              value={values.email}
+              placeholder="Email"
+            />
+            {errors.email && touched.email && <Text style={styles.error}>{errors.email}</Text>}
 
 </View>)}
       </Formik>
