@@ -1,33 +1,34 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  Text,
-  Link,
-  Center,
-  Heading,
-  VStack,
-  Box,
-  Button,
-  Image,
-  Input,
-  Flex,
-  Divider,
-  Icon,
-  HStack,
-} from "native-base";
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-} from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import React from 'react';
+import { View, StyleSheet,Button,Text, ImageBackground,Image} from 'react-native';
+import { Formik } from 'formik';
+import { TextInput } from 'react-native-gesture-handler';
+import * as Yup from 'yup';
 
-export default function Reclamation({ navigation }) {
-  
- return (
-   <Center>
-     <Text>reclamation page</Text>
-   </Center>
- );
-}
+const ReclamationForm = () => {
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Name is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    reclamation: Yup.string().required('Reclamation is required'),
+  });}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  export default ReclamationForm;
