@@ -82,7 +82,7 @@ export default Messages = () => {
   return (
     <View style={styles.container}>
       <Box>
-        <Box backgroundColor={"#E7C7C8"}>
+        <Box backgroundColor={"#FFC8CE"}>
           <Box style={styles.Header}>
             <HStack>
               <Center>

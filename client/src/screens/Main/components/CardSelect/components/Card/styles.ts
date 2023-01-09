@@ -31,13 +31,15 @@ export const TopCardLogo = styled.Image`
 
 export const BottomCardView = styled.View`
   width: 100%;
-  height: 48px;
+  height: 88px;
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
 `;
 
-export const CardTextView = styled.View``;
+export const CardTextView = styled.View`
+
+`;
 
 export const CardNumber = styled.Text`
   color: white;
@@ -48,8 +50,9 @@ export const CardNumber = styled.Text`
 export const CardName = styled.Text`
   color: white;
   font-weight: bold;
-  font-size: 11px;
+  font-size: 18px;
   margin-top: 8px;
+  margin-left:20px;
 `;
 
 export const BottomCardLogo = styled.Image`
