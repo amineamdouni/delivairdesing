@@ -52,8 +52,21 @@ const ReclamationForm = () => {
               placeholder="Email"
             />
             {errors.email && touched.email && <Text style={styles.error}>{errors.email}</Text>}
-
-</View>)}
+            <TextInput
+              style={styles.input}
+              onChangeText={handleChange('reclamation')}
+              onBlur={handleBlur('reclamation')}
+              value={values.reclamation}
+              placeholder="Reclamation"
+              multiline={true}
+              numberOfLines={4}
+            />
+            {errors.reclamation && touched.reclamation && (
+              <Text style={styles.error}>{errors.reclamation}</Text>
+            )}
+            <Button title="Send Reclamation" onPress={handleSubmit}  color={"#E7C7C8"} />
+        </View>
+        )}
       </Formik>
     </View>
     </ImageBackground>
