@@ -10,6 +10,8 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import { Box, Center, Divider, Flex, HStack } from 'native-base';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const friends = [
   {
     name: 'Amine Amdouni',
@@ -79,13 +81,21 @@ useEffect(() => {
   };
 
   return (
+    <Box  >
+     
+    <Center backgroundColor={"#FFC8CE"} h={50}  ><HStack>
+        <TouchableOpacity><Text fontSize={20}>Contact list</Text></TouchableOpacity>
+        <Divider bg="emerald.500" thickness="2" mx="2" orientation="vertical" />
+        <Text fontSize={20}>Pending requests</Text>
+        </HStack>
+      </Center>
     <FlatList
       data={friendsList}
       renderItem={({ item }) => (
         <FriendItem {...item} onDelete={() => handleDelete(item.email)} />
       )}
       keyExtractor={item => item.email}
-    />
+    /></Box>
   );
 };
 
@@ -96,7 +106,7 @@ const styles = StyleSheet.create({
     margin: 20,
     borderRadius:30,
     padding: 20,
-    backgroundColor: 'rgba(180, 200, 205, 0.17)',
+    backgroundColor: 'white',
   },
   profileImage: {
     width: 50,
@@ -120,6 +130,11 @@ const styles = StyleSheet.create({
   friendCountry: {
     fontSize: 16,
   },
+  verticleLine: {
+    height: '100%',
+    width: 1,
+    backgroundColor: '#5FC8C0',
+  }
 });
 
 export default FriendsList;

@@ -1,4 +1,7 @@
-import React, { useState, useContext,useEffect } from "react";
+
+
+import React, { useState, useContext, useEffect } from "react";
+import Text from "native-base";
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { UserContext } from "../UserContext";
@@ -31,6 +34,7 @@ const Stacks = () => {
     console.log(user, "stack");
   }, [user]);
 
+
   // if( !user){return (<Stack.Navigator screenOptions={{ headerShown: false }}>
 
 
@@ -50,7 +54,17 @@ const Stacks = () => {
      <Stack.Screen name="chat" component={Chat} />
      <Stack.Screen name="messages" component={Messages} />
      <Stack.Screen name="reclamation" component={Reclamation} />
-     <Stack.Screen name="contact" component={Contact} />
+   <Stack.Screen
+        name="contact"
+        component={Contact}
+        options={{
+          headerShown: true,
+          title: "DelivAir",
+          headerTitleStyle: { fontWeight: "light" },
+          headerLeft: () => <Text>hzil</Text>,
+          headerStyle: { backgroundColor: "#FFC8CE" },
+        }}
+      />
      <Stack.Screen name="history" component={History} />
    </Stack.Navigator>
  );
