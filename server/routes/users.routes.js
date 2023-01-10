@@ -4,7 +4,8 @@ router.get("/", get);
 router.post('/',add)
 // router.put('/:id',verify)
 router.get("/:email", getOne);
-router.delete("/:id",deleteFriend)
+router.delete("/:id",deleteFriend)  
+
 router.put('/:id', updateFriend);
 
 module.exports = router;
