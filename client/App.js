@@ -25,36 +25,65 @@ export const theme = extendTheme({ config });
 export default function App() {
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
-  const [chatUser,setChatUser]=useState(null)
+  const [chatUser, setChatUser] = useState(null);
   const [oneUser, setOneUser] = useState(null);
   const [onePost, setOnePost] = useState(null);
   const [to, setTo] = useState(null);
+  const [contactList, setContactList] = useState([]);
+  const [contactArray, setcontactArray] = useState([]);
+  const [pendingList, setPendingList] = useState([]);
+  const [pendingArray, setPendingArray] = useState([]);
   const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
   //Checking if there is a user connected
- 
-  useEffect(() => {
-     onAuthStateChanged(auth, (user) => {
-       console.log("user connected is ", user.email);
-      
-       
-       if (initializing) {
-         setInitializing(false);
-       }
-       if (user === null) {
-         navigation.navigate("login");
-       }
-       
-     });
-  }, [connected]);
 
-console.log(user, "user");
-console.log(chatUser,'chat');
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("user connected is ", user.email);
+
+      if (initializing) {
+        setInitializing(false);
+      }
+      if (user === null) {
+        navigation.navigate("login");
+      }
+    });
+  }, [connected]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setcontactArray(user.contactList);
+  //     setPendingArray(user.pendingRequests);
+  //     for (let i = 0; i < user.contactList.length; i++) {
+  //       axios.get("").then((res) => {
+  //         if (!contactList) {
+  //           setContactList(res.data);
+  //         } else {
+  //           let oldContact = contactList;
+  //           setContactList(...oldContact, res.data);
+  //         }
+  //       });
+  //     }
+  //     for (let i = 0; i < user.contactList.length; i++) {
+  //       axios.get("").then((res) => {
+  //         if (!pendingList) {
+  //           setContactList(res.data);
+  //         } else {
+  //           let oldContact = contactList;
+  //           setContactList(...oldContact, res.data);
+  //         }
+  //       });
+  //     }
+  //   }
+  // }, [user]);
+
+  console.log(user, "user");
+  console.log(chatUser, "chat");
 
   return (
     <UserContext.Provider
       value={{
-        chatUser,setChatUser,
+        chatUser,
+        setChatUser,
         user,
         setUser,
         selected,

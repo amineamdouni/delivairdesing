@@ -37,10 +37,10 @@ const app = initializeApp(firebaseConfig);
 //------------firebase-----------
 import { UserContext } from "../UserContext";
 const SignUpForm = ({ navigation }) => {
-  const { user, connected,setUser } = useContext(UserContext);
+  const { user, connected, setUser } = useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
-console.log(connected,'connectedd');
+  console.log(connected, "connectedd");
   useEffect(() => {
     forceUpdate();
   }, [user]);
@@ -131,14 +131,13 @@ console.log(connected,'connectedd');
         phoneNumber: Number(phoneNumber),
         location,
         image,
-        email:connected
+        email: connected,
       })
       .then((response) => {
         console.log(response.data);
         axios
           .get(`http://192.168.104.13:5000/users/${response.data.email}`)
-          .then(res=>{
-
+          .then((res) => {
             console.log(res.data.user_id);
             setUser(res.data);
             navigation.navigate("home");
