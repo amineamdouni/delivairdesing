@@ -126,7 +126,7 @@ const SignUpForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://192.168.104.13:5000/users", {
+      .post("http://192.168.104.13:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -136,7 +136,7 @@ const SignUpForm = ({ navigation }) => {
       .then((response) => {
         console.log(response.data);
         axios
-          .get(`http://192.168.104.13:5000/users/${response.data.email}`)
+          .get(`http://192.168.104.13:5001/users/${response.data.email}`)
           .then((res) => {
             console.log(res.data.user_id);
             setUser(res.data);
