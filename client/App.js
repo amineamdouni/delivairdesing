@@ -21,8 +21,12 @@ const config = {
 // extend the theme
 import { amine } from "./host.js";
 const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
+
+import socketIO from "socket.io-client";
+
 export const theme = extendTheme({ config });
 export default function App() {
+  // const socket = socketIO.connect("http://192.168.104.23:3000");
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
   const [chatUser, setChatUser] = useState(null);
@@ -35,6 +39,7 @@ export default function App() {
   const [pendingArray, setPendingArray] = useState([]);
   const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
+  var [socket, setSocket] = useState("");
   //Checking if there is a user connected
 
   useEffect(() => {
@@ -78,6 +83,7 @@ export default function App() {
 
   console.log(user, "user");
   console.log(chatUser, "chat");
+  console.log(socket, "socket");
 
   return (
     <UserContext.Provider
@@ -96,6 +102,8 @@ export default function App() {
         setOnePost,
         to,
         setTo,
+        socket,
+        setSocket,
       }}
     >
       <NativeBaseProvider>

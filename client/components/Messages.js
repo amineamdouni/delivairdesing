@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Box, HStack, Center, Heading } from "native-base";
 import {
   StyleSheet,
@@ -9,34 +9,42 @@ import {
   TextInput,
   FlatList,
   Button,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { io } from "socket.io-client";
+import { UserContext } from "../UserContext";
 
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
+
   const [newMsg, setNewMsg] = useState();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
 
-  const socket = io("http://192.168.104.28:3000/");
-  socket.on("connection", () => {
-    console.log("hello from socket", socket.id);
-    //amine we can console log the connection here (socket.id)
-  });
+  const { chatUser, to } = useContext(UserContext);
+
+  const socket = io("http://192.168.104.23:3000/");
+  // socket.on("connection", () => {
+  //   console.log("hello from socket", socket.id);
+  //   //amine we can console log the connection here (socket.id)
+  // });
+
+  console.log("From ", chatUser._id);
+  console.log("to ", to);
 
   const handleSending = async () => {
     console.log(newMsg["text"]);
 
-    socket.emit("send-msg", {
-      from: "63b54b3536c92210d680f473",
-      to: "63b5490436c92210d680f46d",
+    socket.emit("message", {
+      to: to,
+      from: chatUser._id,
       message: newMsg["text"],
     });
     await axios
-      .post("http://192.168.104.28:3000/api/messages/addmsg/", {
-        from: "63b5490436c92210d680f46d",
-        to: "63b54b3536c92210d680f473",
+      .post("http://192.168.104.23:3000/api/messages/addmsg/", {
+        from: chatUser._id,
+        to: to,
         message: newMsg["text"],
       })
       .then((res) => {
@@ -51,9 +59,9 @@ export default Messages = () => {
 
   useEffect(() => {
     axios
-      .post("http://192.168.104.28:3000/api/messages/getmsg/", {
-        to: "63b5490436c92210d680f46d",
-        from: "63b54b3536c92210d680f473",
+      .post("http://192.168.104.23:3000/api/messages/getmsg/", {
+        from: chatUser._id,
+        to: to,
       })
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err));
@@ -64,20 +72,28 @@ export default Messages = () => {
   };
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
-      });
-    }
-  }, []);
+    socket.on("messageResponse", (data) => {
+      data.fromSelf = false;
+      console.log(data);
+      setMessages([...messages, { fromSelf: false, message: data["message"] }]);
+    });
+  }, [socket, messages]);
 
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
+  // useEffect(() => {
+  //   if (socket.current) {
+  //     socket.current.on("msg-recieve", (msg) => {
+  //       setArrivalMessage({ fromSelf: false, message: msg });
+  //     });
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  // useEffect(() => {
+  //   arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage]);
+
+  // useEffect(() => {
+  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
 
   return (
     <View style={styles.container}>
@@ -114,14 +130,19 @@ export default Messages = () => {
         }}
       />
       <View style={styles.footer}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Write a message..."
-            underlineColorAndroid="transparent"
-            onChangeText={(text) => setNewMsg({ text })}
-          />
-        </View>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
+        >
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Write a message..."
+              underlineColorAndroid="transparent"
+              onChangeText={(text) => setNewMsg({ text })}
+            />
+          </View>
+        </ScrollView>
 
         <TouchableOpacity style={styles.btnSend}>
           <Button onPress={handleSending} title="submit"></Button>
