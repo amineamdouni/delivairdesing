@@ -16,7 +16,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
 
-const PORT = 5000;
+const PORT = 5001;
 app.use("/users", users);
 app.use('/products',products)
 app.use('/posts',posts)
