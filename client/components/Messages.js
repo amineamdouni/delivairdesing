@@ -21,7 +21,6 @@ export default Messages = () => {
   const [newMsg, setNewMsg] = useState();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
-  console.log(messages, "messages");
 
   const { chatUser, to } = useContext(UserContext);
 
@@ -38,8 +37,8 @@ export default Messages = () => {
     console.log(newMsg["text"]);
 
     socket.emit("message", {
-      from: chatUser._id,
       to: to,
+      from: chatUser._id,
       message: newMsg["text"],
     });
     await axios
@@ -73,7 +72,11 @@ export default Messages = () => {
   };
 
   useEffect(() => {
-    socket.on("messageResponse", (data) => setMessages([...messages, data]));
+    socket.on("messageResponse", (data) => {
+      data.fromSelf = false;
+      console.log(data);
+      setMessages([...messages, { fromSelf: false, message: data["message"] }]);
+    });
   }, [socket, messages]);
 
   // useEffect(() => {
