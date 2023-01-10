@@ -51,7 +51,7 @@ import axios from "axios";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 export default function Login({ navigation }) {
-  const { setUser ,setChatUser} = useContext(UserContext);
+  const { setUser, setChatUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -64,7 +64,7 @@ export default function Login({ navigation }) {
           password,
         })
         .then((result) => {
-          console.log(result.data,'result email');
+          console.log(result.data, "result email");
           setChatUser(result.data.user);
           axios
             .get(`http://192.168.104.13:5000/users/${result.data.user.email}`)

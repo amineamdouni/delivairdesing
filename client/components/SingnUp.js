@@ -49,7 +49,7 @@ export default function SignUp({ navigation }) {
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
-  const { setUser, setConnected,setChatUser } = useContext(UserContext);
+  const { setUser, setConnected, setChatUser } = useContext(UserContext);
 
   //SignUp function
   const SignUpUser = () => {
@@ -64,11 +64,11 @@ export default function SignUp({ navigation }) {
             username,
           })
           .then((res) => {
-          console.log('mongo succ');
-          setConnected(res.data.user.email)
-          setChatUser(res.data.user)
-          setUser(res.data);
-              navigation.navigate("form");
+            console.log("mongo succ");
+            setConnected(res.data.user.email);
+            setChatUser(res.data.user);
+            setUser(res.data);
+            navigation.navigate("form");
           })
           .catch((err) => {
             alert(err);
