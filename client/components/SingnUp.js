@@ -65,9 +65,9 @@ export default function SignUp({ navigation }) {
           })
           .then((res) => {
             console.log("mongo succ");
-            setConnected(res.data.user.email);
+            console.log(res.data);
+            setConnected(res.data.user);
             setChatUser(res.data.user);
-            setUser(res.data);
             navigation.navigate("form");
           })
           .catch((err) => {
