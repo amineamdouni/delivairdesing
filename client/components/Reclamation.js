@@ -1,75 +1,27 @@
 import React from 'react';
-import { View, StyleSheet,Button,Text, ImageBackground,Image} from 'react-native';
-import { Formik } from 'formik';
+import { View, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
+import{Button,Text,Box,Image, Container,Center}from "native-base";
 import { TextInput } from 'react-native-gesture-handler';
-import * as Yup from 'yup';
+
 
 const ReclamationForm = () => {
-  const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Name is required'),
-    email: Yup.string().email('Invalid email').required('Email is required'),
-    reclamation: Yup.string().required('Reclamation is required'),
-  });
+  
 
   return (
-    <ImageBackground
-    source={{
-      uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
-    }}
-    style={styles.image}
-  >
-    <View style={styles.formContainer}>
-         <Text style={styles.title}>Reclamation !</Text>
-      
-      <Formik
-        initialValues={{ name: '', email: '', reclamation: '' }}
-        validationSchema={validationSchema}
-        onSubmit={values => {
-          // Send the reclamation here
-          console.log(`Name: ${values.name} Email: ${values.email} Reclamation: ${values.reclamation}`);
-        }}
-      >
-        {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => (
-          <View  style={styles.formFieldsContainer}>
-              <Image
-    source={{ uri: 'https://tse3.mm.bing.net/th?id=OIP.GBfJtHNV9InrMI8pV5OGYgHaHa&pid=Api&P=0' }} // URL or path to the image file
-    style={styles.logo}
+  <Box style={styles.image} backgroundColor={"#FFC8CE"}>
+   
+      <Image style={styles.logo} left={12}
+      top={100} source={{
+      uri: "https://cdn.discordapp.com/attachments/1055908199326294039/1057563889543421982/Minimal_World_Travel_Blog_Suitcase_Logo.png"
+    }} alt="Alternate Text" size="xl" />
+  
+    <Box>
+   <Text style={styles.textrec}>When something isn't working properly, the reports we receive on DelivAir help us to identify and fix the issues. A detailed report (e.g. with screenshot and description) helps us to find what is wrong. When you report issues as soon as they happen pressing in this link : </Text>
+   <TouchableOpacity>
+   <Text style={styles.textlink}>delivaireclamtion@gmail.com</Text></TouchableOpacity>
+   <Image style={styles.image2} source={{uri:"https://res.cloudinary.com/duqxezt6m/image/upload/v1673367250/Sans_titre-2_znvrkq.gif"}} ></Image>
+   </Box></Box>
     
-  />
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('name')}
-              onBlur={handleBlur('name')}
-              value={values.name}
-              placeholder="Name"
-            />
-            {errors.name && touched.name && <Text style={styles.error}>{errors.name}</Text>}
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('email')}
-              onBlur={handleBlur('email')}
-              value={values.email}
-              placeholder="Email"
-            />
-            {errors.email && touched.email && <Text style={styles.error}>{errors.email}</Text>}
-            <TextInput
-              style={styles.input}
-              onChangeText={handleChange('reclamation')}
-              onBlur={handleBlur('reclamation')}
-              value={values.reclamation}
-              placeholder="Reclamation"
-              multiline={true}
-              numberOfLines={4}
-            />
-            {errors.reclamation && touched.reclamation && (
-              <Text style={styles.error}>{errors.reclamation}</Text>
-            )}
-            <Button title="Send Reclamation" onPress={handleSubmit}  color={"#E7C7C8"} />
-          </View>
-        )}
-      </Formik>
-    </View>
-    </ImageBackground>
   );
 };
 
@@ -77,6 +29,23 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 20,
   },
+  textlink:{
+    left:90,
+    top:160,
+    color:"white",
+    fontWeight:"bold",
+  }
+  ,
+  textrec:{
+    fontWeight:"b",
+    color:"white",
+    width :320,
+    left:35,
+    top:120,
+    
+    
+  }
+  ,
   title: {
     fontSize: 24,
     fontWeight: 'bold',
@@ -90,6 +59,18 @@ const styles = StyleSheet.create({
     marginVertical: 250,
   },
   input: {
+    left:10,
+    width:330,
+    height:30,
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+    marginBottom: 10,
+  },
+  inputreclamation: {
+    left:10,
+    width:330,
+    height:30,
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
@@ -103,17 +84,25 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    
+  
     height: 1000,
-    width: 420,
-    marginBottom: 0,
+    width: 1920,
+    
+  },
+  image2: {
+  
+    height: 60,
+    width: 60,
+    top:110,
+    left:300,
+    
   },
   logo: {
-    width: 100,
-    height: 100,
-    alignSelf: 'center',
-    marginTop: -120,
-    borderRadius: 100,
+    width: 300,
+    height: 300,
+   
+   
+   
    
     
   }
