@@ -38,24 +38,20 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 
-io.on("connection", (socket) => {
-  global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
+io.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+
+  //sends the message to all the users on the server
+  socket.on('message', (data) => {
+    io.emit('messageResponse', data);
   });
 
-  socket.on("send-msg", (data) => {
-    // console.log(data);
-    // const sendUserSocket = onlineUsers.get(data.to);
-    // console.log("userSocket::===>", sendUserSocket);
-    // if (sendUserSocket) {
-    //  socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    // }
-     socket.to("63b54b3536c92210d680f473").emit("msg-recieve", data.msg);
-  });
-
-  socket.on("disconnect", () => {
-    socket.disconnect();
-    console.log("🔥: A user disconnected");
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
   });
 });
+
+// socket.on("disconnect", () => {
+//   socket.disconnect();
+//   console.log("🔥: A user disconnected");
+// });

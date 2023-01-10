@@ -49,9 +49,10 @@ const auth = getAuth();
 import { UserContext } from "../UserContext";
 import axios from "axios";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
+import socketIO from "socket.io-client";
 
 export default function Login({ navigation }) {
-  const { setUser, setChatUser } = useContext(UserContext);
+  const { setUser, setChatUser, setSocket } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -59,7 +60,7 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       console.log("firebase succ");
       axios
-        .post("http://192.168.104.13:3000/api/users/login", {
+        .post("http://192.168.104.23:3000/api/users/login", {
           email,
           password,
         })
@@ -67,10 +68,11 @@ export default function Login({ navigation }) {
           console.log(result.data, "result email");
           setChatUser(result.data.user);
           axios
-            .get(`http://192.168.104.13:5000/users/${result.data.user.email}`)
+            .get(`http://192.168.104.23:5000/users/${result.data.user.email}`)
             .then((res) => {
               console.log(res.data, "res.data");
               setUser(res.data);
+              setSocket(socketIO.connect("http://192.168.104.23:3000"));
               navigation.navigate("profile");
               alert("welcome " + email);
             });
