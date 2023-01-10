@@ -23,7 +23,7 @@ const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
   
- const { user, setUser } = useContext(UserContext);
+ const { user, setUser ,setConnected,setChatUser} = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
  
@@ -53,6 +53,9 @@ export default function FlyContent({ navigation, posts }) {
     signOut(auth)
       .then((res) => {
       setUser(null)
+      setChatUser(null)
+      setConnected(null)
+      
 navigation.navigate('login')
         alert("Signed out");
    

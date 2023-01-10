@@ -131,7 +131,7 @@ const SignUpForm = ({ navigation }) => {
         phoneNumber: Number(phoneNumber),
         location,
         image,
-        email: connected,
+        email: connected.email,
       })
       .then((response) => {
         console.log(response.data);
