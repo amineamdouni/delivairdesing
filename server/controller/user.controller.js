@@ -59,8 +59,21 @@ const verify = (req,res)=>{
     res.json(err)
   })
 }
+const deleteFriend = async (req, res) => {
+  try {
+    const result = await users.delete({
+      where: {
+        user_id: +req.params.id
+      },
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 
 
 
-module.exports = { get, add ,verify,getOne};
+
+module.exports = { get, add ,verify,getOne,deleteFriend};
