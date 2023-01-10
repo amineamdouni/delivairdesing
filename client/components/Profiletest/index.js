@@ -22,14 +22,14 @@ import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
-  console.log(posts);
- const { user, connected } = useContext(UserContext);
+  
+ const { user, setUser } = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
  
  useEffect(() => {
   forceUpdate()
-   console.log(user, "profile");
+
  }, [user]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -52,7 +52,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        console.log(res);
+      setUser(null)
 navigation.navigate('login')
         alert("Signed out");
    
@@ -69,22 +69,24 @@ navigation.navigate('login')
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text  color={"black"} fontSize={30} fontWeight={"light"}>
-              DelivAir
+            <Text  left={120} color={"white"} fontSize={30} fontWeight={"bold"}>
+             Profile
             </Text>
           </Center>
 
           <Box alignItems="center">
             <Menu
+
               w="130"
               trigger={(triggerProps) => {
                 return (
-                  <Pressable
+                  <Pressable right={4}
+                  
                     accessibilityLabel="More options menu"
                     {...triggerProps}
                   >
                     <ChevronDownIcon size={5} color="black" />
-                  </Pressable>
+                  </Pressable >
                 );
               }}
             >

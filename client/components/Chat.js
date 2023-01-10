@@ -41,11 +41,10 @@ export default function Chat({ navigation }) {
 
   useEffect(() => {
     forceUpdate();
-    console.log(user, "Chat");
   }, [user]);
   return (
     
-    <Box style={{ backgroundColor: "#EAC7CA" }}>
+    <Box style={{ backgroundColor: "#FFC8CE" }}>
       <Box style={styles.header}>
         <Heading fontSize="2xl" style={styles.heading}>
           Messages
@@ -216,7 +215,7 @@ const styles = StyleSheet.create({
     padding:15
   },
   header: {
-    backgroundColor: "#EAC7CA",
+    backgroundColor: "#FFC8CE",
     width: windowWidth,
     top: windowHeight - (windowHeight - 60),
     height: windowHeight - (windowHeight - 80),

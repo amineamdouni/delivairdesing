@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Alert,
@@ -46,22 +46,40 @@ import {
 } from "firebase/auth";
 
 const auth = getAuth();
-
+import { UserContext } from "../UserContext";
+import axios from "axios";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 export default function Login({ navigation }) {
+  const { setUser, setChatUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        navigation.navigate("home");
-        alert("welcome " + email);
-      })
-      .catch((err) => {
-        alert("Please check your credentials or you may not be signed in");
-      });
+    signInWithEmailAndPassword(auth, email, password).then((res) => {
+      console.log("firebase succ");
+      axios
+        .post("http://192.168.104.13:3000/api/users/login", {
+          email,
+          password,
+        })
+        .then((result) => {
+          console.log(result.data, "result email");
+          setChatUser(result.data.user);
+          axios
+            .get(`http://192.168.104.13:5000/users/${result.data.user.email}`)
+            .then((res) => {
+              console.log(res.data, "res.data");
+              setUser(res.data);
+              navigation.navigate("profile");
+              alert("welcome " + email);
+            });
+        })
+        .catch((err) => console.log(err))
+        .catch((err) => {
+          alert("Please check your credentials or you may not be signed in");
+        });
+    });
   };
   const resetPassword = () => {
     if (email != null) {

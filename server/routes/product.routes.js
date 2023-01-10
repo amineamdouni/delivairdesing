@@ -1,4 +1,12 @@
 var router = require("express").Router();
-const {} = require("../controller/product.controller");
+const {
+  getAll,
+  addProduct,
+  getbyShipper,
+} = require("../controller/product.controller");
+router.get("/", getAll);
+router.post("/", addProduct);
+router.get("/shipper/:id", getbyShipper);
+
 
 module.exports = router;

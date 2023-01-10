@@ -12,7 +12,7 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect("mongodb://127.0.0.1:27017/DelivChat", {
+  .connect("mongodb+srv://root:root@delivair.1zg97hn.mongodb.net/delivair", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

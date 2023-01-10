@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
   Alert,
@@ -41,27 +41,41 @@ import { initializeApp } from "firebase/app";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 //-----------------------
-
-export default function SignUp() {
+import { UserContext } from "../UserContext";
+import axios from "axios";
+export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
-  const [user, setUser] = useState("");
- 
+  const { setUser, setConnected, setChatUser } = useContext(UserContext);
 
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
-      .then((Credential) => {
-        setUser(Credential.user.uid);
-        navigation.navigate("form");
+      .then((res) => {
+        axios
+          .post("http://192.168.104.13:3000/api/users/register", {
+            email: Email,
+            password,
+            username,
+          })
+          .then((res) => {
+            console.log("mongo succ");
+            setConnected(res.data.user.email);
+            setChatUser(res.data.user);
+            setUser(res.data);
+            navigation.navigate("form");
+          })
+          .catch((err) => {
+            alert(err);
+          });
       })
       .catch((err) => {
-        alert(err);
+        console.log(err);
       });
   };
 
