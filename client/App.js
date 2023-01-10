@@ -26,7 +26,7 @@ import socketIO from "socket.io-client";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.104.23:3000");
+  // const socket = socketIO.connect("http://192.168.104.13:3000");
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
   const [chatUser, setChatUser] = useState(null);
