@@ -67,8 +67,8 @@ const FriendItem = ({ name, email, phone, country, profileImage, onDelete }) => 
 );
 
 const FriendsList = () => {
-  const [friendsList, setFriendsList] = useState(friends);
-const { user, connected } = useContext(UserContext);
+  const { user, connected,contactList } = useContext(UserContext);
+  const [friendsList, setFriendsList] = useState(contactList);
 const [, updateState] = useState();
 const forceUpdate = useCallback(() => updateState({}), []);
 

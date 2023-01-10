@@ -25,7 +25,7 @@ import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
-  console.log(posts);
+  
  const { user, connected } = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
@@ -55,7 +55,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        console.log(res);
+      
 navigation.navigate('login')
         alert("Signed out");
    

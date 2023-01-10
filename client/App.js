@@ -23,17 +23,18 @@ import { amine } from "./host.js";
 const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
 
 import socketIO from "socket.io-client";
+import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.104.13:3000");
+  // const socket = socketIO.connect("http://192.168.1.105:3000");
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
   const [chatUser, setChatUser] = useState(null);
   const [oneUser, setOneUser] = useState(null);
   const [onePost, setOnePost] = useState(null);
   const [to, setTo] = useState(null);
-  const [contactList, setContactList] = useState([]);
+  const [contactList, setContactList] = useState(null);
   const [contactArray, setcontactArray] = useState([]);
   const [pendingList, setPendingList] = useState([]);
   const [pendingArray, setPendingArray] = useState([]);
@@ -44,8 +45,6 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("user connected is ", user.email);
-
       if (initializing) {
         setInitializing(false);
       }
@@ -54,36 +53,51 @@ export default function App() {
       }
     });
   }, [connected]);
-  // useEffect(() => {
-  //   if (user) {
-  //     setcontactArray(user.contactList);
-  //     setPendingArray(user.pendingRequests);
-  //     for (let i = 0; i < user.contactList.length; i++) {
-  //       axios.get("").then((res) => {
-  //         if (!contactList) {
-  //           setContactList(res.data);
-  //         } else {
-  //           let oldContact = contactList;
-  //           setContactList(...oldContact, res.data);
-  //         }
-  //       });
-  //     }
-  //     for (let i = 0; i < user.contactList.length; i++) {
-  //       axios.get("").then((res) => {
-  //         if (!pendingList) {
-  //           setContactList(res.data);
-  //         } else {
-  //           let oldContact = contactList;
-  //           setContactList(...oldContact, res.data);
-  //         }
-  //       });
-  //     }
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      setcontactArray(user.contactList);
 
+      setPendingArray(user.pendingRequests);
+    }
+  }, [user]);
+  useEffect(() => {
+    if (user) {
+      let contact = [];
+
+      for (let i = 0; i < user.contactList.length; i++) {
+        axios
+          .get(`http://192.168.1.105:5001/users/${user.contactList[i]}`)
+          .then((res) => {
+            contact.push(res.data);
+          });
+      }
+      let pending = [];
+
+      for (let i = 0; i < user.pendingRequests.length; i++) {
+        axios
+          .get(`http://192.168.1.105:5001/users/${user.pendingRequests[i]}`)
+          .then((res) => {
+            pending.push(res.data);
+          });
+      }
+      setTimeout(() => {
+        setPendingList(pending);
+        setContactList(contact);
+      }, 1);
+    }
+  }, [contactArray, pendingArray]);
+  useEffect(() => {
+    console.log(
+      contactList,
+      "================================>==================================>",
+      pendingList
+    );
+  }, [contactList]);
   console.log(user, "user");
   console.log(chatUser, "chat");
-  console.log(socket, "socket");
+  console.log(connected, "connected");
+
+  console.log(contactArray, "contact array");
 
   return (
     <UserContext.Provider
@@ -104,6 +118,7 @@ export default function App() {
         setTo,
         socket,
         setSocket,
+        contactList,
       }}
     >
       <NativeBaseProvider>

@@ -1,4 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
+const { default: axios } = require("axios");
 
 const prisma = new PrismaClient();
 const users = prisma.users;
@@ -18,6 +19,20 @@ const getOne = async (req, res) => {
     users.findFirst({where:{email:req.params.email}}).then((result) => {
       res.json(result);
     });
+  } catch (err) {
+    res.json(err);
+  }
+};
+const getfriends = async (req, res) => {
+  const friends=req.body.contactList
+  
+  try {
+    var i=0
+   while (i<friends.length) {
+  
+   }
+   
+ 
   } catch (err) {
     res.json(err);
   }
@@ -48,7 +63,7 @@ const add = async (req,res)=>{
 }
 
 const verify = (req,res)=>{
-   console.log(typeof req.body.verified);
+   
    users.update({
       where: {user_id:+req.params.id },
       data: { verified:req.body.verified},
@@ -71,6 +86,7 @@ const deleteFriend = async (req, res) => {
     res.json(err);
   }
 };
+
 const updateFriend = async (req, res) => {
   try {
     const result = await users.update({
@@ -91,4 +107,4 @@ const updateFriend = async (req, res) => {
 
 
 
-module.exports = { get, add ,verify,getOne,deleteFriend,updateFriend};
+module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend};
