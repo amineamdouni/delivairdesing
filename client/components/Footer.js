@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   Image,
+  Badge,
   Center,
 } from "native-base";
 import { UserContext } from "../UserContext";
@@ -55,14 +56,31 @@ export default function Footer({ navigation, focused }) {
         <ActionSheet
           navigation={navigation}
           styles={style.middleButton}
-          icon={<MaterialCommunityIcons name="plus" color={"white"} size={25} />}
+          icon={
+            <MaterialCommunityIcons name="plus" color={"white"} size={25} />
+          }
         />
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("track");
             setSelected("radar");
           }}
         >
+          {<Badge // bg="red.400"
+            colorScheme="danger"
+            rounded="full"
+            mb={-4}
+            mr={-4}
+            zIndex={1}
+            variant="solid"
+            alignSelf="flex-end"
+            _text={{
+              fontSize: 8,
+            }}
+          >
+            2
+          </Badge>}
           <MaterialCommunityIcons
             name="radar"
             color={selected === "radar" ? "#5FC8C0" : "#5FC8C0"}
