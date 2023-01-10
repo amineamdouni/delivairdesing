@@ -53,7 +53,8 @@
     "react-native-web": "~0.18.7",
     "socket.io-client": "^4.5.4",
     "styled-components": "^5.3.5",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-splash-screen": "~0.17.5"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",
