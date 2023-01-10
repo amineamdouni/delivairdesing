@@ -71,9 +71,24 @@ const deleteFriend = async (req, res) => {
     res.json(err);
   }
 };
+const updateFriend = async (req, res) => {
+  try {
+    const result = await users.update({
+      where: { user_id: +req.params.id },
+      data: {
+      
+        contactList: req.body.contactList
+        
+      },
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 
 
 
 
-module.exports = { get, add ,verify,getOne,deleteFriend};
+module.exports = { get, add ,verify,getOne,deleteFriend,updateFriend};
