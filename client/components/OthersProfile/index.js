@@ -6,7 +6,7 @@ import {
   ScrollView,
   SafeAreaView,
   View,
-  StyleSheet,
+  StyleSheet,TouchableOpacity
   
 } from "react-native";
 import {
@@ -18,22 +18,69 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
-import { Text, Box, Image, Center, HStack,Avatar } from "native-base";
+import { Text, Box, Image, Center, HStack,Avatar, Button } from "native-base";
 import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
-  
- const { user, connected } = useContext(UserContext);
+  const [rating,setRating]=useState(0)
+ const { user, connected,oneUser,setOneUser } = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
- 
+ const [userStatus,setUserStatus]=useState(null)
  useEffect(() => {
   forceUpdate()
-   console.log(user, "profile");
- }, [user]);
+  
+  if(oneUser){
+   if (
+     
+     oneUser.pendingRequests.includes(user.email)
+   ) {
+     setUserStatus("waiting");
+   } else if (
+     user.contactList.includes(oneUser.email) 
+   ) {
+     setUserStatus("friend");
+   } else if(
+     user.pendingRequests.includes(oneUser.email)
+
+   ){
+setUserStatus('pending')
+   }
+   
+   else{
+     setUserStatus("unknown");
+   }
+ setRating(
+   oneUser.ratings.reduce(
+     (accumulateur, valeurCourante) => Number(accumulateur) + Number(valeurCourante)
+   ,0)/oneUser.ratings.length
+ );
+ };
+ 
+   console.log(oneUser, "profile");
+ }, [oneUser]);
+ const userStat=()=>{
+  if (userStatus==='waiting') {
+    return (
+      <>
+        
+        <Button >remove request</Button>
+      </>
+    );  } 
+    else if (userStatus==='pending') {
+    return(
+<Button>accepet</Button>
+    )
+  } else if (userStatus==='unknown') {
+    return(
+<Button>add</Button>
+    )
+  }
+ }
+ console.log(rating);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -64,7 +111,7 @@ navigation.navigate('login')
         alert(error);
       });
   }
-
+if (oneUser) {
   return (
     <S.Container>
       <StatusBar barStyle="light-content" />
@@ -72,7 +119,7 @@ navigation.navigate('login')
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text  color={"black"} fontSize={30} fontWeight={"light"}>
+            <Text color={"black"} fontSize={30} fontWeight={"light"}>
               DelivAir
             </Text>
           </Center>
@@ -113,7 +160,10 @@ navigation.navigate('login')
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
         <S.FlyInfoContent intensity={70}>
-          <ScrollView>
+          <ScrollView
+            nestedScrollEnabled={true}
+            contentContainerStyle={{ flexGrow: 1 }}
+          >
             <Center alignItems="center">
               <Image
                 size={150}
@@ -130,23 +180,20 @@ navigation.navigate('login')
                 <S.LargeText
                   style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                 >
-                  Med Aziz Selini
+                  {oneUser.userName}
                 </S.LargeText>
-                
-             <Rating />
+                {userStat()}
+                <Rating starRating={rating} />
+                <Text>(rating{oneUser && oneUser.ratings.length})</Text>
 
-
-
-
-{/* add star rating here  */}
+                {/* add star rating here  */}
                 <Box marginRight={-50}>
                   <S.HeaderInfoText
                     style={{ fontSize: 17, fontWeight: "bold" }}
                   >
                     Phone Number :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {" "}
-                      + 216 52 224 782
+                      {oneUser.phoneNumber}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -157,7 +204,7 @@ navigation.navigate('login')
                     Email :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
                       {" "}
-                      medaziz@gmail.com
+                      {oneUser.email}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -168,83 +215,61 @@ navigation.navigate('login')
                     Location :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
                       {" "}
-                      Boumhal El bassattine
+                      {oneUser.location}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
               </Center>
             </S.FlyInfoTwo>
-<S.FlyInfoFour>
-<SafeAreaView>
-  <Box borderRadius={6} bottom={9} height={90} left={3} width={"110%"} borderColor={"black"} borderWidth={1}> 
- 
-  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  >
-
-  <HStack  space={7}>
-  <Avatar left={3} top={2} bg="cyan.500" size="xs" source={{
-      uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-    }}></Avatar><Text top={3}>: was very professional. </Text></HStack>
-      <HStack  space={7}>
-  <Avatar left={3} top={3} bg="cyan.500" size="xs" source={{
-      uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-    }}></Avatar><Text maxWidth={"50%"} top={3}>: He carefully listened to our needs and helped us find exactly what we were looking for.</Text></HStack>
-    </ScrollView>
-  </Box></SafeAreaView>
-    
-  {/* Add review with scroll and inputs for add other revieiw */}
-</S.FlyInfoFour>
-            
-            <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
-              <Center marginRight={-50}>
-                <S.HeaderInfoText
-                  style={{ fontSize: 30, fontWeight: "bold", marginBottom: 30 }}
+            <S.FlyInfoFour>
+              <SafeAreaView>
+                <Box
+                  borderRadius={6}
+                  bottom={9}
+                  height={90}
+                  left={3}
+                  width={"110%"}
+                  borderColor={"black"}
+                  borderWidth={1}
                 >
-                  Contact List
-                </S.HeaderInfoText>
-                <Center>
                   <ScrollView
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                   >
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
+                    <HStack space={7}>
+                      <Avatar
+                        left={3}
+                        top={2}
+                        bg="cyan.500"
+                        size="xs"
                         source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
+                          uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
                         }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
+                      ></Avatar>
+                      <Text top={3}>: was very professional. </Text>
+                    </HStack>
+                    <HStack space={7}>
+                      <Avatar
+                        left={3}
+                        top={3}
+                        bg="cyan.500"
+                        size="xs"
                         source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
+                          uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
                         }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
+                      ></Avatar>
+                      <Text maxWidth={"50%"} top={3}>
+                        : He carefully listened to our needs and helped us find
+                        exactly what we were looking for.
+                      </Text>
+                    </HStack>
                   </ScrollView>
-                </Center>
-              </Center>
-            </S.FlyInfoThree>
+                </Box>
+              </SafeAreaView>
+
+              {/* Add review with scroll and inputs for add other revieiw */}
+            </S.FlyInfoFour>
+
           </ScrollView>
           {/* <S.TicketInfo></S.TicketInfo> */}
         </S.FlyInfoContent>
@@ -252,6 +277,10 @@ navigation.navigate('login')
       <Footer navigation={navigation} />
     </S.Container>
   );
+} else {
+  return (<Text size={50}> hi err</Text>)
+}
+ 
 }
 const styles = StyleSheet.create({
   text: {

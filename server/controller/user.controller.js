@@ -91,11 +91,7 @@ const updateFriend = async (req, res) => {
   try {
     const result = await users.update({
       where: { user_id: +req.params.id },
-      data: {
-      
-        contactList: req.body.contactList
-        
-      },
+      data: req.body,
     });
     res.json(result);
   } catch (err) {
