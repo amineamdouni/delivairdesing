@@ -32,6 +32,7 @@ const Stacks = () => {
     console.log(user, "stack");
   }, [user]);
 
+
   if (!user) {
     return (
       <Stack.Navigator
@@ -39,6 +40,7 @@ const Stacks = () => {
           headerShown: false,
           gestureEnabled: true,
           gestureDirection: "horizontal",
+
         }}
       >
         <Stack.Screen name="login" component={Login} />
