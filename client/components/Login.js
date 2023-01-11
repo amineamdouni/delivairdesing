@@ -65,15 +65,13 @@ export default function Login({ navigation }) {
           password,
         })
         .then((result) => {
-          console.log(result.data, "result email");
           setChatUser(result.data.user);
           axios
             .get(`http://192.168.104.13:5001/users/${result.data.user.email}`)
             .then((res) => {
-              console.log(res.data, "res.data");
               setUser(res.data);
               setSocket(socketIO.connect("http://192.168.104.13:3000"));
-              navigation.navigate("profile");
+              navigation.navigate("chat");
               alert("welcome " + email);
             });
         })

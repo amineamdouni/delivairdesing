@@ -23,10 +23,10 @@ const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 export default function FlyContent({ navigation, posts }) {
   
- const { user, setUser ,setConnected,setChatUser} = useContext(UserContext);
+ const { user, setUser ,setConnected,setChatUser,contactList} = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
- 
+
  useEffect(() => {
   forceUpdate()
 

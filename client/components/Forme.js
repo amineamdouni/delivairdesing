@@ -134,17 +134,14 @@ const SignUpForm = ({ navigation }) => {
         email: connected.email,
       })
       .then((response) => {
-        console.log(response.data);
         axios
           .get(`http://192.168.104.13:5001/users/${response.data.email}`)
           .then((res) => {
-            console.log(res.data.user_id);
             setUser(res.data);
             navigation.navigate("home");
           });
       })
       .catch((error) => {
-        console.log("errr");
         console.log(error);
       });
   };

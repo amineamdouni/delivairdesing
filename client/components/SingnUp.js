@@ -65,7 +65,7 @@ export default function SignUp({ navigation }) {
           })
           .then((res) => {
             console.log("mongo succ");
-            console.log(res.data);
+
             setConnected(res.data.user);
             setChatUser(res.data.user);
             navigation.navigate("form");

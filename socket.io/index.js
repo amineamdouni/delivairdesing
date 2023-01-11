@@ -10,7 +10,7 @@ const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
-
+mongoose.set("strictQuery", false);
 mongoose
   .connect("mongodb+srv://root:root@delivair.1zg97hn.mongodb.net/delivair", {
     useNewUrlParser: true,
@@ -25,7 +25,7 @@ mongoose
 
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", usersRoutes);
-// const server = app.listen(3000, () => console.log(`Server started on 3000`));
+
 server.listen(3000, () => console.log("server started on 3000"));
 
 const io = socket(server, {

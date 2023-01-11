@@ -19,7 +19,7 @@ import CardSelect from "../CardSelect - Copy";
 import Swiper from "react-native-swiper";
 
 export default function FlyContent({navigation,posts}) {
-  console.log(posts);
+ 
   
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);

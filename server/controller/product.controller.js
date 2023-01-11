@@ -38,7 +38,7 @@ const getbyShipper = async (req, res) => {
   }
 };
 
-const addProduct = async (req, res) => {console.log(req.body);
+const addProduct = async (req, res) => {
   try {
     products
       .create({
