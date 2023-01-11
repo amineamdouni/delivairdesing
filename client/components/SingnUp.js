@@ -58,7 +58,7 @@ export default function SignUp({ navigation }) {
     createUserWithEmailAndPassword(auth, Email, password)
       .then((res) => {
         axios
-          .post("http://192.168.104.13:3000/api/users/register", {
+          .post("http://192.168.104.18:3000/api/users/register", {
             email: Email,
             password,
             username,
