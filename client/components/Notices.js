@@ -39,7 +39,7 @@ const images = [
   ],
 ];
 
-const Notices = () => {
+const Notices = ({ navigation }) => {
   const scrollX = useRef(new Animated.Value(0)).current;
 
   const { width: windowWidth } = useWindowDimensions();
@@ -86,7 +86,11 @@ const Notices = () => {
                   <Text style={styles.infoText}>{image[0]}</Text>
                   <Box style={styles.petitText}>
                     {imageIndex === 4 ? (
-                      <Button variant="subtle" style={styles.Begin}>
+                      <Button
+                        variant="subtle"
+                        style={styles.Begin}
+                        onPress={() => navigation.navigate("form")}
+                      >
                         Begin!
                       </Button>
                     ) : (

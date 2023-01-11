@@ -60,17 +60,17 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       console.log("firebase succ");
       axios
-        .post("http://192.168.104.18:3000/api/users/login", {
+        .post("http://192.168.1.41:3000/api/users/login", {
           email,
           password,
         })
         .then((result) => {
           setChatUser(result.data.user);
           axios
-            .get(`http://192.168.104.18:5001/users/${result.data.user.email}`)
+            .get(`http://192.168.1.41:5001/users/${result.data.user.email}`)
             .then((res) => {
               setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.104.18:3000"));
+              setSocket(socketIO.connect("http://192.168.1.41:3000"));
               navigation.navigate("chat");
               alert("welcome " + email);
             });
