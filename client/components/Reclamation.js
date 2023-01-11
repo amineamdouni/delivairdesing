@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, ImageBackground, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, ImageBackground, TouchableOpacity,Linking} from 'react-native';
 import{Button,Text,Box,Image, Container,Center}from "native-base";
 import { TextInput } from 'react-native-gesture-handler';
 
 
 const ReclamationForm = () => {
-  
+  const handleEmailPress = () => {
+    const to = 'delivaireclamtion@gmail.com';
+    const subject = 'Reclamation';
+    const body = 'Write here the body of the email';
+    Linking.openURL(`mailto:${to}?subject=${subject}&body=${body}`);
+  }
 
   return (
   <Box style={styles.image} backgroundColor={"#FFC8CE"}>
@@ -17,7 +22,7 @@ const ReclamationForm = () => {
   
     <Box>
    <Text style={styles.textrec}>When something isn't working properly, the reports we receive on DelivAir help us to identify and fix the issues. A detailed report (e.g. with screenshot and description) helps us to find what is wrong. When you report issues as soon as they happen pressing in this link : </Text>
-   <TouchableOpacity>
+   <TouchableOpacity  onPress={handleEmailPress}>
    <Text style={styles.textlink}>delivaireclamtion@gmail.com</Text></TouchableOpacity>
    <Image style={styles.image2} source={{uri:"https://res.cloudinary.com/duqxezt6m/image/upload/v1673367250/Sans_titre-2_znvrkq.gif"}} ></Image>
    </Box></Box>
