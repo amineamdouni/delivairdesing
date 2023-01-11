@@ -54,6 +54,7 @@ export const FlyInfo = styled(Animated.View)`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   margin-top: -125px;
+  
 `;
 export const FlyInfoTwo = styled(Animated.View)`
   width: 85%;
