@@ -58,7 +58,7 @@ export default function SignUp({ navigation }) {
     createUserWithEmailAndPassword(auth, Email, password)
       .then((res) => {
         axios
-          .post("http://192.168.1.41:3000/api/users/register", {
+          .post("http://192.168.1.42:3000/api/users/register", {
             email: Email,
             password,
             username,
@@ -107,14 +107,16 @@ export default function SignUp({ navigation }) {
             />
           </Center>
           <VStack space={1} alignItems="center">
-            <Heading color={"white"} size="lg">SignUp</Heading>
+            <Heading color={"white"} size="lg">
+              SignUp
+            </Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
               <Text style={style.Text}>Username</Text>
               <Box alignItems="center">
                 <Input
-                 variant="rounded"
-                 
-                 borderColor={"white"}placeholderTextColor={"white"}
+                  variant="rounded"
+                  borderColor={"white"}
+                  placeholderTextColor={"white"}
                   mx="4"
                   placeholder="Username"
                   style={style.Input}
@@ -126,9 +128,8 @@ export default function SignUp({ navigation }) {
               <Text style={style.Text}>Email</Text>
               <Box alignItems="center">
                 <Input
-               variant="rounded"
-                 
-               borderColor={"white"}
+                  variant="rounded"
+                  borderColor={"white"}
                   mx="4"
                   type="email"
                   placeholderTextColor={"white"}
@@ -142,9 +143,8 @@ export default function SignUp({ navigation }) {
               <Text style={style.Text}>Password</Text>
               <Box alignItems="center">
                 <Input
-                variant="rounded"
-                 
-                borderColor={"white"}
+                  variant="rounded"
+                  borderColor={"white"}
                   type="password"
                   mx="4"
                   placeholderTextColor={"white"}
@@ -158,9 +158,8 @@ export default function SignUp({ navigation }) {
               <Text style={style.Text}>Confirm Password</Text>
               <Box alignItems="center">
                 <Input
-                variant="rounded"
-                 
-                borderColor={"white"}
+                  variant="rounded"
+                  borderColor={"white"}
                   type="password"
                   mx="4"
                   placeholderTextColor={"white"}
@@ -215,7 +214,7 @@ export default function SignUp({ navigation }) {
               <Box>
                 <Center>
                   <Button
-                  variant="subtle"
+                    variant="subtle"
                     className="LoginButton"
                     onPress={SignUpUser}
                     style={style.LoginButton}
@@ -250,13 +249,13 @@ const style = StyleSheet.create({
     width: "70%",
   },
   Text: {
-    fontWeight:"bold",
+    fontWeight: "bold",
     padding: 5,
     textAlign: "left",
     alignSelf: "flex-start",
     textAlign: "right",
     paddingLeft: 20,
-    color:"white",
+    color: "white",
   },
   forgot: {
     marginTop: 10,

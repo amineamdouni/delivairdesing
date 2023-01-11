@@ -49,11 +49,11 @@ const auth = getAuth();
 import { UserContext } from "../UserContext";
 import axios from "axios";
 
-const imgBackground = { uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif" };
-
+const imgBackground = {
+  uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
+};
 
 import socketIO from "socket.io-client";
-
 
 export default function Login({ navigation }) {
   const { setUser, setChatUser, setSocket } = useContext(UserContext);
@@ -64,18 +64,18 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       console.log("firebase succ");
       axios
-        .post("http://192.168.1.41:3000/api/users/login", {
+        .post("http://192.168.1.42:3000/api/users/login", {
           email,
           password,
         })
         .then((result) => {
           setChatUser(result.data.user);
           axios
-            .get(`http://192.168.1.41:5001/users/${result.data.user.email}`)
+            .get(`http://192.168.1.42:5001/users/${result.data.user.email}`)
             .then((res) => {
               setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.1.41:3000"));
-              navigation.navigate("chat");
+              setSocket(socketIO.connect("http://192.168.1.42:3000"));
+              navigation.navigate("home");
               alert("welcome " + email);
             });
         })
@@ -127,14 +127,16 @@ export default function Login({ navigation }) {
             />
           </Center>
           <VStack space={10} alignItems="center">
-            <Heading color={"white"} size="lg">Login</Heading>
+            <Heading color={"white"} size="lg">
+              Login
+            </Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
               <Text style={style.Text}>Email</Text>
 
               <Input
-              variant="rounded"
-              borderColor={"white"}
-              placeholderTextColor={"white"}
+                variant="rounded"
+                borderColor={"white"}
+                placeholderTextColor={"white"}
                 mx="4"
                 placeholder="Email"
                 style={style.Input}
@@ -145,8 +147,8 @@ export default function Login({ navigation }) {
               <Text style={style.Text}>Password</Text>
 
               <Input
-              variant="rounded"
-              borderColor={"white"}
+                variant="rounded"
+                borderColor={"white"}
                 type="password"
                 mx="4"
                 placeholder="Password"
@@ -163,7 +165,7 @@ export default function Login({ navigation }) {
                       navigation.navigate("signup");
                     }}
                   >
-                    <Text color="white" underline fontSize={"15px"} >
+                    <Text color="white" underline fontSize={"15px"}>
                       Register Now
                     </Text>
                   </Link>
@@ -176,14 +178,16 @@ export default function Login({ navigation }) {
                   }}
                   onPress={() => resetPassword()}
                 >
-                  <Text fontSize={"15px"} color={"white"} >Forget Password ?</Text>
+                  <Text fontSize={"15px"} color={"white"}>
+                    Forget Password ?
+                  </Text>
                 </TouchableOpacity>
               </HStack>
 
               <Box w={160}>
                 <HStack space={10} justifyContent="center" style={style.forgot}>
                   <Divider my={2} />
-                  <Text color={"white"} >OR</Text>
+                  <Text color={"white"}>OR</Text>
                   <Divider my={2} />
                 </HStack>
                 <Flex
@@ -223,8 +227,7 @@ export default function Login({ navigation }) {
               <Box>
                 <Center>
                   <Button
-                   variant="subtle"
-                   
+                    variant="subtle"
                     className="LoginButton"
                     onPress={() => {
                       // navigation.navigate('tabs')
@@ -256,18 +259,15 @@ const style = StyleSheet.create({
   },
   Input: {
     backgroundColor: "rgba(0,0,0,0.1)",
-    
   },
   LoginButton: {
-    
     marginTop: "20%",
     borderRadius: 5,
     width: "70%",
-    
   },
   Text: {
-    fontWeight:"bold",
-    color:"white",
+    fontWeight: "bold",
+    color: "white",
     padding: 5,
     textAlign: "left",
     alignSelf: "flex-start",
