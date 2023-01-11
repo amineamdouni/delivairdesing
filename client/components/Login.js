@@ -136,9 +136,10 @@ export default function Login({ navigation }) {
               borderColor={"white"}
               placeholderTextColor={"white"}
                 mx="4"
+                size="l"
                 placeholder="Email"
                 style={style.Input}
-                size="l"
+                
                 onChangeText={(text) => setEmail(text)}
               />
 
