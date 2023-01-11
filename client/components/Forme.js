@@ -1,7 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
-  
   StyleSheet,
   Text,
   ImageBackground,
@@ -9,7 +8,7 @@ import {
 } from "react-native";
 import { Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { Image,Input, Center, Avatar, Box } from "native-base";
+import { Image, Input, Center, Avatar, Box } from "native-base";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
@@ -126,7 +125,7 @@ const SignUpForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://192.168.1.41:5001/users", {
+      .post("http://192.168.1.42:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -135,7 +134,7 @@ const SignUpForm = ({ navigation }) => {
       })
       .then((response) => {
         axios
-          .get(`http://192.168.1.41:5001/users/${response.data.email}`)
+          .get(`http://192.168.1.42:5001/users/${response.data.email}`)
           .then((res) => {
             setUser(res.data);
             navigation.navigate("home");
@@ -193,8 +192,8 @@ const SignUpForm = ({ navigation }) => {
         <Box right={1}>
           <Text style={styles.title}>Username</Text>
           <Input
-          variant="rounded"
-          borderColor={"white"}
+            variant="rounded"
+            borderColor={"white"}
             placeholder="Username"
             value={userName}
             onChangeText={(text) => setUsername(text)}
@@ -202,8 +201,8 @@ const SignUpForm = ({ navigation }) => {
           />
           <Text style={styles.title}>Phone Number</Text>
           <Input
-          variant="rounded"
-          borderColor={"white"}
+            variant="rounded"
+            borderColor={"white"}
             keyboardType="number"
             placeholder="Phone Number"
             value={phoneNumber}
@@ -215,8 +214,8 @@ const SignUpForm = ({ navigation }) => {
 
           <Text style={styles.title}>Add your Location</Text>
           <Input
-          variant="rounded"
-          borderColor={"white"}
+            variant="rounded"
+            borderColor={"white"}
             placeholder="Location"
             value={location}
             onChangeText={(text) => setLocation(text)}
@@ -281,7 +280,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    
     width: 350,
     height: 44,
     padding: 10,
