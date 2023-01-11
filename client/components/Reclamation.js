@@ -21,6 +21,7 @@ const ReclamationForm = () => {
    <Text style={styles.textlink}>delivaireclamtion@gmail.com</Text></TouchableOpacity>
    <Image style={styles.image2} source={{uri:"https://res.cloudinary.com/duqxezt6m/image/upload/v1673367250/Sans_titre-2_znvrkq.gif"}} ></Image>
    </Box></Box>
+   
     
   );
 };
