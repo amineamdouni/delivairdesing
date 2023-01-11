@@ -63,12 +63,12 @@ const FriendItem = ({ name, email, phone, country, profileImage, onDelete }) => 
       <Text style={styles.friendCountry}><MaterialCommunityIcons name="home-map-marker" size={14} color="black" ></MaterialCommunityIcons> : {country}</Text>
     </View>
     <AntDesign name="deleteuser"  color={"#e7c7c8"}  size={19}onPress={onDelete} ></AntDesign>
-  </View>
+  </View>       
 );
 
 const FriendsList = () => {
-  const [friendsList, setFriendsList] = useState(friends);
-const { user, connected } = useContext(UserContext);
+  const { user, connected,contactList } = useContext(UserContext);
+  const [friendsList, setFriendsList] = useState(contactList);
 const [, updateState] = useState();
 const forceUpdate = useCallback(() => updateState({}), []);
 

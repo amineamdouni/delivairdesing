@@ -38,7 +38,7 @@ const getbyShipper = async (req, res) => {
   }
 };
 
-const addProduct = async (req, res) => {console.log(req.body);
+const addProduct = async (req, res) => {
   try {
     products
       .create({
@@ -52,6 +52,22 @@ const addProduct = async (req, res) => {console.log(req.body);
         },
       })
       .then((result) => res.json(result));
+  } catch (err) {
+    res.json(err);
+  }
+};
+updateProduct = async (req, res) => {
+  try {
+    products({
+      where: {
+        AND: [{ shipper_id:req.body.shipper_id }, { receiver_id: req.body.receiver_id }],
+      },
+      data: {
+        status: req.body.status,
+      },
+    }).then((result) => {
+      res.json(result);
+    });
   } catch (err) {
     res.json(err);
   }

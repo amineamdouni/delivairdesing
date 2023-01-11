@@ -58,17 +58,17 @@ export default function SignUp({ navigation }) {
     createUserWithEmailAndPassword(auth, Email, password)
       .then((res) => {
         axios
-          .post("http://192.168.104.13:3000/api/users/register", {
+          .post("http://192.168.1.41:3000/api/users/register", {
             email: Email,
             password,
             username,
           })
           .then((res) => {
             console.log("mongo succ");
-            setConnected(res.data.user.email);
+
+            setConnected(res.data.user);
             setChatUser(res.data.user);
-            setUser(res.data);
-            navigation.navigate("form");
+            navigation.navigate("notices");
           })
           .catch((err) => {
             alert(err);
