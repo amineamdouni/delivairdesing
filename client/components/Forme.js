@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
-  TextInput,
+  
   StyleSheet,
   Text,
   ImageBackground,
@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { Image, Center, Avatar, Box } from "native-base";
+import { Image,Input, Center, Avatar, Box } from "native-base";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
@@ -152,7 +152,7 @@ const SignUpForm = ({ navigation }) => {
   return (
     <ImageBackground
       source={{
-        uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
+        uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
       }}
       style={styles.image}
     >
@@ -195,14 +195,18 @@ const SignUpForm = ({ navigation }) => {
         <Text style={styles.title2}>Welcome! let's create your profile</Text>
         <Box right={1}>
           <Text style={styles.title}>Username</Text>
-          <TextInput
+          <Input
+          variant="rounded"
+          borderColor={"white"}
             placeholder="Username"
             value={userName}
             onChangeText={(text) => setUsername(text)}
             style={styles.input}
           />
           <Text style={styles.title}>Phone Number</Text>
-          <TextInput
+          <Input
+          variant="rounded"
+          borderColor={"white"}
             keyboardType="number"
             placeholder="Phone Number"
             value={phoneNumber}
@@ -213,7 +217,9 @@ const SignUpForm = ({ navigation }) => {
           <View></View>
 
           <Text style={styles.title}>Add your Location</Text>
-          <TextInput
+          <Input
+          variant="rounded"
+          borderColor={"white"}
             placeholder="Location"
             value={location}
             onChangeText={(text) => setLocation(text)}
@@ -278,12 +284,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    borderRadius: 10,
+    
     width: 350,
     height: 44,
     padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
     marginBottom: 10,
   },
   image: {
