@@ -192,8 +192,13 @@ const SignUpForm = ({ navigation }) => {
         <Box right={1}>
           <Text style={styles.title}>Username</Text>
           <Input
-            variant="rounded"
-            borderColor={"white"}
+
+        variant="rounded"
+        borderColor={"white"}
+        placeholderTextColor={"white"}
+          mx="-5"
+          size="l"
+
             placeholder="Username"
             value={userName}
             onChangeText={(text) => setUsername(text)}
@@ -201,8 +206,13 @@ const SignUpForm = ({ navigation }) => {
           />
           <Text style={styles.title}>Phone Number</Text>
           <Input
-            variant="rounded"
-            borderColor={"white"}
+
+          variant="rounded"
+          borderColor={"white"}
+          placeholderTextColor={"white"}
+            mx="-5"
+            size="l"
+
             keyboardType="number"
             placeholder="Phone Number"
             value={phoneNumber}
@@ -214,8 +224,13 @@ const SignUpForm = ({ navigation }) => {
 
           <Text style={styles.title}>Add your Location</Text>
           <Input
-            variant="rounded"
-            borderColor={"white"}
+
+          variant="rounded"
+          borderColor={"white"}
+          placeholderTextColor={"white"}
+            mx="-5"
+            size="l"
+
             placeholder="Location"
             value={location}
             onChangeText={(text) => setLocation(text)}
@@ -224,36 +239,29 @@ const SignUpForm = ({ navigation }) => {
         </Box>
         <Box top={20}>
           <Button
+          variant="subtle"
             isLoading={loading}
             title="confirm"
             onPress={handleSubmit}
-            backgroundColor={"#E7C7C8"}
-            isLoadingText="image uploading"
-            borderRadius={"1"}
-            _loading={{
-              bg: "#E7C7C8",
-              _text: {
-                color: "black",
-              },
-            }}
+           
+            
+            
+           
           >
-            submit
+            Submit
           </Button>
           <Button
+          style={styles.buttonupload}
+          variant="subtle"
             isLoading={loading}
             title="upload"
             onPress={uploadImage}
-            backgroundColor={"#E7C7C8"}
-            isLoadingText="image uploading"
-            borderRadius={"1"}
-            _loading={{
-              bg: "#E7C7C8",
-              _text: {
-                color: "black",
-              },
-            }}
+            
+            
+            
+            
           >
-            upload
+            Upload
           </Button>
         </Box>
       </View>
@@ -276,14 +284,18 @@ const styles = StyleSheet.create({
     color: "white",
   },
   title: {
+    color:"white",
+    fontWeight:"bold",
     fontSize: 15,
-    marginBottom: 20,
+    padding:10,
+    right:20,
   },
   input: {
-    width: 350,
-    height: 44,
-    padding: 10,
-    marginBottom: 10,
+
+    backgroundColor: "rgba(0,0,0,0.1)",
+    
+   
+
   },
   image: {
     height: 1000,
@@ -293,14 +305,17 @@ const styles = StyleSheet.create({
   button: {
     top: 300,
   },
+  buttonupload: {
+    bottom:490,
+  },
   activityIndicator: {
     backgroundColor: "#d8d8d8",
     height: 20,
     width: 20,
     borderRadius: 10,
-    bottom: 141,
-    right: 28,
-    borderColor: "black",
+    bottom: 130,
+    right: 43,
+    borderColor: "white",
     borderWidth: 1,
   },
 });
