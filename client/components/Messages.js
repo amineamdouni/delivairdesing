@@ -25,6 +25,7 @@ export default Messages = () => {
   const { chatUser, to,user } = useContext(UserContext);
 
   const socket = io("http://192.168.104.2:3000/");
+
   // socket.on("connection", () => {
   //   console.log("hello from socket", socket.id);
   //   //amine we can console log the connection here (socket.id)
@@ -42,7 +43,9 @@ export default Messages = () => {
       message: newMsg["text"],
     });
     await axios
+
       .post("http://192.168.104.2:3000/api/messages/addmsg/", {
+
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -59,7 +62,9 @@ export default Messages = () => {
 
   useEffect(() => {
     axios
+
       .post("http://192.168.104.2:3000/api/messages/getmsg/", {
+
         from: chatUser._id,
         to: to,
       })

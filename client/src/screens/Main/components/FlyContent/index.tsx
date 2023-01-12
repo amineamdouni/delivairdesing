@@ -18,8 +18,38 @@ import AllPosts from "../../../../../components/AllPosts";
 import CardSelect from "../CardSelect - Copy";
 import Swiper from "react-native-swiper";
 
-export default function FlyContent({navigation,posts}) {
- 
+export default function FlyContent({navigation,posts,to,from}) {
+ const relativeDate=(param)=>{
+   var olddate = new Date(param);
+   var oldseconds = olddate.getTime() / 1000; //1440516958
+   const date = new Date();
+   const timestamp = date.getTime();
+   const seconds = Math.floor(timestamp / 1000);
+   const difference = seconds - oldseconds;
+   let output = ``;
+   if (difference < 60) {
+     // Less than a minute has passed:
+     output = `${difference} seconds ago`;
+   } else if (difference < 3600) {
+     // Less than an hour has passed:
+     output = `${Math.floor(difference / 60)} minutes ago`;
+   } else if (difference < 86400) {
+     // Less than a day has passed:
+     output = `${Math.floor(difference / 3600)} hours ago`;
+   } else if (difference < 2620800) {
+     // Less than a month has passed:
+     output = `${Math.floor(difference / 86400)} days ago`;
+   } else if (difference < 31449600) {
+     // Less than a year has passed:
+     output = `${Math.floor(difference / 2620800)} months ago`;
+   } else {
+     // More than a year has passed:
+     output = `${Math.floor(difference / 31449600)} years ago`;
+   }return output
+ }
+  const convertTime = (pa) => {
+    return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+  };
   
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -52,81 +82,50 @@ export default function FlyContent({navigation,posts}) {
         <S.FlyInfoContent intensity={70}>
           <S.TextRowContent>
             <S.TextContent>
-              <S.LargeText>LAS</S.LargeText>
+              <S.LargeText>{from}</S.LargeText>
             </S.TextContent>
             <S.HourContent>
               <Entypo name="chevron-right" size={30} color="white" />
             </S.HourContent>
             <S.TextContent alingment="right">
-              <S.LargeText>NYC</S.LargeText>
+              <S.LargeText>{to}</S.LargeText>
             </S.TextContent>
           </S.TextRowContent>
           <S.TicketInfo></S.TicketInfo>
           <Box style={{ zIndex: 10002, height: 200, width: 300 }}>
             <Swiper showsPagination={false}>
-              <Box width={300} style={style.graybox}>
-                <Container margin={3}>
-                  <HStack space={2}>
-                    <VStack>
-                    <Center style={style.left}>
-                      <Avatar
-                        source={{
-                          uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                        }}
-                      />
-                    </Center>
-                    <Center backgroundColor="#EBC8CB" borderRadius="5">
-                      <Text>3kg</Text>
-                    </Center>
-                    </VStack>
-                    <Center>
-                    </Center>
+              {posts.map((e, i) => (
+                <Box width={300} style={style.graybox}>
+                  <Container margin={3}>
+                    <HStack space={2}>
                       <VStack>
-                    <Container style={style.Middle}>
-                      <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text color={'grey'} >2 Days ago </Text>
-                      <Text>📍Ariana,Tunis</Text>
-                    </Container>
-                  <Container marginTop="3" fontWeight="400">
-                    <Text>Departure Time:</Text>
-                    <Text>15h:43min</Text>
-                  </Container>
-                  </VStack>
-                  </HStack>
-                </Container>
-             </Box>
-
-             <Box width={300} style={style.graybox}>
-                <Container margin={3}>
-                  <HStack space={2}>
-                    <VStack>
-                    <Center style={style.left}>
-                      <Avatar
-                        source={{
-                          uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                        }}
-                      />
-                    </Center>
-                    <Center backgroundColor="#EBC8CB" borderRadius="5">
-                      <Text>3kg</Text>
-                    </Center>
-                    </VStack>
-                    <Center>
-                    </Center>
+                        <Center style={style.left}>
+                          <Avatar
+                            source={{
+                              uri: e.acceptedItems[0],
+                            }}
+                          />
+                        </Center>
+                        <Center backgroundColor="#EBC8CB" borderRadius="5">
+                          <Text>{e.weight}kg</Text>
+                        </Center>
+                      </VStack>
+                      <Center></Center>
                       <VStack>
-                    <Container style={style.Middle}>
-                      <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text color={'grey'} >2 Days ago </Text>
-                      <Text>📍Ariana,Tunis</Text>
-                    </Container>
-                  <Container marginTop="3" fontWeight="400">
-                    <Text>Departure Time:</Text>
-                    <Text>15h:43min</Text>
+                        <Container style={style.Middle}>
+                          <Heading size="sm">{e.content}</Heading>
+                          <Text color={"grey"}>{relativeDate(e.postTime)}</Text>
+                          <Text>{e.departCountry}</Text>
+                        </Container>
+                        <Container marginTop="3" fontWeight="400">
+                          <Text>Departure Time:</Text>
+                          <Text>{convertTime(e.departTime)}</Text>
+                        </Container>
+                      </VStack>
+                    </HStack>
                   </Container>
-                  </VStack>
-                  </HStack>
-                </Container>
-             </Box>
+                </Box>
+              ))}
             </Swiper>
           </Box>
         </S.FlyInfoContent>

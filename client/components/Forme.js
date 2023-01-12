@@ -125,7 +125,9 @@ const SignUpForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     axios
+
       .post("http://192.168.104.2:5001/users", {
+
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -134,7 +136,9 @@ const SignUpForm = ({ navigation }) => {
       })
       .then((response) => {
         axios
+
           .get(`http://192.168.104.2:5001/users/${response.data.email}`)
+
           .then((res) => {
             setUser(res.data);
             navigation.navigate("home");

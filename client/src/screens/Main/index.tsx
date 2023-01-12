@@ -50,7 +50,7 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      filterPosts(from, to);
+      // filterPosts(from, to);
     } else {
       setShowCardSelect(true);
     }
@@ -65,7 +65,7 @@ export default function Main({ navigation }: any) {
   };
   useEffect(() => {
     axios
-      .get("")
+      .get("http://192.168.104.19:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -167,11 +167,11 @@ export default function Main({ navigation }: any) {
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
               <Text fontSize={18} style={{ paddingBottom: 100 }}>
-              Please enter destination {" "}
+                Please enter destination{" "}
               </Text>
               <A.HStack>
-                <Text color={"black"}top={3}>
-                  <FontAwesome5  size={20} name="plane-departure" />
+                <Text color={"black"} top={3}>
+                  <FontAwesome5 size={20} name="plane-departure" />
                 </Text>
 
                 <Input
@@ -180,16 +180,16 @@ export default function Main({ navigation }: any) {
                   mx="3"
                   placeholder="From"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
-                                />
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
+                />
               </A.HStack>
               <A.Divider my="6" />
               <A.HStack>
                 <Text color={"black"} top={3}>
-                  <FontAwesome5  size={20}  name="plane-arrival"  />
+                  <FontAwesome5 size={20} name="plane-arrival" />
                 </Text>
 
                 <Input
@@ -198,24 +198,29 @@ export default function Main({ navigation }: any) {
                   mx="3"
                   placeholder="To"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
                 />
               </A.HStack>
             </A.Center>
           </S.InfoContent>
         )}
         {!confirm && (
-          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
         {showFlyInfo && (
           <>
-            <FlyContent posts={posts} navigation={navigation} />
-            <Box style={{zIndex:10000,right:195,bottom:40}}>
+            <FlyContent
+              posts={posts}
+              from={from}
+              to={to}
+              navigation={navigation}
+            />
+            <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>
