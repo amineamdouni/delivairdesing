@@ -18,7 +18,18 @@ import AllPosts from "../../../../../components/AllPosts";
 import CardSelect from "../CardSelect - Copy";
 import Swiper from "react-native-swiper";
 
-export default function FlyContent({navigation,posts,to,from}) {
+export default function FlyContent({navigation,posts,to,from,setPosts}) {
+ 
+  const search=(from,to)=> {
+    let searchedData = posts.filter((e):any =>
+      e.departCountry.toLowerCase().includes(from.toLowerCase())
+    );
+    setPosts(searchedData)
+    console.log(searchedData,"search");
+    
+  console.log(posts,'ppppppppppppp');
+   
+  }
  const relativeDate=(param)=>{
    var olddate = new Date(param);
    var oldseconds = olddate.getTime() / 1000; //1440516958

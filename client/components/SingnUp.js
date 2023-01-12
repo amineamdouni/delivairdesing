@@ -59,7 +59,7 @@ export default function SignUp({ navigation }) {
       .then((res) => {
         axios
 
-          .post("http://192.168.104.2:3000/api/users/register", {
+          .post("http://192.168.103.16:3000/api/users/register", {
 
             email: Email,
             password,
