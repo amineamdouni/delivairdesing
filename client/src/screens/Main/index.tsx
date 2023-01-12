@@ -8,7 +8,7 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5,AntDesign } from "@expo/vector-icons";
 import { Text, Container, Box, Input } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
@@ -24,6 +24,7 @@ import StatusContent from "./components/StatusContent";
 import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const date = new Date();
 export default function Main({ navigation }: any) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,7 @@ export default function Main({ navigation }: any) {
   const [selectedDate, setSelectedDate] = useState(
     date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
   );
+  
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);
   const airplaneShadowY = useSharedValue(0);
@@ -50,11 +52,12 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      // filterPosts(from, to);
+      search(from, to);
     } else {
       setShowCardSelect(true);
     }
   };
+
   const filterPosts = (departure, arrival) => {
     let filtered = posts.filter(
       (e): any => e.departCountry == departure && e.arriveCountry == arrival
@@ -65,7 +68,7 @@ export default function Main({ navigation }: any) {
   };
   useEffect(() => {
     axios
-      .get("http://192.168.104.19:5001/posts")
+      .get("http://192.168.103.16:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -129,18 +132,22 @@ export default function Main({ navigation }: any) {
         {!confirm && (
           <S.FlyInfo exiting={FlipOutXUp.duration(600)}>
             <S.Content>
-              <S.LargeText>DelivAir</S.LargeText>
+            <S.LargeText>DelivAir  <TouchableOpacity style={{left:160,bottom:3}} onPress={()=>{
+              console.log('hi');
+              
+              navigation.navigate('allposts')}}><AntDesign name="doubleright" size={25}  color={"white"}/></TouchableOpacity></S.LargeText>
+            
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>From</S.SmallText>
-                  <S.LargeText>{from}</S.LargeText>
+                  <S.HourContent>{from}</S.HourContent>
                 </S.TextContent>
-                <S.HourContent>
+                <A.Center style={{position:"absolute",left:150}}>
                   <Entypo name="chevron-right" size={30} color="white" />
-                </S.HourContent>
+                </A.Center>
                 <S.TextContent alingment="right">
                   <S.SmallText>To</S.SmallText>
-                  <S.LargeText>{to}</S.LargeText>
+                  <S.HourContent>{to}</S.HourContent>
                 </S.TextContent>
               </S.TextRowContent>
             </S.Content>
@@ -175,6 +182,7 @@ export default function Main({ navigation }: any) {
                 </Text>
 
                 <Input
+                maxLength={8}
                   onChangeText={(text) => setFrom(text)}
                   size="l"
                   mx="3"
@@ -193,6 +201,7 @@ export default function Main({ navigation }: any) {
                 </Text>
 
                 <Input
+                maxLength={8}
                   onChangeText={(text) => setTo(text)}
                   size="l"
                   mx="3"
@@ -218,7 +227,7 @@ export default function Main({ navigation }: any) {
               posts={posts}
               from={from}
               to={to}
-              navigation={navigation}
+              navigation={navigation} setPosts={setPosts}
             />
             <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
               <Footer navigation={navigation} />

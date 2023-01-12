@@ -169,7 +169,7 @@ if (oneUser) {
                 size={150}
                 borderRadius={100}
                 source={{
-                  uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059132781097140294/B5D7F24B-388D-4038-8644-F999ACD00FAE.jpg",
+                  uri: oneUser.image,
                 }}
                 alt="Alternate Text"
               />

@@ -65,7 +65,7 @@ export default function Login({ navigation }) {
       console.log("firebase succ");
       axios
 
-        .post("http://192.168.104.2:3000/api/users/login", {
+        .post("http://192.168.103.16:3000/api/users/login", {
 
           email,
           password,
@@ -74,11 +74,11 @@ export default function Login({ navigation }) {
           setChatUser(result.data.user);
           axios
 
-            .get(`http://192.168.104.2:5001/users/${result.data.user.email}`)
+            .get(`http://192.168.103.16:5001/users/${result.data.user.email}`)
             .then((res) => {
               setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.104.2:3000"));
-              navigation.navigate("chat");
+              setSocket(socketIO.connect("http://192.168.103.16:3000"));
+              navigation.navigate("home");
 
               alert("welcome " + email);
             });
