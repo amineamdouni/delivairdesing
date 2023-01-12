@@ -9,7 +9,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading } from "native-base";
+import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading,VStack } from "native-base";
 
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
@@ -64,9 +64,10 @@ export default function FlyContent({navigation,posts}) {
           <S.TicketInfo></S.TicketInfo>
           <Box style={{ zIndex: 10002, height: 200, width: 300 }}>
             <Swiper showsPagination={false}>
-              <Box width={300}>
-                <Container>
+              <Box width={300} style={style.graybox}>
+                <Container margin={3}>
                   <HStack space={2}>
+                    <VStack>
                     <Center style={style.left}>
                       <Avatar
                         source={{
@@ -74,33 +75,31 @@ export default function FlyContent({navigation,posts}) {
                         }}
                       />
                     </Center>
+                    <Center backgroundColor="#EBC8CB" borderRadius="5">
+                      <Text>3kg</Text>
+                    </Center>
+                    </VStack>
+                    <Center>
+                    </Center>
+                      <VStack>
                     <Container style={style.Middle}>
                       <Heading size="sm">Med Amine Amdouni</Heading>
                       <Text color={'grey'} >2 Days ago </Text>
                       <Text>📍Ariana,Tunis</Text>
                     </Container>
-                    <Container>
-                      <Text style={{  margin: 5 }}>
-                        e.type
-                      </Text>
-                      <Text style={{  margin: 5 }}>
-                        3kg
-                      </Text>
-                      <Text style={{  margin: 5 }}>
-                        Germany
-                      </Text>
-                    </Container>
-                  </HStack>
-                  <Container style={{ paddingLeft: 50 }} fontWeight="400">
+                  <Container marginTop="3" fontWeight="400">
                     <Text>Departure Time:</Text>
                     <Text>15h:43min</Text>
                   </Container>
+                  </VStack>
+                  </HStack>
                 </Container>
-                <Divider my={2} />
-              </Box>
-              <Box style={{width:300}}>
-                <Container>
+             </Box>
+
+             <Box width={300} style={style.graybox}>
+                <Container margin={3}>
                   <HStack space={2}>
+                    <VStack>
                     <Center style={style.left}>
                       <Avatar
                         source={{
@@ -108,30 +107,26 @@ export default function FlyContent({navigation,posts}) {
                         }}
                       />
                     </Center>
+                    <Center backgroundColor="#EBC8CB" borderRadius="5">
+                      <Text>3kg</Text>
+                    </Center>
+                    </VStack>
+                    <Center>
+                    </Center>
+                      <VStack>
                     <Container style={style.Middle}>
                       <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text>e.postTime</Text>
+                      <Text color={'grey'} >2 Days ago </Text>
                       <Text>📍Ariana,Tunis</Text>
                     </Container>
-                    <Container>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        e.type
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        3kg
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        Germany
-                      </Text>
-                    </Container>
-                  </HStack>
-                  <Container style={{ paddingLeft: 50 }} fontWeight="400">
+                  <Container marginTop="3" fontWeight="400">
                     <Text>Departure Time:</Text>
-                    <Text>e.departTime</Text>
+                    <Text>15h:43min</Text>
                   </Container>
+                  </VStack>
+                  </HStack>
                 </Container>
-                <Divider my={2} />
-              </Box>
+             </Box>
             </Swiper>
           </Box>
         </S.FlyInfoContent>
@@ -151,7 +146,8 @@ const style = StyleSheet.create({
   },
   graybox: {
     color: "black",
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "#e7f5e5",
+    borderRadius:10,
   },
   searchButtons: {
     color: "black",
