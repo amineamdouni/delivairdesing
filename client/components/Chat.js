@@ -55,7 +55,7 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     axios
       .get(
-        "http://192.168.104.12:3000/api/users/allusers/63bc585f004eb697059c2a7d"
+        "http://192.168.104.2:3000/api/users/allusers/63bc585f004eb697059c2a7d"
       )
       .then((res) => {
         getAllUsers(res.data);
@@ -73,12 +73,13 @@ export default function Chat({ navigation }) {
         <Box style={styles.containerTop}>
           <Box style={styles.SearchBar}>
             <Input
+            variant="rounded"
               placeholder="Search"
-              variant="filled"
+             backgroundColor={"rgba(0,0,0,0.1)"}
               width="100%"
-              borderRadius="10"
-              borderWidth={1}
-              borderColor="black"
+              mx="4"
+             right={4}
+              borderColor="white"
               fontSize="lg"
               py="1"
               px="2"
