@@ -109,7 +109,7 @@ export default function AddPost({ navigation }) {
   };
   const post = (body) => {
     axios
-      .post(`http://192.168.104.12:5001/posts`, body)
+      .post(`http://192.168.104.19:5001/posts`, body)
       .then((res) => Alert("success"));
   };
   return (
@@ -282,21 +282,17 @@ export default function AddPost({ navigation }) {
           onPress={() =>
             post({
               type: "shipper",
-              departCountry: 
-                flight.departure.airport.municipalityName
-              ,
-              content: "hi",
+              departCountry: flight.departure.airport.municipalityName,
+              content: user.userName,
               departTime: flight.departure.scheduledTimeLocal,
-              arriveCountry: 
-                flight.departure.airport.municipalityName
-              ,
+              arriveCountry: flight.departure.airport.municipalityName,
               arriveTime: flight.departure.scheduledTimeLocal,
               weight: JSON.stringify(onChangeEndValue),
               flight_id: flight.number,
               postTime: date,
               paymentWays: [],
-              acceptedItems: [],
-              poster_id: 19,
+              acceptedItems: [user.image],
+              poster_id: user.user_id,
             })
           }
         >
