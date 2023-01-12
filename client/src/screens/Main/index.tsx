@@ -220,7 +220,7 @@ export default function Main({ navigation }: any) {
               to={to}
               navigation={navigation}
             />
-            <Box style={{ zIndex: 10000, right: 195, bottom: 40 }}>
+            <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>
