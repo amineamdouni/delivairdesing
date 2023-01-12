@@ -23,6 +23,7 @@ import Profile from "./Profiletest";
 import OthersProfile from "./OthersProfile";
 import Home from "./Home";
 import Notices from "./Notices";
+import AllPosts from "./AllPosts";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,8 +41,19 @@ const Stacks = () => {
           gestureEnabled: true,
           gestureDirection: "horizontal",
         }}
-        >
-
+      >
+        <Stack.Screen name="allposts" component={AllPosts} />
+        <Stack.Screen
+          name="contact"
+          component={Contact}
+          options={{
+            headerShown: true,
+            title: "DelivAir",
+            headerTitleStyle: { fontWeight: "light" },
+    
+            headerStyle: { backgroundColor: "#FFC8CE" },
+          }}
+        />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="form" component={Form} />
@@ -52,7 +64,7 @@ const Stacks = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="otherprofile" component={OthersProfile} />
-   <Stack.Screen name="home" component={Main} />
+        <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
 
         <Stack.Screen name="track" component={Track} />
@@ -61,17 +73,6 @@ const Stacks = () => {
 
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="reclamation" component={Reclamation} />
-        <Stack.Screen
-          name="contact"
-          component={Contact}
-          options={{
-            headerShown: true,
-            title: "DelivAir",
-            headerTitleStyle: { fontWeight: "light" },
-
-            headerStyle: { backgroundColor: "#FFC8CE" },
-          }}
-        />
         <Stack.Screen name="history" component={History} />
       </Stack.Navigator>
     );

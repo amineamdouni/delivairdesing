@@ -1,7 +1,6 @@
-
-import React, { useCallback, useContext, useState,useEffect } from 'react';
-import { View, Text, Image, Button, FlatList, StyleSheet } from 'react-native';
-import { UserContext } from '../UserContext';
+import React, { useCallback, useContext, useState, useEffect } from "react";
+import { View, Text, Image, Button, FlatList, StyleSheet } from "react-native";
+import { UserContext } from "../UserContext";
 import {
   Entypo,
   AntDesign,
@@ -10,103 +9,138 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import { Box, Center, Divider, Flex, HStack } from 'native-base';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Box, Center, Divider, Flex, HStack } from "native-base";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const friends = [
   {
-    name: 'Amine Amdouni',
-    email: 'amouna@gmail.com',
-    phone: '123-456-7890',
-    country: 'United States',
-    profileImage: 'https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg',
+    name: "Amine Amdouni",
+    email: "amouna@gmail.com",
+    phone: "123-456-7890",
+    country: "United States",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
   },
   {
-    name: 'Jane Smith',
-    email: 'jane@gmail.com',
-    phone: '098-765-4321',
-    country: 'Canada',
-    profileImage: 'https://picsum.photos/200',
-  },  {
-    name: 'Wiem Mimouni',
-    email: 'mimouni@gmail.com',
-    phone: '123-456-7890',
-    country: 'tunisia',
-    profileImage: 'https://res.cloudinary.com/duqxezt6m/image/upload/v1671620160/me_kosu6u_p95f3v.jpg',
+    name: "Jane Smith",
+    email: "jane@gmail.com",
+    phone: "098-765-4321",
+    country: "Canada",
+    profileImage: "https://picsum.photos/200",
   },
   {
-    name: 'Mahdi Dissem',
-    email: 'midox@gmail.com',
-    phone: '123-456-7890',
-    country: 'tunisia',
-    profileImage: 'https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg',
+    name: "Wiem Mimouni",
+    email: "mimouni@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://res.cloudinary.com/duqxezt6m/image/upload/v1671620160/me_kosu6u_p95f3v.jpg",
   },
   {
-    name: 'Abderrahim Ouertani',
-    email: 'abdouu@gmail.com',
-    phone: '123-456-7890',
-    country: 'tunisia',
-    profileImage: 'https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg',
+    name: "Mahdi Dissem",
+    email: "midox@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
+  },
+  {
+    name: "Abderrahim Ouertani",
+    email: "abdouu@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
   },
 
-  
-  
   // Add more friends here
 ];
 
-const FriendItem = ({ name, email, phone, country, profileImage, onDelete }) => (
+const FriendItem = ({
+  name,
+  email,
+  phone,
+  country,
+  profileImage,
+  onDelete,
+}) => (
   <View style={styles.friendItem}>
     <Image source={{ uri: profileImage }} style={styles.profileImage} />
     <View style={styles.friendInfo}>
       <Text style={styles.friendName}>{name}</Text>
-      <Text style={styles.friendEmail}><Entypo name="email" size={14} color="black" ></Entypo> : {email}</Text>
-   <Text style={styles.friendPhone}> <FontAwesome name="phone" size={14} color="black" ></FontAwesome> : {phone}</Text>
-      <Text style={styles.friendCountry}><MaterialCommunityIcons name="home-map-marker" size={14} color="black" ></MaterialCommunityIcons> : {country}</Text>
+      <Text style={styles.friendEmail}>
+        <Entypo name="email" size={14} color="black"></Entypo> : {email}
+      </Text>
+      <Text style={styles.friendPhone}>
+        {" "}
+        <FontAwesome name="phone" size={14} color="black"></FontAwesome> :{" "}
+        {phone}
+      </Text>
+      <Text style={styles.friendCountry}>
+        <MaterialCommunityIcons
+          name="home-map-marker"
+          size={14}
+          color="black"
+        ></MaterialCommunityIcons>{" "}
+        : {country}
+      </Text>
     </View>
-    <AntDesign name="deleteuser"  color={"#e7c7c8"}  size={19}onPress={onDelete} ></AntDesign>
-  </View>       
+    <AntDesign
+      name="deleteuser"
+      color={"#e7c7c8"}
+      size={19}
+      onPress={onDelete}
+    ></AntDesign>
+  </View>
 );
 
 const FriendsList = () => {
-  const { user, connected,contactList } = useContext(UserContext);
+  const { user, connected, contactList } = useContext(UserContext);
   const [friendsList, setFriendsList] = useState(contactList);
-const [, updateState] = useState();
-const forceUpdate = useCallback(() => updateState({}), []);
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
-useEffect(() => {
-  forceUpdate();
- 
-}, [user]);
-  const handleDelete = email => {
-    setFriendsList(friendsList.filter(friend => friend.email !== email));
+  useEffect(() => {
+    forceUpdate();
+  }, [user]);
+  const handleDelete = (email) => {
+    setFriendsList(friendsList.filter((friend) => friend.email !== email));
   };
 
   return (
-    <Box  >
-     
-    <Center backgroundColor={"#FFC8CE"} h={50}  ><HStack>
-        <TouchableOpacity><Text fontSize={20}>Contact list</Text></TouchableOpacity>
-        <Divider bg="emerald.500" thickness="2" mx="2" orientation="vertical" />
-        <Text fontSize={20}>Pending requests</Text>
+    <Box>
+      <Center backgroundColor={"#FFC8CE"} h={50}>
+        <HStack>
+          <TouchableOpacity>
+            <Text fontSize={20}>Contact list</Text>
+          </TouchableOpacity>
+          <Divider
+            bg="emerald.500"
+            thickness="2"
+            mx="2"
+            orientation="vertical"
+          />
+          <Text fontSize={20}>Pending requests</Text>
         </HStack>
       </Center>
-    <FlatList
-      data={friendsList}
-      renderItem={({ item }) => (
-        <FriendItem {...item} onDelete={() => handleDelete(item.email)} />
-      )}
-      keyExtractor={item => item.email}
-    /></Box>
+      <FlatList
+        data={friendsList}
+        renderItem={({ item }) => (
+          <FriendItem {...item} onDelete={() => handleDelete(item.email)} />
+        )}
+        keyExtractor={(item) => item.email}
+      />
+    </Box>
   );
 };
 
 const styles = StyleSheet.create({
   friendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     margin: 20,
-    borderRadius:30,
+    borderRadius: 30,
     padding: 20,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   profileImage: {
     width: 50,
@@ -119,7 +153,7 @@ const styles = StyleSheet.create({
   },
   friendName: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   friendEmail: {
     fontSize: 16,
@@ -131,14 +165,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   verticleLine: {
-    height: '100%',
+    height: "100%",
     width: 1,
-    backgroundColor: '#5FC8C0',
-  }
+    backgroundColor: "#5FC8C0",
+  },
 });
 
 export default FriendsList;
-
-
-
-
