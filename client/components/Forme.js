@@ -125,7 +125,7 @@ const SignUpForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://192.168.1.42:5001/users", {
+      .post("http://192.168.104.12:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -134,7 +134,7 @@ const SignUpForm = ({ navigation }) => {
       })
       .then((response) => {
         axios
-          .get(`http://192.168.1.42:5001/users/${response.data.email}`)
+          .get(`http://192.168.104.12:5001/users/${response.data.email}`)
           .then((res) => {
             setUser(res.data);
             navigation.navigate("home");
@@ -192,13 +192,11 @@ const SignUpForm = ({ navigation }) => {
         <Box right={1}>
           <Text style={styles.title}>Username</Text>
           <Input
-
-        variant="rounded"
-        borderColor={"white"}
-        placeholderTextColor={"white"}
-          mx="-5"
-          size="l"
-
+            variant="rounded"
+            borderColor={"white"}
+            placeholderTextColor={"white"}
+            mx="-5"
+            size="l"
             placeholder="Username"
             value={userName}
             onChangeText={(text) => setUsername(text)}
@@ -206,13 +204,11 @@ const SignUpForm = ({ navigation }) => {
           />
           <Text style={styles.title}>Phone Number</Text>
           <Input
-
-          variant="rounded"
-          borderColor={"white"}
-          placeholderTextColor={"white"}
+            variant="rounded"
+            borderColor={"white"}
+            placeholderTextColor={"white"}
             mx="-5"
             size="l"
-
             keyboardType="number"
             placeholder="Phone Number"
             value={phoneNumber}
@@ -224,13 +220,11 @@ const SignUpForm = ({ navigation }) => {
 
           <Text style={styles.title}>Add your Location</Text>
           <Input
-
-          variant="rounded"
-          borderColor={"white"}
-          placeholderTextColor={"white"}
+            variant="rounded"
+            borderColor={"white"}
+            placeholderTextColor={"white"}
             mx="-5"
             size="l"
-
             placeholder="Location"
             value={location}
             onChangeText={(text) => setLocation(text)}
@@ -239,27 +233,19 @@ const SignUpForm = ({ navigation }) => {
         </Box>
         <Box top={20}>
           <Button
-          variant="subtle"
+            variant="subtle"
             isLoading={loading}
             title="confirm"
             onPress={handleSubmit}
-           
-            
-            
-           
           >
             Submit
           </Button>
           <Button
-          style={styles.buttonupload}
-          variant="subtle"
+            style={styles.buttonupload}
+            variant="subtle"
             isLoading={loading}
             title="upload"
             onPress={uploadImage}
-            
-            
-            
-            
           >
             Upload
           </Button>
@@ -284,18 +270,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   title: {
-    color:"white",
-    fontWeight:"bold",
+    color: "white",
+    fontWeight: "bold",
     fontSize: 15,
-    padding:10,
-    right:20,
+    padding: 10,
+    right: 20,
   },
   input: {
-
     backgroundColor: "rgba(0,0,0,0.1)",
-    
-   
-
   },
   image: {
     height: 1000,
@@ -306,7 +288,7 @@ const styles = StyleSheet.create({
     top: 300,
   },
   buttonupload: {
-    bottom:490,
+    bottom: 490,
   },
   activityIndicator: {
     backgroundColor: "#d8d8d8",
