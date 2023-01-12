@@ -8,7 +8,7 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { FontAwesome5,AntDesign } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { Text, Container, Box, Input } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
@@ -33,7 +33,7 @@ export default function Main({ navigation }: any) {
   const [selectedDate, setSelectedDate] = useState(
     date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
   );
-  
+
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);
   const airplaneShadowY = useSharedValue(0);
@@ -52,23 +52,27 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      search(from, to);
+      
     } else {
-      setShowCardSelect(true);
+      if (from.length == 0 && to.length == 0) {
+        console.log("null");
+        alert("u didin t pick any destination u will be redirected to ...");
+
+        navigation.navigate("allposts");
+      } else  if(from.length>0 && to.length==0  ){
+alert("please specify ur destination")
+    }else  if(to.length>0 && from.length==0  ){
+alert("please specify where are u going")
+    }else {
+        setShowCardSelect(true);
+      }
     }
   };
 
-  const filterPosts = (departure, arrival) => {
-    let filtered = posts.filter(
-      (e): any => e.departCountry == departure && e.arriveCountry == arrival
-    );
-    console.log(filtered);
-
-    setPosts(filtered);
-  };
+  
   useEffect(() => {
     axios
-      .get("http://192.168.103.16:5001/posts")
+      .get("http://192.168.11.59:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -132,17 +136,14 @@ export default function Main({ navigation }: any) {
         {!confirm && (
           <S.FlyInfo exiting={FlipOutXUp.duration(600)}>
             <S.Content>
-            <S.LargeText>DelivAir  <TouchableOpacity style={{left:160,bottom:3}} onPress={()=>{
-              console.log('hi');
-              
-              navigation.navigate('allposts')}}><AntDesign name="doubleright" size={25}  color={"white"}/></TouchableOpacity></S.LargeText>
-            
+              <S.LargeText>DelivAir</S.LargeText>
+             
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>From</S.SmallText>
                   <S.HourContent>{from}</S.HourContent>
                 </S.TextContent>
-                <A.Center style={{position:"absolute",left:150}}>
+                <A.Center style={{ position: "absolute", left: 150 }}>
                   <Entypo name="chevron-right" size={30} color="white" />
                 </A.Center>
                 <S.TextContent alingment="right">
@@ -174,7 +175,12 @@ export default function Main({ navigation }: any) {
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
               <Text fontSize={18} style={{ paddingBottom: 100 }}>
-                Please enter destination{" "}
+                Please enter destination or
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("allposts")}
+                >
+                  <Text>skip to ...page</Text>
+                </TouchableOpacity>
               </Text>
               <A.HStack>
                 <Text color={"black"} top={3}>
@@ -182,7 +188,7 @@ export default function Main({ navigation }: any) {
                 </Text>
 
                 <Input
-                maxLength={8}
+                  maxLength={8}
                   onChangeText={(text) => setFrom(text)}
                   size="l"
                   mx="3"
@@ -201,7 +207,7 @@ export default function Main({ navigation }: any) {
                 </Text>
 
                 <Input
-                maxLength={8}
+                  maxLength={8}
                   onChangeText={(text) => setTo(text)}
                   size="l"
                   mx="3"
@@ -227,7 +233,8 @@ export default function Main({ navigation }: any) {
               posts={posts}
               from={from}
               to={to}
-              navigation={navigation} setPosts={setPosts}
+              navigation={navigation}
+              setPosts={setPosts}
             />
             <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
               <Footer navigation={navigation} />

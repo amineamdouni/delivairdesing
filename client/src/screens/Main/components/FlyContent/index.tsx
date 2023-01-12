@@ -21,8 +21,11 @@ import Swiper from "react-native-swiper";
 export default function FlyContent({navigation,posts,to,from,setPosts}) {
  
   const search=(from,to)=> {
-    let searchedData = posts.filter((e):any =>
-      e.departCountry.toLowerCase().includes(from.toLowerCase())
+    
+    let searchedData = posts.filter(
+      (e): any =>
+        e.departCountry.toLowerCase().includes(from.toLowerCase()) &&
+        e.arriveCountry.toLowerCase().includes(to.toLowerCase())
     );
     setPosts(searchedData)
     console.log(searchedData,"search");
@@ -78,9 +81,13 @@ export default function FlyContent({navigation,posts,to,from,setPosts}) {
     headertranslateY.value = withTiming(0, { duration: 700 });
     headerContentTranslateY.value = withTiming(0, { duration: 900 });
     headerContentopacity.value = withTiming(1, { duration: 700 });
-    
+      search(from, to);
   }, []);
-
+useEffect(()=>{
+  if (posts.length==0) {
+    alert('errrr')
+  }
+},[posts])
   return (
     <S.Container>
       <StatusBar barStyle="light-content" />

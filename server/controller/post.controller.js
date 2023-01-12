@@ -12,7 +12,18 @@ const get=async (req, res) => {
     res.json(err);
   }}
 
-
+const deletePost = async (req, res) => {
+  try {
+    const result = await posts.delete({
+      where: {
+        post_id: +req.params.id,
+      },
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 const newPost = async(req,res)=>{
   try{
     posts
@@ -39,4 +50,4 @@ const newPost = async(req,res)=>{
 }
 
 
-module.exports = {get,newPost};
+module.exports = {get,newPost,deletePost};
