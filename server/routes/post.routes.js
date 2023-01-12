@@ -1,7 +1,8 @@
 var router = require("express").Router();
-const {get,newPost} = require("../controller/post.controller");
+const {get,add,getOne,deletepost} = require("../controller/post.controller");
 
 router.get('/',get)
-router.post('/newPost',newPost)
-
+router.post('/',add)
+router.get("/:departCountry", getOne);
+router.delete("/:post_id", deletepost);
 module.exports = router;

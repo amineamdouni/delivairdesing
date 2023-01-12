@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const { default: axios } = require("axios");
+// const { default: axios } = require("axios");
 
 const prisma = new PrismaClient();
 const users = prisma.users;

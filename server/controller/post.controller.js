@@ -11,9 +11,18 @@ const get=async (req, res) => {
   } catch (err) {
     res.json(err);
   }}
+  const getOne = async (req, res) => {
+    try {
+      posts.findFirst({where:{departCountry:req.params.departCountry}}).then((result) => {
+        res.json(result);
+      });
+    } catch (err) {
+      res.json(err);
+    }
+  };
 
 
-const newPost = async(req,res)=>{
+const add = async(req,res)=>{
   try{
     posts.create({
       data:{
@@ -24,7 +33,7 @@ const newPost = async(req,res)=>{
         arriveTime:req.body.arriveTime,
         content:req.body.content,
         paymentWays:req.body.paymentWays,
-        accptedItems:req.body.accptedItems,
+        acceptedItems:req.body.acceptedItems,
         weight:req.body.weight,
         postTime:req.body.postTime,
         poster_id:req.body.poster_id,
@@ -35,6 +44,20 @@ const newPost = async(req,res)=>{
     res.json(err)
   }
 }
+const deletepost = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    const deletedPost = await prisma.posts.delete({
+      where: {
+        post_id: Number(post_id)
+      }
+    });
+    res.json(deletedPost);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 
-module.exports = {get,newPost};
+
+module.exports = {get,add,getOne,deletepost};
