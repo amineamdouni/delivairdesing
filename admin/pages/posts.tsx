@@ -11,6 +11,16 @@ const posts = () => {
       .catch((err) => console.log(err));
   }, []);
  
+  const deletePost = (post_id) => {
+    axios.delete(`http://localhost:5001/posts/${post_id}`)
+      .then((response) => {
+        console.log(response);
+      window.location.reload();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
  
  
   return (
@@ -191,7 +201,11 @@ const posts = () => {
                           </p>
                         </td>
                        
-   
+                        <td className="align-middle ">
+  <button className="btn btn-outline-danger btn-sm" onClick={() => deletePost(e.post_id)}>
+    DELETE
+  </button>
+</td>
                        
                       
                       </tr>
