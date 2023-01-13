@@ -26,6 +26,7 @@
     "expo-document-picker": "^11.0.1",
     "expo-image-picker": "^14.0.2",
     "expo-linear-gradient": "^12.0.1",
+    "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
     "firebase": "^9.15.0",
     "formik": "^2.2.9",
@@ -48,13 +49,13 @@
     "react-native-screens": "~3.18.0",
     "react-native-step-indicator": "^1.0.3",
     "react-native-svg": "13.4.0",
+    "react-native-swipe-list-view": "^3.2.9",
     "react-native-swiper": "^1.6.0",
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "~0.18.7",
     "socket.io-client": "^4.5.4",
     "styled-components": "^5.3.5",
-    "yup": "^0.32.11",
-    "expo-splash-screen": "~0.17.5"
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.19.3",

@@ -194,11 +194,7 @@ export default function AllPosts({ navigation }) {
                     size={25}
                   ></AntDesign>
                 </TouchableOpacity>
-                <AntDesign
-                  name="adduser"
-                  color={"#5FC8C0"}
-                  size={25}
-                ></AntDesign>
+               
               </View>
             </View>
             

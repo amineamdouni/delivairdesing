@@ -124,6 +124,7 @@ export default function App() {
         socket,
         setSocket,
         contactList,
+        contactArray,setContactList,setcontactArray
       }}
     >
       <NativeBaseProvider>

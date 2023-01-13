@@ -236,7 +236,7 @@ alert("please specify where are u going")
               navigation={navigation}
               setPosts={setPosts}
             />
-            <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
+            <Box style={{ zIndex: 10000, right: 196, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>
