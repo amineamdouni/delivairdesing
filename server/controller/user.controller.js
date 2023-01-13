@@ -98,9 +98,20 @@ const updateFriend = async (req, res) => {
     res.json(err);
   }
 };
+const getOneById = async (req, res) => {
+  try {
+    const result = await users.findUnique({
+      where: { user_id: +req.params.id }
+  
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 
 
 
 
-module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend};
+module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend,getOneById};

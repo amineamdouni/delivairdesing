@@ -42,7 +42,6 @@ const Stacks = () => {
           gestureDirection: "horizontal",
         }}
       >
-      
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="form" component={Form} />
