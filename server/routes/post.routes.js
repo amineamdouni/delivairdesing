@@ -5,4 +5,5 @@ router.get('/',get)
 router.post('/',add)
 router.get("/:departCountry", getOne);
 router.delete("/:post_id", deletepost);
+
 module.exports = router;

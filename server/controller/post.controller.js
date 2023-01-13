@@ -60,4 +60,4 @@ const deletepost = async (req, res) => {
 
 
 
-module.exports = {get,add,getOne,deletepost};
+module.exports = {get,add,getOne,deletepost,};
