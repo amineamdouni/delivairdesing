@@ -17,7 +17,7 @@ const ReclamationForm = () => {
    
       <Image style={styles.logo} left={12}
       top={100} source={{
-      uri: "https://cdn.discordapp.com/attachments/1055908199326294039/1057563889543421982/Minimal_World_Travel_Blog_Suitcase_Logo.png"
+      uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443763/1_swzwcw.png"
     }} alt="Alternate Text" size="xl" />
   
     <Box>

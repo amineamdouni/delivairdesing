@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-// const { default: axios } = require("axios");
+
 
 const prisma = new PrismaClient();
 const users = prisma.users;
@@ -91,11 +91,7 @@ const updateFriend = async (req, res) => {
   try {
     const result = await users.update({
       where: { user_id: +req.params.id },
-      data: {
-      
-        contactList: req.body.contactList
-        
-      },
+      data: req.body,
     });
     res.json(result);
   } catch (err) {

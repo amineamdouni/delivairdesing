@@ -8,7 +8,7 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
 import { Text, Container, Box, Input } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
@@ -24,6 +24,7 @@ import StatusContent from "./components/StatusContent";
 import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const date = new Date();
 export default function Main({ navigation }: any) {
   const [modalVisible, setModalVisible] = useState(false);
@@ -32,6 +33,7 @@ export default function Main({ navigation }: any) {
   const [selectedDate, setSelectedDate] = useState(
     date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
   );
+
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);
   const airplaneShadowY = useSharedValue(0);
@@ -50,22 +52,27 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      filterPosts(from, to);
+      
     } else {
-      setShowCardSelect(true);
+      if (from.length == 0 && to.length == 0) {
+        console.log("null");
+        alert("u didin t pick any destination u will be redirected to ...");
+
+        navigation.navigate("allposts");
+      } else  if(from.length>0 && to.length==0  ){
+alert("please specify ur destination")
+    }else  if(to.length>0 && from.length==0  ){
+alert("please specify where are u going")
+    }else {
+        setShowCardSelect(true);
+      }
     }
   };
-  const filterPosts = (departure, arrival) => {
-    let filtered = posts.filter(
-      (e): any => e.departCountry == departure && e.arriveCountry == arrival
-    );
-    console.log(filtered);
 
-    setPosts(filtered);
-  };
+  
   useEffect(() => {
     axios
-      .get("")
+      .get("http://192.168.11.59:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -130,17 +137,18 @@ export default function Main({ navigation }: any) {
           <S.FlyInfo exiting={FlipOutXUp.duration(600)}>
             <S.Content>
               <S.LargeText>DelivAir</S.LargeText>
+             
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>From</S.SmallText>
-                  <S.LargeText>{from}</S.LargeText>
+                  <S.HourContent>{from}</S.HourContent>
                 </S.TextContent>
-                <S.HourContent>
+                <A.Center style={{ position: "absolute", left: 150 }}>
                   <Entypo name="chevron-right" size={30} color="white" />
-                </S.HourContent>
+                </A.Center>
                 <S.TextContent alingment="right">
                   <S.SmallText>To</S.SmallText>
-                  <S.LargeText>{to}</S.LargeText>
+                  <S.HourContent>{to}</S.HourContent>
                 </S.TextContent>
               </S.TextRowContent>
             </S.Content>
@@ -167,55 +175,68 @@ export default function Main({ navigation }: any) {
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
               <Text fontSize={18} style={{ paddingBottom: 100 }}>
-              Please enter destination {" "}
+                Please enter destination or
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("allposts")}
+                >
+                  <Text>skip to ...page</Text>
+                </TouchableOpacity>
               </Text>
               <A.HStack>
-                <Text color={"black"}top={3}>
-                  <FontAwesome5  size={20} name="plane-departure" />
+                <Text color={"black"} top={3}>
+                  <FontAwesome5 size={20} name="plane-departure" />
                 </Text>
 
                 <Input
+                  maxLength={8}
                   onChangeText={(text) => setFrom(text)}
                   size="l"
                   mx="3"
                   placeholder="From"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
-                                />
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
+                />
               </A.HStack>
               <A.Divider my="6" />
               <A.HStack>
                 <Text color={"black"} top={3}>
-                  <FontAwesome5  size={20}  name="plane-arrival"  />
+                  <FontAwesome5 size={20} name="plane-arrival" />
                 </Text>
 
                 <Input
+                  maxLength={8}
                   onChangeText={(text) => setTo(text)}
                   size="l"
                   mx="3"
                   placeholder="To"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
                 />
               </A.HStack>
             </A.Center>
           </S.InfoContent>
         )}
         {!confirm && (
-          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
         {showFlyInfo && (
           <>
-            <FlyContent posts={posts} navigation={navigation} />
-            <Box style={{zIndex:10000,right:195,bottom:40}}>
+            <FlyContent
+              posts={posts}
+              from={from}
+              to={to}
+              navigation={navigation}
+              setPosts={setPosts}
+            />
+            <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>

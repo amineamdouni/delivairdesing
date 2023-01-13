@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { Box, HStack, Center, Heading } from "native-base";
+import { Avatar, Box, HStack, Center, Heading } from "native-base";
 import {
   StyleSheet,
   Text,
@@ -22,9 +22,10 @@ export default Messages = () => {
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
 
-  const { chatUser, to } = useContext(UserContext);
+  const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.104.18:3000/");
+  const socket = io("http://192.168.11.59:3000/");
+
   // socket.on("connection", () => {
   //   console.log("hello from socket", socket.id);
   //   //amine we can console log the connection here (socket.id)
@@ -42,7 +43,8 @@ export default Messages = () => {
       message: newMsg["text"],
     });
     await axios
-      .post("http://192.168.104.18:3000/api/messages/addmsg/", {
+
+      .post("http://192.168.11.59:3000/api/messages/addmsg/", {
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -59,7 +61,8 @@ export default Messages = () => {
 
   useEffect(() => {
     axios
-      .post("http://192.168.104.18:3000/api/messages/getmsg/", {
+
+      .post("http://192.168.11.59:3000/api/messages/getmsg/", {
         from: chatUser._id,
         to: to,
       })
@@ -102,7 +105,7 @@ export default Messages = () => {
           <Box style={styles.Header}>
             <HStack>
               <Center>
-                <Heading style={styles.logo}>DeliVair</Heading>
+                <Heading style={styles.logo}>{user.userName}</Heading>
               </Center>
             </HStack>
           </Box>
@@ -120,6 +123,14 @@ export default Messages = () => {
           let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
           return (
             <View style={[styles.item, itemStyle]}>
+              <Avatar
+                bg="green.500"
+                alignSelf="center"
+                size="xs"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                }}
+              ></Avatar>
               {!inMessage && renderDate(item.createdAt)}
               <View style={[styles.balloon]}>
                 <Text>{item.message}</Text>
@@ -144,8 +155,7 @@ export default Messages = () => {
           </View>
         </ScrollView>
 
-        <TouchableOpacity style={styles.btnSend}>
-          <Button onPress={handleSending} title="submit"></Button>
+        <TouchableOpacity onPress={handleSending} style={styles.btnSend}>
           <Image
             source={{
               uri: "https://img.icons8.com/small/75/ffffff/filled-sent.png",
@@ -174,7 +184,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   btnSend: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "#5FC8C0",
     width: 40,
     height: 40,
     borderRadius: 360,
@@ -182,15 +192,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   iconSend: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     alignSelf: "center",
   },
   inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(0,0,0,0.1)",
     borderRadius: 30,
-    borderBottomWidth: 1,
+
     height: 40,
     flexDirection: "row",
     alignItems: "center",
@@ -210,17 +219,18 @@ const styles = StyleSheet.create({
   },
   itemIn: {
     alignSelf: "flex-start",
-    backgroundColor: "#EAC7CA",
+    backgroundColor: "#FFC8CE",
   },
   itemOut: {
     alignSelf: "flex-end",
-    backgroundColor: "##5FC8C0",
+    backgroundColor: "#5FC8C0",
   },
   time: {
     alignSelf: "flex-end",
     margin: 15,
     fontSize: 12,
     color: "#808080",
+    top: 40,
   },
   item: {
     marginVertical: 14,
@@ -231,7 +241,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   Header: {
-    backgroundColor: "#EBC8CB",
+    backgroundColor: "#FFC8CE",
     paddingTop: 80,
     width: 500,
     height: 100,
@@ -241,10 +251,11 @@ const styles = StyleSheet.create({
       "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
   },
   logo: {
+    color: "white",
     width: 143,
     height: 48,
-    left: 12,
+    left: 150,
     top: 10,
-    fontSize: 30,
+    fontSize: 17,
   },
 });

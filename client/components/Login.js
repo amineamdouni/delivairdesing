@@ -48,7 +48,11 @@ import {
 const auth = getAuth();
 import { UserContext } from "../UserContext";
 import axios from "axios";
-const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
+
+const imgBackground = {
+  uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
+};
+
 import socketIO from "socket.io-client";
 
 export default function Login({ navigation }) {
@@ -60,18 +64,21 @@ export default function Login({ navigation }) {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       console.log("firebase succ");
       axios
-        .post("http://192.168.104.18:3000/api/users/login", {
+
+        .post("http://192.168.11.59:3000/api/users/login", {
           email,
           password,
         })
         .then((result) => {
           setChatUser(result.data.user);
           axios
-            .get(`http://192.168.104.18:5001/users/${result.data.user.email}`)
+
+            .get(`http://192.168.11.59:5001/users/${result.data.user.email}`)
             .then((res) => {
               setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.104.18:3000"));
-              navigation.navigate("chat");
+              setSocket(socketIO.connect("http://192.168.11.59:3000"));
+              navigation.navigate("home");
+
               alert("welcome " + email);
             });
         })
@@ -106,7 +113,7 @@ export default function Login({ navigation }) {
       <Image
         style={style.backgroundImage}
         source={{
-          uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
+          uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
         }}
         alt="*"
       />
@@ -117,30 +124,38 @@ export default function Login({ navigation }) {
               size={300}
               borderRadius={30}
               source={{
-                uri: "https://i.ibb.co/WzPwN1m/Minimal-World-Travel-Blog-Suitcase-Logo.png",
+                uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443763/1_swzwcw.png",
               }}
               alt="Alternate Text"
             />
           </Center>
           <VStack space={10} alignItems="center">
-            <Heading size="lg">Login</Heading>
+            <Heading color={"white"} size="lg">
+              Login
+            </Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
               <Text style={style.Text}>Email</Text>
 
               <Input
+                variant="rounded"
+                borderColor={"white"}
+                placeholderTextColor={"white"}
                 mx="4"
+                size="l"
                 placeholder="Email"
                 style={style.Input}
-                size="l"
                 onChangeText={(text) => setEmail(text)}
               />
 
               <Text style={style.Text}>Password</Text>
 
               <Input
+                variant="rounded"
+                borderColor={"white"}
                 type="password"
                 mx="4"
                 placeholder="Password"
+                placeholderTextColor={"white"}
                 style={style.Input}
                 onChangeText={(text) => setPassword(text)}
                 size="l"
@@ -153,7 +168,7 @@ export default function Login({ navigation }) {
                       navigation.navigate("signup");
                     }}
                   >
-                    <Text color="primary.500" underline fontSize={"15px"}>
+                    <Text color="white" underline fontSize={"15px"}>
                       Register Now
                     </Text>
                   </Link>
@@ -166,14 +181,16 @@ export default function Login({ navigation }) {
                   }}
                   onPress={() => resetPassword()}
                 >
-                  <Text>Forget Password ?</Text>
+                  <Text fontSize={"15px"} color={"white"}>
+                    Forget Password ?
+                  </Text>
                 </TouchableOpacity>
               </HStack>
 
               <Box w={160}>
                 <HStack space={10} justifyContent="center" style={style.forgot}>
                   <Divider my={2} />
-                  <Text>OR</Text>
+                  <Text color={"white"}>OR</Text>
                   <Divider my={2} />
                 </HStack>
                 <Flex
@@ -186,7 +203,7 @@ export default function Login({ navigation }) {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="facebook"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
@@ -195,7 +212,7 @@ export default function Login({ navigation }) {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="google"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
@@ -204,7 +221,7 @@ export default function Login({ navigation }) {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="twitter"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
@@ -213,6 +230,7 @@ export default function Login({ navigation }) {
               <Box>
                 <Center>
                   <Button
+                    variant="subtle"
                     className="LoginButton"
                     onPress={() => {
                       // navigation.navigate('tabs')
@@ -243,23 +261,16 @@ const style = StyleSheet.create({
     backgroundColor: "",
   },
   Input: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 7,
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
   LoginButton: {
-    backgroundColor: "#9EA7B6",
     marginTop: "20%",
     borderRadius: 5,
     width: "70%",
-    shadowColor: "black",
-    shadowOpacity: 0.8,
-    elevation: 1,
-    shadowRadius: 8,
-    shadowOffset: { width: 6, height: 5 },
   },
   Text: {
+    fontWeight: "bold",
+    color: "white",
     padding: 5,
     textAlign: "left",
     alignSelf: "flex-start",
