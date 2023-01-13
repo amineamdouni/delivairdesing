@@ -20,12 +20,7 @@ const Navbar = () => {
            Posts
           </a>
         </li>
-        <li className="nav-item active">
-          <a className="nav-link" href="reclamation">
-            Reclamation
-          </a>
-          
-        </li>
+       
         <li className="nav-item active">
           <a className="nav-link" href="transaction">
             Transactions
