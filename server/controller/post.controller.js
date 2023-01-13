@@ -11,6 +11,16 @@ const get=async (req, res) => {
   } catch (err) {
     res.json(err);
   }}
+  const getOne = async (req, res) => {
+    try {
+      posts.findFirst({where:{departCountry:req.params.departCountry}}).then((result) => {
+        res.json(result);
+      });
+    } catch (err) {
+      res.json(err);
+    }
+  };
+
 
 const deletePost = async (req, res) => {
   try {
@@ -44,10 +54,27 @@ const newPost = async(req,res)=>{
         },
       })
       .then((result) => res.json(result));
+
   } catch(err){
     res.json(err)
   }
 }
+const deletepost = async (req, res) => {
+  try {
+    const { post_id } = req.params;
+    const deletedPost = await prisma.posts.delete({
+      where: {
+        post_id: Number(post_id)
+      }
+    });
+    res.json(deletedPost);
+  } catch (err) {
+    res.json(err);
+  }
+};
+
+
 
 
 module.exports = {get,newPost,deletePost};
+

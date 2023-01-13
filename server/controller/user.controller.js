@@ -98,9 +98,20 @@ const updateFriend = async (req, res) => {
     res.json(err);
   }
 };
+const ban = async (req, res) => {
+  try {
+    const result = await users.delete({
+      where: {
+        user_id: +req.params.user_id
+      },
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 
 
 
-
-module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend};
+module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend,ban};
