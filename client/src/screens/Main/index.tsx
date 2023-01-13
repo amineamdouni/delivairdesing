@@ -72,7 +72,7 @@ alert("please specify where are u going")
   
   useEffect(() => {
     axios
-      .get("http://192.168.11.59:5001/posts")
+      .get("http://192.168.103.16:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -236,7 +236,7 @@ alert("please specify where are u going")
               navigation={navigation}
               setPosts={setPosts}
             />
-            <Box style={{ zIndex: 10000, right: 210, bottom: 40 }}>
+            <Box style={{ zIndex: 10000, right: 196, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>

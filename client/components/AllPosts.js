@@ -1,6 +1,6 @@
 //import liraries
 import * as React from "react";
-import { Avatar, Box, HStack, Center, Content, Heading } from "native-base";
+import { Avatar, Box, HStack, Center, Content, Heading, VStack } from "native-base";
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   Animated,
   SafeAreaView,
 } from "react-native";
+import axios from "axios";
 import { Linking, Platform } from "react-native";
 import {
   Entypo,
@@ -22,7 +23,9 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
+import { UserContext } from "../UserContext";
+import { useContext,useState } from "react";
+import { async } from "@firebase/util";
 const friends = [
   {
     name: "Amine Amdouni",
@@ -66,6 +69,44 @@ const friends = [
 ];
 
 export default function AllPosts({ navigation }) {
+  React.useEffect(()=>{
+    axios.get(`http://192.168.103.16:5001/posts`).then(res=>setPosts(res.data)).catch(err=>alert("an error ocured when i "))
+  },[])
+
+  const relativeDate=(param)=>{
+    var olddate = new Date(param);
+    var oldseconds = olddate.getTime() / 1000; //1440516958
+    const date = new Date();
+    const timestamp = date.getTime();
+    const seconds = Math.floor(timestamp / 1000);
+    const difference = seconds - oldseconds;
+    let output = ``;
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor(difference / 60)} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor(difference / 3600)} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor(difference / 86400)} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor(difference / 2620800)} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor(difference / 31449600)} years ago`;
+    }return output
+  }
+   const convertTime = (pa) => {
+     return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+   };
+  
+  const { setOneUser, contactList } = useContext(UserContext);
+  const[posts,setPosts]=useState("")
   const dialCall = (number) => {
     let phoneNumber = "";
     if (Platform.OS === "android") {
@@ -88,57 +129,77 @@ export default function AllPosts({ navigation }) {
           </Box>
         </Box>
       </Box>
-      <View style={styles.friendItem}>
-        <Image
-          source={{ uri: friends[0].profileImage }}
-          style={styles.profileImage}
-        />
-        <View style={styles.friendInfo}>
-          <Text style={styles.friendName}>{friends[0].name}</Text>
-          <Text style={styles.friendEmail}>
-            <MaterialCommunityIcons
-              name="weight-kilogram"
-              size={20}
-              color="#FFC8CE"
-            ></MaterialCommunityIcons>{" "}
-            : <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>3Kg</Text>
-          </Text>
-          <Text style={styles.friendPhone}>
-            <MaterialCommunityIcons
-              name="clock-time-eight-outline"
-              size={20}
-              color="#FFC8CE"
-            ></MaterialCommunityIcons>{" "}
-            Going Tomorrow
-          </Text>
-          <Text style={styles.friendCountry}>
-            <MaterialCommunityIcons
-              name="airplane-marker"
-              size={20}
-              color="#FFC8CE"
-            ></MaterialCommunityIcons>{" "}
-            : 26-07-2023 16:55
-          </Text>
+        {posts &&posts.map((e, i) => {
+          console.log(e, "eeeee");
+          let test 
+           axios.get(
+            `http://192.168.103.16:5001/users/id/${e.poster_id}`
+          ).then(res=>test=res.data)
+          console.log(test, "titi");
+          return (
+            
+            <View style={styles.friendItem}>
+            
+              <Image source={{ uri: friends[i].profileImage }} style={styles.profileImage} />
+              <View style={styles.friendInfo}>
+                <Text style={styles.friendName}>{friends[i].name}</Text>
+                <Text style={styles.friendEmail}>
+                  <MaterialCommunityIcons
+                    name="weight-kilogram"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  :{" "}
+                  <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                    3Kg
+                  </Text>
+                </Text>
+                <Text style={styles.friendPhone}>
+                  <MaterialCommunityIcons
+                    name="clock-time-eight-outline"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  Going Tomorrow
+                </Text>
+                <Text style={styles.friendCountry}>
+                  <MaterialCommunityIcons
+                    name="airplane-marker"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  : {convertTime(e.departTime) }
+                </Text>
 
-          <Text>
-            <MaterialCommunityIcons
-              name="message"
-              size={20}
-              color="#FFC8CE"
-            ></MaterialCommunityIcons>{" "}
-            : Only have 3Kg left ! No guns or drugs please I still wanna study
-            AWS. Thank you I love you.
-          </Text>
-        </View>
-        <View
-          style={{ height: 80, marginTop: 15, justifyContent: "space-around" }}
-        >
-          <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
-            <AntDesign name="phone" color={"#5FC8C0"} size={25}></AntDesign>
-          </TouchableOpacity>
-          <AntDesign name="adduser" color={"#5FC8C0"} size={25}></AntDesign>
-        </View>
-      </View>
+                <Text>
+                  <MaterialCommunityIcons
+                    name="message"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  : {e.content}
+                </Text>
+              </View>
+              <View
+                style={{
+                  height: 80,
+                  marginTop: 15,
+                  justifyContent: "space-around",
+                }}
+              >
+                <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
+                  <AntDesign
+                    name="phone"
+                    color={"#5FC8C0"}
+                    size={25}
+                  ></AntDesign>
+                </TouchableOpacity>
+               
+              </View>
+            </View>
+            
+          );
+        })}
     </View>
   );
 }

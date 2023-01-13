@@ -98,12 +98,13 @@ const updateFriend = async (req, res) => {
     res.json(err);
   }
 };
-const ban = async (req, res) => {
+
+const getOneById = async (req, res) => {
   try {
-    const result = await users.delete({
-      where: {
-        user_id: +req.params.user_id
-      },
+    const result = await users.findUnique({
+      where: { user_id: +req.params.id }
+  
+
     });
     res.json(result);
   } catch (err) {
@@ -114,4 +115,7 @@ const ban = async (req, res) => {
 
 
 
-module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend,ban};
+
+
+module.exports = { get, add ,verify,getOne,getfriends,deleteFriend,updateFriend,getOneById};
+
