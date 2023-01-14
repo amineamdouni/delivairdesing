@@ -22,7 +22,7 @@ router.get("/id/:id", getOneById);
 router.delete("/:id", deleteFriend);
 
 router.put("/:id", updateFriend);
-router.delete("/:user_id", ban);
+
 
 
 module.exports = router;
