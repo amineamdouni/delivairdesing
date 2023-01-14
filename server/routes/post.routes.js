@@ -1,10 +1,11 @@
 var router = require("express").Router();
 
-const {get,newPost,deletePost} = require("../controller/post.controller");
+const {getAllPosts,newPost,deletePost, updatePost} = require("../controller/post.controller");
 
-router.get('/',get)
+router.get('/',getAllPosts)
 router.post("/", newPost);
 router.delete("/:id", deletePost);
+router.put("/:id", updatePost);
 
 
 module.exports = router;

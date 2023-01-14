@@ -14,15 +14,20 @@ const getAll = async (req, res) => {
 };
 const getbyShipper = async (req, res) => {
   try {
-    products.findMany({ where:{
-      shipper_id:1*req.params.id
-    }}).then((result) => {
-      res.json(result);
-    });
+    products
+      .findMany({
+        where: {
+          shipper_id: 1 * req.params.id,
+        },
+      })
+      .then((result) => {
+        res.json(result);
+      });
   } catch (err) {
     res.json(err);
   }
-};const getbysender = async (req, res) => {
+};
+const getbysender = async (req, res) => {
   try {
     products
       .findMany({
@@ -43,9 +48,9 @@ const addProduct = async (req, res) => {
     products
       .create({
         data: {
-          shipper_id: req.body.shipper,
-          receiver_id: req.body.reciver,
-          status: "intitial",
+          shipper_id: req.body.shipper_id,
+          receiver_id: req.body.receiver_id,
+          status: "waiting",
           weight: req.body.weight,
           productName: req.body.productName,
           flightNumber: req.body.flightNumber,
@@ -56,21 +61,24 @@ const addProduct = async (req, res) => {
     res.json(err);
   }
 };
-updateProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
-    products({
-      where: {
-        AND: [{ shipper_id:req.body.shipper_id }, { receiver_id: req.body.receiver_id }],
-      },
-      data: {
-        status: req.body.status,
-      },
-    }).then((result) => {
-      res.json(result);
-    });
+    products
+      .updateMany({
+        where: {
+          shipper_id: req.body.shipper_id,
+          receiver_id: req.body.receiver_id
+        },
+        data: {
+          status: req.body.status,
+        },
+      })
+      .then((result) => {
+        res.json(result);
+      });
   } catch (err) {
     res.json(err);
   }
 };
 
-module.exports = { getAll, addProduct, getbyShipper };
+module.exports = { getAll, addProduct, getbyShipper,getbysender, updateProduct };
