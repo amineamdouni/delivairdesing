@@ -62,6 +62,22 @@ export default function SignUp({ navigation }) {
   const [dataInput, setDataInput] = useState([]);
   const { setUser, setConnected, setChatUser } = useContext(UserContext);
 const toast = useToast();
+const Ale=()=>{
+  toast.show({
+    render: ({ id }) => {
+      return (
+        <Alert
+          id={id}
+          status={ToastDetails[0].status}
+          variant={ToastDetails[0].variant}
+          title={ToastDetails[0].title}
+          description={ToastDetails[0].description}
+          isClosable={true}
+        />
+      );
+    },
+  });
+}
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
@@ -83,11 +99,11 @@ const toast = useToast();
             navigation.navigate("notices");
           })
           .catch((err) => {
-            alert(err);
+         console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        Ale();
       });
   };
 
@@ -235,34 +251,21 @@ const toast = useToast();
               </Box>
               <Box>
                 <Center>
-                  {/* <Button
+                  <Button
                     variant="subtle"
                     className="LoginButton"
                     onPress={SignUpUser}
                     style={style.LoginButton}
                   >
                     SignUp
-                  </Button> */}
-                  <Button
+                  </Button>
+                  {/* <Button
                     onPress={() =>
-                      toast.show({
-                        render: ({ id }) => {
-                          return (
-                            <Alert
-                              id={id}
-                              status={ToastDetails[0].status}
-                              variant={ToastDetails[0].variant}
-                              title={ToastDetails[0].title}
-                              description={ToastDetails[0].description}
-                              isClosable={true}
-                            />
-                          );
-                        },
-                      })
+                     Ale()
                     }
                   >
                     {ToastDetails[0].variant}
-                  </Button>
+                  </Button> */}
                 </Center>
               </Box>
             </Box>
