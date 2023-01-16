@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 import {
- 
   Text,
   Center,
   Heading,
@@ -16,7 +15,7 @@ import {
   Icon,
   HStack,
   Link,
-  useToast
+  useToast,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IconButton } from "native-base";
@@ -61,23 +60,23 @@ export default function SignUp({ navigation }) {
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
   const { setUser, setConnected, setChatUser } = useContext(UserContext);
-const toast = useToast();
-const Ale=()=>{
-  toast.show({
-    render: ({ id }) => {
-      return (
-        <Alert
-          id={id}
-          status={ToastDetails[0].status}
-          variant={ToastDetails[0].variant}
-          title={ToastDetails[0].title}
-          description={ToastDetails[0].description}
-          isClosable={true}
-        />
-      );
-    },
-  });
-}
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
@@ -86,7 +85,7 @@ const Ale=()=>{
       .then((res) => {
         axios
 
-          .post("http://192.168.104.20:3000/api/users/register", {
+          .post("http://192.168.167.101:3000/api/users/register", {
             email: Email,
             password,
             username,
@@ -99,11 +98,11 @@ const Ale=()=>{
             navigation.navigate("notices");
           })
           .catch((err) => {
-         console.log(err);
+            console.log(err);
           });
       })
       .catch((err) => {
-        Ale();
+        Ale("error", "error", JSON.stringify(err.code));
       });
   };
 
@@ -259,13 +258,6 @@ const Ale=()=>{
                   >
                     SignUp
                   </Button>
-                  {/* <Button
-                    onPress={() =>
-                     Ale()
-                    }
-                  >
-                    {ToastDetails[0].variant}
-                  </Button> */}
                 </Center>
               </Box>
             </Box>

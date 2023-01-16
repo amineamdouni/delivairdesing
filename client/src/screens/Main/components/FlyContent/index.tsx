@@ -9,7 +9,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading,VStack } from "native-base";
+import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading,VStack,useToast } from "native-base";
 
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
@@ -19,7 +19,23 @@ import CardSelect from "../CardSelect - Copy";
 import Swiper from "react-native-swiper";
 
 export default function FlyContent({navigation,posts,to,from,setPosts}) {
- 
+ const toast = useToast();
+ const Ale = (status, title, description) => {
+   toast.show({
+     render: ({ id }) => {
+       return (
+         <Alert
+           id={id}
+           status={status}
+           variant={"left-accent"}
+           title={title}
+           description={description}
+           isClosable={true}
+         />
+       );
+     },
+   });
+ };
   const search=(from,to)=> {
     
     let searchedData = posts.filter(
@@ -85,7 +101,7 @@ export default function FlyContent({navigation,posts,to,from,setPosts}) {
   }, []);
 useEffect(()=>{
   if (posts.length==0) {
-    alert('errrr')
+    // Ale('error')
   }
 },[posts])
   return (

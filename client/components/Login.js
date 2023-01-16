@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 
 import {
-  Alert,
   Text,
   Link,
   Center,
@@ -15,6 +14,7 @@ import {
   Divider,
   Icon,
   HStack,
+  useToast,
 } from "native-base";
 import {
   StyleSheet,
@@ -24,7 +24,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
+import Alert from "./Alert";
 //--------- We need to secure this amine !------
 const firebaseConfig = {
   apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
@@ -57,52 +57,79 @@ import socketIO from "socket.io-client";
 import { getMediaLibraryPermissionsAsync } from "expo-image-picker";
 
 export default function Login({ navigation }) {
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
   const { setUser, setChatUser, setSocket } = useContext(UserContext);
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(null);
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password).then((res) => {
-      console.log("firebase succ");
-      axios
+    signInWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log("firebase succ");
+        axios
 
-        .post("http://192.168.104.20:3000/api/users/login", {
-          email,
-          password,
-        })
-        .then((result) => {
-          console.log(result.data,"mongosucc");
-          setChatUser(result.data.user);
-          axios
+          .post("http://192.168.167.101:3000/api/users/login", {
+            email,
+            password,
+          })
+          .then((result) => {
+            console.log(result.data, "mongosucc");
+            setChatUser(result.data.user);
+            axios
 
-           .get(`http://192.168.104.20:5001/users/${result.data.user.email}`)
-            .then((res) => {
-              setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.104.20:3000"));
-              navigation.navigate("home");
+              .get(
+                `http://192.168.167.101:5001/users/${result.data.user.email}`
+              )
+              .then((res) => {
+                setUser(res.data);
+                setSocket(socketIO.connect("http://192.168.167.101:3000"));
+                navigation.navigate("home");
 
-              alert("welcome " + email);
-            });
-        })
-        .catch((err) => console.log(err))
-        .catch((err) => {
-          alert("Please check your credentials or you may not be signed in");
-        });
-    });
+                Ale(
+                  "success",
+                  "login succussfully",
+                  "welcome " + res.data.userName
+                );
+              });
+          });
+      })
+      .catch((err) =>
+        Ale("error", "error", "please check ur email or password ")
+      );
   };
   const resetPassword = () => {
     if (email != null) {
       sendPasswordResetEmail(auth, email)
         .then(() => {
-          alert("password reset email has been sent successfully");
+          Ale(
+            "info",
+            "password reset",
+            "password reset email has been sent successfully"
+          );
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          alert(errorMessage);
+          Ale("error", "error", "Please enter a valid email");
         });
     } else {
-      alert("Please enter a valid email");
+      Ale("error", "email error", "write an email before ");
     }
   };
   return (
