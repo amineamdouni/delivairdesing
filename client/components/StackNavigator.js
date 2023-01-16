@@ -9,9 +9,8 @@ import AddPost from "./AddPost";
 import Reclamation from "./Reclamation";
 import Contact from "./ContactList";
 import History from "./History";
-
+import Alert from "./Alert";
 import Main from "../src/screens/Main";
-
 import Form from "./Forme";
 
 import Chat from "./Chat";
@@ -42,8 +41,8 @@ const Stacks = () => {
           gestureDirection: "horizontal",
         }}
       >
-        <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
+        <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="form" component={Form} />
         <Stack.Screen name="notices" component={Notices} />
       </Stack.Navigator>
@@ -52,6 +51,7 @@ const Stacks = () => {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="otherprofile" component={OthersProfile} />
+        <Stack.Screen name="contarct" component={Alert} />
         <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
 

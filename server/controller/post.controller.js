@@ -3,24 +3,27 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const posts = prisma.posts;
 
-const get=async (req, res) => {
+const getAllPosts = async (req, res) => {
   try {
     posts.findMany({}).then((result) => {
       res.json(result);
     });
   } catch (err) {
     res.json(err);
-  }}
-  const getOne = async (req, res) => {
-    try {
-      posts.findFirst({where:{departCountry:req.params.departCountry}}).then((result) => {
-        res.json(result);
-      });
-    } catch (err) {
-      res.json(err);
-    }
-  };
+  }
+};
 
+const updatePost = async (req, res) => {
+  try {
+    const result = await posts.update({
+      where: { post_id: +req.params.id },
+      data: req.body,
+    });
+    res.json(result);
+  } catch (err) {
+    res.json(err);
+  }
+};
 
 const deletePost = async (req, res) => {
   try {
@@ -34,8 +37,8 @@ const deletePost = async (req, res) => {
     res.json(err);
   }
 };
-const newPost = async(req,res)=>{
-  try{
+const newPost = async (req, res) => {
+  try {
     posts
       .create({
         data: {
@@ -50,31 +53,16 @@ const newPost = async(req,res)=>{
           weight: req.body.weight,
           postTime: req.body.postTime,
           poster_id: req.body.poster_id,
+          poster_image: req.body.poster_image,
+          poster_name: req.body.poster_name,
           flight_id: req.body.flight_id,
         },
       })
       .then((result) => res.json(result));
-
-  } catch(err){
-    res.json(err)
-  }
-}
-const deletepost = async (req, res) => {
-  try {
-    const { post_id } = req.params;
-    const deletedPost = await prisma.posts.delete({
-      where: {
-        post_id: Number(post_id)
-      }
-    });
-    res.json(deletedPost);
   } catch (err) {
     res.json(err);
   }
 };
 
 
-
-
-module.exports = {get,newPost,deletePost};
-
+module.exports = { getAllPosts, newPost, deletePost,updatePost };

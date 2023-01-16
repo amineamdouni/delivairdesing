@@ -1,13 +1,14 @@
 import React, { useContext, useState } from "react";
 
 import {
-  Alert,
+ 
   Text,
   Center,
   Heading,
   VStack,
   Box,
   Button,
+  Checkbox,
   Image,
   Input,
   Flex,
@@ -15,6 +16,7 @@ import {
   Icon,
   HStack,
   Link,
+  useToast
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IconButton } from "native-base";
@@ -24,7 +26,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
-
+import Alert from "./Alert";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 //--------- We need to secure this amine !------
@@ -44,13 +46,38 @@ const auth = getAuth();
 import { UserContext } from "../UserContext";
 import axios from "axios";
 export default function SignUp({ navigation }) {
+  const ToastDetails = [
+    {
+      title: "Network connection restored",
+      variant: "left-accent",
+      description:
+        "This is to inform you that your network connectivity is restored",
+      isClosable: true,
+    },
+  ];
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
   const { setUser, setConnected, setChatUser } = useContext(UserContext);
-
+const toast = useToast();
+const Ale=()=>{
+  toast.show({
+    render: ({ id }) => {
+      return (
+        <Alert
+          id={id}
+          status={ToastDetails[0].status}
+          variant={ToastDetails[0].variant}
+          title={ToastDetails[0].title}
+          description={ToastDetails[0].description}
+          isClosable={true}
+        />
+      );
+    },
+  });
+}
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
@@ -59,7 +86,7 @@ export default function SignUp({ navigation }) {
       .then((res) => {
         axios
 
-          .post("http://192.168.103.16:3000/api/users/register", {
+          .post("http://192.168.104.20:3000/api/users/register", {
             email: Email,
             password,
             username,
@@ -72,11 +99,11 @@ export default function SignUp({ navigation }) {
             navigation.navigate("notices");
           })
           .catch((err) => {
-            alert(err);
+         console.log(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        Ale();
       });
   };
 
@@ -171,6 +198,17 @@ export default function SignUp({ navigation }) {
                   shadow="12"
                 />
               </Box>
+              <HStack space={6}>
+                <Checkbox
+                  shadow={2}
+                  value="test"
+                  accessibilityLabel="This is a dummy checkbox"
+                  isChecked={false}
+                >
+                  I accept the terms & conditions
+                </Checkbox>
+              </HStack>
+              ;
               <Box w={160}>
                 <HStack space={10} justifyContent="center" style={style.forgot}>
                   <Divider my={2} />
@@ -211,7 +249,6 @@ export default function SignUp({ navigation }) {
                   </Link>
                 </Flex>
               </Box>
-
               <Box>
                 <Center>
                   <Button
@@ -222,6 +259,13 @@ export default function SignUp({ navigation }) {
                   >
                     SignUp
                   </Button>
+                  {/* <Button
+                    onPress={() =>
+                     Ale()
+                    }
+                  >
+                    {ToastDetails[0].variant}
+                  </Button> */}
                 </Center>
               </Box>
             </Box>
