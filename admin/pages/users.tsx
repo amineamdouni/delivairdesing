@@ -10,13 +10,21 @@ const users = () => {
       .then((response) => setUser(response.data))
       .catch((err) => console.log(err));
   }, []);
-  const Ban = () => {
-    //ban function
+  const ban = (user_id) => {
+    axios
+      .delete(`http://localhost:5001/users/${user_id}`)
+      .then((res) =>{
+console.log(res);
+window.location.reload();
+
+      })
+      .catch((err) => console.log(err));
   };
   const Verify = (id) => {
     axios
       .put(`http://localhost:5001/users/${id}`, { verified: true })
       .then((res) => console.log("succ"))
+      
       .catch((err) => console.log(err));
   };
   const Search = () => {
@@ -199,9 +207,9 @@ const users = () => {
                           >
                             verify
                           </button>
-                          <button className="btn btn-outline-danger btn-sm">
-                            ban
-                          </button>
+                          <button className="btn btn-danger" onClick={() => ban(e.user_id)}>
+  ban
+</button>
                         </td>
                       </tr>
                     </>

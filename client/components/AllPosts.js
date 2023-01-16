@@ -1,6 +1,14 @@
 //import liraries
 import * as React from "react";
-import { Avatar, Box, HStack, Center, Content, Heading, VStack } from "native-base";
+import {
+  Avatar,
+  Box,
+  HStack,
+  Center,
+  Content,
+  Heading,
+  VStack,
+} from "native-base";
 import {
   View,
   Text,
@@ -24,7 +32,7 @@ import {
 } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../UserContext";
-import { useContext,useState } from "react";
+import { useContext, useState } from "react";
 import { async } from "@firebase/util";
 const friends = [
   {
@@ -69,11 +77,14 @@ const friends = [
 ];
 
 export default function AllPosts({ navigation }) {
-  React.useEffect(()=>{
-    axios.get(`http://192.168.104.23:5001/posts`).then(res=>setPosts(res.data)).catch(err=>alert("an error ocured when i "))
-  },[])
+  React.useEffect(() => {
+    axios
+      .get(`http://192.168.104.20:5001/posts`)
+      .then((res) => setPosts(res.data))
+      .catch((err) => alert("an error ocured when i "));
+  }, []);
 
-  const relativeDate=(param)=>{
+  const relativeDate = (param) => {
     var olddate = new Date(param);
     var oldseconds = olddate.getTime() / 1000; //1440516958
     const date = new Date();
@@ -99,14 +110,15 @@ export default function AllPosts({ navigation }) {
     } else {
       // More than a year has passed:
       output = `${Math.floor(difference / 31449600)} years ago`;
-    }return output
-  }
-   const convertTime = (pa) => {
-     return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
-   };
-  
+    }
+    return output;
+  };
+  const convertTime = (pa) => {
+    return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+  };
+
   const { setOneUser, contactList } = useContext(UserContext);
-  const[posts,setPosts]=useState("")
+  const [posts, setPosts] = useState("");
   const dialCall = (number) => {
     let phoneNumber = "";
     if (Platform.OS === "android") {
@@ -129,18 +141,20 @@ export default function AllPosts({ navigation }) {
           </Box>
         </Box>
       </Box>
-        {posts &&posts.map((e, i) => {
+      {posts &&
+        posts.map((e, i) => {
           console.log(e, "eeeee");
-          let test 
-           axios.get(
-            `http://192.168.104.23:5001/users/id/${e.poster_id}`
-          ).then(res=>test=res.data)
+          let test;
+          axios
+            .get(`http://192.168.104.20:5001/users/id/${e.poster_id}`)
+            .then((res) => (test = res.data));
           console.log(test, "titi");
           return (
-            
             <View style={styles.friendItem}>
-            
-              <Image source={{ uri: friends[i].profileImage }} style={styles.profileImage} />
+              <Image
+                source={{ uri: friends[i].profileImage }}
+                style={styles.profileImage}
+              />
               <View style={styles.friendInfo}>
                 <Text style={styles.friendName}>{friends[i].name}</Text>
                 <Text style={styles.friendEmail}>
@@ -168,7 +182,7 @@ export default function AllPosts({ navigation }) {
                     size={20}
                     color="#FFC8CE"
                   ></MaterialCommunityIcons>{" "}
-                  : {convertTime(e.departTime) }
+                  : {convertTime(e.departTime)}
                 </Text>
 
                 <Text>
@@ -194,10 +208,8 @@ export default function AllPosts({ navigation }) {
                     size={25}
                   ></AntDesign>
                 </TouchableOpacity>
-               
               </View>
             </View>
-            
           );
         })}
     </View>

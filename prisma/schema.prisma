@@ -19,6 +19,8 @@ model posts {
   acceptedItems String[]
   weight        String
   postTime      String
+  poster_image  String
+  poster_name   String
   poster_id     Int
   flight_id     String
   users         users    @relation(fields: [poster_id], references: [user_id], onDelete: Cascade)
@@ -46,23 +48,24 @@ model reviews {
 }
 
 model users {
-  user_id                               Int           @id @default(autoincrement())
-  userName                              String?       @unique(map: "user.id_unique")
-  password                              String?
+  user_id                               Int            @id @default(autoincrement())
+  userName                              String?        @unique(map: "user.id_unique")
+  banned                                Boolean?
   email                                 String?
   phoneNumber                           Int?
   image                                 String?
-  ratings                               Decimal[]     @db.Decimal
+  ratings                               Decimal[]      @db.Decimal
   pendingRequests                       String[]
   location                              String?
   contactList                           String[]
   verified                              Boolean?
+  notification                          notification[]
   posts                                 posts[]
-  products_products_receiver_idTousers  products[]    @relation("products_receiver_idTousers")
-  products_products_shipper_idTousers   products[]    @relation("products_shipper_idTousers")
+  products_products_receiver_idTousers  products[]     @relation("products_receiver_idTousers")
+  products_products_shipper_idTousers   products[]     @relation("products_shipper_idTousers")
   reclamation                           reclamation[]
-  reviews_reviews_reviewReceiverTousers reviews[]     @relation("reviews_reviewReceiverTousers")
-  reviews_reviews_reviewSenderTousers   reviews[]     @relation("reviews_reviewSenderTousers")
+  reviews_reviews_reviewReceiverTousers reviews[]      @relation("reviews_reviewReceiverTousers")
+  reviews_reviews_reviewSenderTousers   reviews[]      @relation("reviews_reviewSenderTousers")
 }
 
 model reclamation {
@@ -79,4 +82,12 @@ model articles {
   content    String
   picture    String
   summary    String
+}
+
+model notification {
+  notification_id       Int    @id @default(autoincrement())
+  status                String
+  content               String
+  notification_receiver Int
+  users                 users  @relation(fields: [notification_receiver], references: [user_id], onDelete: Cascade)
 }

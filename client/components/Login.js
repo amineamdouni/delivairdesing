@@ -54,6 +54,7 @@ const imgBackground = {
 };
 
 import socketIO from "socket.io-client";
+import { getMediaLibraryPermissionsAsync } from "expo-image-picker";
 
 export default function Login({ navigation }) {
   const { setUser, setChatUser, setSocket } = useContext(UserContext);
@@ -65,18 +66,19 @@ export default function Login({ navigation }) {
       console.log("firebase succ");
       axios
 
-        .post("http://192.168.104.23:3000/api/users/login", {
+        .post("http://192.168.104.20:3000/api/users/login", {
           email,
           password,
         })
         .then((result) => {
+          console.log(result.data,"mongosucc");
           setChatUser(result.data.user);
           axios
 
-            .get(`http://192.168.104.23:5001/users/${result.data.user.email}`)
+           .get(`http://192.168.104.20:5001/users/${result.data.user.email}`)
             .then((res) => {
               setUser(res.data);
-              setSocket(socketIO.connect("http://192.168.104.23:3000"));
+              setSocket(socketIO.connect("http://192.168.104.20:3000"));
               navigation.navigate("home");
 
               alert("welcome " + email);

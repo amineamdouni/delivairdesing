@@ -52,27 +52,25 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      
     } else {
       if (from.length == 0 && to.length == 0) {
         console.log("null");
         alert("u didin t pick any destination u will be redirected to ...");
 
         navigation.navigate("allposts");
-      } else  if(from.length>0 && to.length==0  ){
-alert("please specify ur destination")
-    }else  if(to.length>0 && from.length==0  ){
-alert("please specify where are u going")
-    }else {
+      } else if (from.length > 0 && to.length == 0) {
+        alert("please specify ur destination");
+      } else if (to.length > 0 && from.length == 0) {
+        alert("please specify where are u going");
+      } else {
         setShowCardSelect(true);
       }
     }
   };
 
-  
   useEffect(() => {
     axios
-      .get("http://192.168.104.23:5001/posts")
+      .get("http://192.168.104.20:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -137,7 +135,7 @@ alert("please specify where are u going")
           <S.FlyInfo exiting={FlipOutXUp.duration(600)}>
             <S.Content>
               <S.LargeText>DelivAir</S.LargeText>
-             
+
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>From</S.SmallText>
