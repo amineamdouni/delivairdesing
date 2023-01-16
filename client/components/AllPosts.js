@@ -79,7 +79,7 @@ const friends = [
 export default function AllPosts({ navigation }) {
   React.useEffect(() => {
     axios
-      .get(`http://192.168.104.20:5001/posts`)
+      .get(`http://192.168.167.101:5001/posts`)
       .then((res) => setPosts(res.data))
       .catch((err) => alert("an error ocured when i "));
   }, []);
@@ -146,7 +146,7 @@ export default function AllPosts({ navigation }) {
           console.log(e, "eeeee");
           let test;
           axios
-            .get(`http://192.168.104.20:5001/users/id/${e.poster_id}`)
+            .get(`http://192.168.167.101:5001/users/id/${e.poster_id}`)
             .then((res) => (test = res.data));
           console.log(test, "titi");
           return (
