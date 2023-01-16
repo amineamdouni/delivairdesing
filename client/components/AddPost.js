@@ -109,7 +109,7 @@ export default function AddPost({ navigation }) {
   };
   const post = (body) => {
     axios
-      .post(`http://192.168.103.16:5001/posts`, body)
+      .post(`http://192.168.104.20:5001/posts`, body)
       .then((res) => Alert("success"));
   };
   return (
