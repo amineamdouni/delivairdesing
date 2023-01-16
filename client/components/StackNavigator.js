@@ -13,10 +13,10 @@ import Alert from "./Alert";
 import Main from "../src/screens/Main";
 import Form from "./Forme";
 
+import UserSetting from "./UserSetting"
 import Chat from "./Chat";
 
 import Track from "./Track";
-
 import Messages from "./Messages";
 import Profile from "./Profiletest";
 import OthersProfile from "./OthersProfile";
@@ -41,6 +41,7 @@ const Stacks = () => {
           gestureDirection: "horizontal",
         }}
       >
+        <Stack.Screen name="setting" component={UserSetting}/>
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="form" component={Form} />
