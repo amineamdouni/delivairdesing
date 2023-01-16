@@ -55,7 +55,7 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     axios
       .get(
-        "http://192.168.103.16:3000/api/users/allusers/63bc585f004eb697059c2a7d"
+        "http://192.168.104.23:3000/api/users/allusers/63bc585f004eb697059c2a7d"
       )
       .then((res) => {
         getAllUsers(res.data);

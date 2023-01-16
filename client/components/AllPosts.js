@@ -70,7 +70,7 @@ const friends = [
 
 export default function AllPosts({ navigation }) {
   React.useEffect(()=>{
-    axios.get(`http://192.168.103.16:5001/posts`).then(res=>setPosts(res.data)).catch(err=>alert("an error ocured when i "))
+    axios.get(`http://192.168.104.23:5001/posts`).then(res=>setPosts(res.data)).catch(err=>alert("an error ocured when i "))
   },[])
 
   const relativeDate=(param)=>{
@@ -133,7 +133,7 @@ export default function AllPosts({ navigation }) {
           console.log(e, "eeeee");
           let test 
            axios.get(
-            `http://192.168.103.16:5001/users/id/${e.poster_id}`
+            `http://192.168.104.23:5001/users/id/${e.poster_id}`
           ).then(res=>test=res.data)
           console.log(test, "titi");
           return (

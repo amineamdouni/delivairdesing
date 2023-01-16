@@ -72,7 +72,7 @@ alert("please specify where are u going")
   
   useEffect(() => {
     axios
-      .get("http://192.168.103.16:5001/posts")
+      .get("http://192.168.104.23:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
