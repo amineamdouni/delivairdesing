@@ -96,6 +96,7 @@ export default function SignUp({ navigation }) {
             setConnected(res.data.user);
             setChatUser(res.data.user);
             navigation.navigate("notices");
+            Ale("success","Welcome!","Have fun and respect everyone !")
           })
           .catch((err) => {
             console.log(err);
