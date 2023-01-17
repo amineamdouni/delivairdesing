@@ -9,7 +9,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-import { Text, Container, Box, Input } from "native-base";
+import { Text, Container, Box, Input,  useToast, } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -26,7 +26,36 @@ import FlyContent from "./components/FlyContent";
 import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
 const date = new Date();
+
+import Alert from "../../../components/Alert";
+import { Toast } from "native-base";
+
+
 export default function Main({ navigation }: any) {
+
+
+  //---------
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+  //---------
+
+
+
   const [modalVisible, setModalVisible] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
@@ -55,13 +84,13 @@ export default function Main({ navigation }: any) {
     } else {
       if (from.length == 0 && to.length == 0) {
         console.log("null");
-        alert("u didin t pick any destination u will be redirected to ...");
+        Ale("error","please pick destination","Please pick both destination in order to get results")
 
         navigation.navigate("allposts");
       } else if (from.length > 0 && to.length == 0) {
-        alert("please specify ur destination");
+        Ale("error","Your destination is required !", "Please make sure to fill it")
       } else if (to.length > 0 && from.length == 0) {
-        alert("please specify where are u going");
+        Ale("error","'From' field is required!", "Please make sure to fill it")
       } else {
         setShowCardSelect(true);
       }
@@ -70,7 +99,7 @@ export default function Main({ navigation }: any) {
 
   useEffect(() => {
     axios
-      .get("http://192.168.167.101:5001/posts")
+      .get("http://192.168.1.6:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -177,8 +206,8 @@ export default function Main({ navigation }: any) {
                 <TouchableOpacity
                   onPress={() => navigation.navigate("allposts")}
                 >
-                  <Text>skip to ...page</Text>
-                </TouchableOpacity>
+                  <Text style={{color:"#5FC8C0", fontWeight:"bold", fontSize:20}}> Press here </Text>
+                </TouchableOpacity>to see all requests.
               </Text>
               <A.HStack>
                 <Text color={"black"} top={3}>

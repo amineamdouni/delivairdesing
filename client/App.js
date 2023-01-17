@@ -27,7 +27,7 @@ import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.167.101:3000");
+  // const socket = socketIO.connect("http://192.168.1.6:3000");
 
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
@@ -68,7 +68,7 @@ export default function App() {
       for (let i = 0; i < user.contactList.length; i++) {
         axios
 
-          .get(`http://192.168.167.101:5001/users/${user.contactList[i]}`)
+          .get(`http://192.168.1.6:5001/users/${user.contactList[i]}`)
 
           .then((res) => {
             contact.push(res.data);
@@ -79,7 +79,7 @@ export default function App() {
       for (let i = 0; i < user.pendingRequests.length; i++) {
         axios
 
-          .get(`http://192.168.167.101:5001/users/${user.pendingRequests[i]}`)
+          .get(`http://192.168.1.6:5001/users/${user.pendingRequests[i]}`)
 
           .then((res) => {
             pending.push(res.data);

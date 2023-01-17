@@ -34,6 +34,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../UserContext";
 import { useContext, useState } from "react";
 import { async } from "@firebase/util";
+import Alert from "./Alert";
+import { useToast } from "native-base";
 const friends = [
   {
     name: "Amine Amdouni",
@@ -77,11 +79,38 @@ const friends = [
 ];
 
 export default function AllPosts({ navigation }) {
+  //----------
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+
+  //----------
   React.useEffect(() => {
     axios
-      .get(`http://192.168.167.101:5001/posts`)
-      .then((res) => setPosts(res.data))
-      .catch((err) => alert("an error ocured when i "));
+      .get(`http://192.168.1.6:5001/posts`)
+      .then((res) => {
+        setPosts(res.data);
+        Ale(
+          "success",
+          res.data.length + " people posted!",
+          "Make sure to verify everything before sending goods !"
+        );
+      })
+      .catch((err) => Ale("error", "oups", err));
   }, []);
 
   const relativeDate = (param) => {
@@ -146,7 +175,7 @@ export default function AllPosts({ navigation }) {
           console.log(e, "eeeee");
           let test;
           axios
-            .get(`http://192.168.167.101:5001/users/id/${e.poster_id}`)
+            .get(`http://192.168.1.6:5001/users/id/${e.poster_id}`)
             .then((res) => (test = res.data));
           console.log(test, "titi");
           return (

@@ -3,7 +3,6 @@ import { UserContext } from "../UserContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios, { Axios } from "axios";
 import {
-  Alert,
   Text,
   Link,
   Center,
@@ -27,6 +26,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
+import Alert from "./Alert";
+import { useToast } from "native-base";
 const date = new Date();
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
@@ -34,6 +35,24 @@ export default function AddPost({ navigation }) {
   const { user, connected } = useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
+
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
 
   useEffect(() => {
     forceUpdate();
@@ -105,12 +124,26 @@ export default function AddPost({ navigation }) {
       )
       .then((res) => {
         setFlight(res.data[0]);
+        console.log(res.data[0]);
+        Ale(
+          "success",
+          "added " + res.data[0].airline.name,
+          "Plane : " + res.data[0].aircraft.model
+        );
+      })
+      .catch((err) => {
+        Ale("error", "Please try again", err);
       });
   };
   const post = (body) => {
     axios
-      .post(`http://192.168.167.101:5001/posts`, body)
-      .then((res) => Alert("success"));
+      .post(`http://192.168.1.6:5001/posts`, body)
+      .then((res) =>
+        Ale("success", "Your post is successfully submitted!", "Good luck!")
+      )
+      .catch((err) =>
+        Ale("error", "try again", "Make sure the flight number is correct!")
+      );
   };
   return (
     <NativeBaseProvider>
@@ -291,8 +324,8 @@ export default function AddPost({ navigation }) {
               flight_id: flight.number,
               postTime: date,
               paymentWays: [],
-              acceptedItems: [user.image],
-              poster_id: user.user_id,
+              acceptedItems: [],
+              poster_id: user._id,
             })
           }
         >

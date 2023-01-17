@@ -13,6 +13,7 @@ import {
   VStack,
   Spacer,
   Center,
+  useToast
 } from "native-base";
 import { SwipeListView } from "react-native-swipe-list-view";
 import {
@@ -23,6 +24,7 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { UserContext } from "../UserContext";
+import Alert from "./Alert";
 
 function Basic() {
   const { contactList, setContactList, contactArray, setcontactArray } =
