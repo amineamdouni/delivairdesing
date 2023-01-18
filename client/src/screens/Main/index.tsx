@@ -106,7 +106,9 @@ export default function Main({ navigation }: any) {
 
   useEffect(() => {
     axios
+
       .get("http://192.168.1.132:5001/posts")
+
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {

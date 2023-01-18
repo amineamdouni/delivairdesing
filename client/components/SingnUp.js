@@ -91,7 +91,9 @@ export default function SignUp({ navigation }) {
       .then((res) => {
         axios
 
+
           .post("http://192.168.1.132:3000/api/users/register", {
+
             email: Email,
             password,
             username,

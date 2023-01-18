@@ -84,7 +84,9 @@ export default function Login({ navigation }) {
         console.log("firebase succ");
         axios
 
+
           .post("http://192.168.1.132:3000/api/users/login", {
+
             email,
             password,
           })
@@ -97,6 +99,7 @@ export default function Login({ navigation }) {
               .then((res) => {
                 setUser(res.data);
                 setSocket(socketIO.connect("http://192.168.1.132:3000"));
+
                 navigation.navigate("home");
 
                 Ale(

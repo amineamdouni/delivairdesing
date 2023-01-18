@@ -30,6 +30,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import Footer from "./Footer";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../UserContext";
 import { useContext, useState } from "react";
@@ -101,7 +102,9 @@ export default function AllPosts({ navigation }) {
   //----------
   React.useEffect(() => {
     axios
+
       .get(`http://192.168.1.132:5001/posts`)
+
       .then((res) => {
         setPosts(res.data);
         Ale(
@@ -175,7 +178,9 @@ export default function AllPosts({ navigation }) {
           console.log(e, "eeeee");
           let test;
           axios
+
             .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
+
             .then((res) => (test = res.data));
           console.log(test, "titi");
           return (
@@ -241,6 +246,7 @@ export default function AllPosts({ navigation }) {
             </View>
           );
         })}
+      <Footer navigation={navigation} />
     </View>
   );
 }
