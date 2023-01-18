@@ -20,6 +20,7 @@ import {
   MaterialCommunityIcons,
   FontAwesome5,
 } from "@expo/vector-icons";
+import ProductForm from "./Contract";
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
 
@@ -28,7 +29,6 @@ export default Messages = () => {
   const scrollRef = useRef();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [size, setSize] = React.useState("md");
-
   const handleSizeClick = (newSize) => {
     setSize(newSize);
     setModalVisible(!modalVisible);
@@ -111,6 +111,7 @@ export default Messages = () => {
 
   return (
     <View style={styles.container}>
+      <ProductForm size={size} setModalVisible={setModalVisible} modalVisible={modalVisible}/>
       <Box>
         <Box backgroundColor={"#FFC8CE"}>
           <Box style={styles.Header}>
@@ -165,8 +166,11 @@ export default Messages = () => {
             />
           </View>
         </ScrollView>
-        <TouchableOpacity style={styles.btnSend}>
-          <FontAwesome5 name="file-contract" size={20} color={"#fff"}/>
+        <TouchableOpacity
+          onPress={() => handleSizeClick("full")}
+          style={styles.btnSend}
+        >
+          <FontAwesome5 name="file-contract" size={20} color={"#fff"} />
         </TouchableOpacity>
         <TouchableOpacity onPress={handleSending} style={styles.btnSend}>
           <Image

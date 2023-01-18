@@ -94,14 +94,18 @@ navigation.navigate('login')
               }}
             >
               <Menu.Item>
-                <HStack>
-                  <MaterialCommunityIcons
-                    name="account-edit-outline"
-                    color="green"
-                    size={17}
-                  />
-                  <Text>Edit Profile</Text>
-                </HStack>
+                <TouchableOpacity onPress={()=>{
+                  navigation.navigate('setting')
+                }}>
+                  <HStack>
+                    <MaterialCommunityIcons
+                      name="account-edit-outline"
+                      color="green"
+                      size={17}
+                    />
+                    <Text>Edit Profile</Text>
+                  </HStack>
+                </TouchableOpacity>
               </Menu.Item>
               <Menu.Item onPress={() => SignOut()}>
                 <HStack>
@@ -185,15 +189,14 @@ navigation.navigate('login')
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                   >
-                 
-                      {contactList.map((e) => (
-                        <TouchableOpacity
-                      onPress={() => {
-                        setOneUser(e);
-                        navigation.navigate("otherprofile");
-                      }}
-                    >
-                        <Box style={styles.mediaImageContainer}>   
+                    {contactList.map((e) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setOneUser(e);
+                          navigation.navigate("otherprofile");
+                        }}
+                      >
+                        <Box style={styles.mediaImageContainer}>
                           <Image
                             source={{
                               uri: e.image,
@@ -203,8 +206,8 @@ navigation.navigate('login')
                             resizeMode="cover"
                           />
                         </Box>
-                    </TouchableOpacity>
-                      ))}
+                      </TouchableOpacity>
+                    ))}
                   </ScrollView>
                 </Center>
               </Center>
