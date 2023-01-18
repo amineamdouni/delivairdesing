@@ -1,9 +1,8 @@
-import React, { useState,useContext,useEffect,useCallback } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../UserContext";
 import DropDownPicker from "react-native-dropdown-picker";
 import axios, { Axios } from "axios";
 import {
-  Alert,
   Text,
   Link,
   Center,
@@ -27,20 +26,86 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
+import Alert from "./Alert";
+import { useToast } from "native-base";
 const date = new Date();
 import { MaterialCommunityIcons, FontAwesome5 } from "@expo/vector-icons";
 
 export default function AddPost({ navigation }) {
-
   const { user, connected } = useContext(UserContext);
- const [, updateState] = useState();
- const forceUpdate = useCallback(() => updateState({}), []);
- 
- useEffect(() => {
-  forceUpdate()
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
- }, [user]);
-  const [flight, setFlight] = useState({"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-04 13:25+01:00","scheduledTimeUtc":"2023-01-04 12:25Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-04 15:10+01:00","actualTimeLocal":"2023-01-04 15:41+01:00","scheduledTimeUtc":"2023-01-04 14:10Z","actualTimeUtc":"2023-01-04 14:41Z","terminal":"1","quality":["Basic","Live"]},"lastUpdatedUtc":"2023-01-04 14:55Z","number":"TU 514","callSign":"TAR514","status":"Arrived","codeshareStatus":"IsOperator","isCargo":false,"aircraft":{"reg":"TS-IMY","modeS":"02A198","model":"Airbus A320 NEO"},"airline":{"name":"Tunisair"}},{"greatCircleDistance":{"meter":860121.12,"km":860.121,"mile":534.454,"nm":464.428,"feet":2821919.69},"departure":{"airport":{"icao":"DTTA","iata":"TUN","name":"Tunis, Tunis Carthage","shortName":"Carthage","municipalityName":"Tunis","location":{"lat":36.851,"lon":10.227199},"countryCode":"TN"},"scheduledTimeLocal":"2023-01-08 19:50+01:00","scheduledTimeUtc":"2023-01-08 18:50Z","terminal":"M","quality":["Basic"]},"arrival":{"airport":{"icao":"LEBL","iata":"BCN","name":"Barcelona","shortName":"Barcelona","municipalityName":"Barcelona","location":{"lat":41.2971,"lon":2.078459},"countryCode":"ES"},"scheduledTimeLocal":"2023-01-08 21:35+01:00","scheduledTimeUtc":"2023-01-08 20:35Z","terminal":"1","quality":["Basic"]},"lastUpdatedUtc":"2022-06-10 08:16Z","number":"TU 514","status":"Unknown","codeshareStatus":"Unknown","isCargo":false,"aircraft":{"model":"Airbus A320"},"airline":{"name":"Tunisair"}});
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+
+  useEffect(() => {
+    forceUpdate();
+  }, [user]); // {
+  //   greatCircleDistance: {
+  //     meter: 860121.12,
+  //     km: 860.121,
+  //     mile: 534.454,
+  //     nm: 464.428,
+  //     feet: 2821919.69,
+  //   },
+  //   departure: {
+  //     airport: {
+  //       icao: "DTTA",
+  //       iata: "TUN",
+  //       name: "Tunis, Tunis Carthage",
+  //       shortName: "Carthage",
+  //       municipalityName: "Tunis",
+  //       location: { lat: 36.851, lon: 10.227199 },
+  //       countryCode: "TN",
+  //     },
+  //     scheduledTimeLocal: "2023-01-04 13:25+01:00",
+  //     scheduledTimeUtc: "2023-01-04 12:25Z",
+  //     terminal: "M",
+  //     quality: ["Basic"],
+  //   },
+  //   arrival: {
+  //     airport: {
+  //       icao: "LEBL",
+  //       iata: "BCN",
+  //       name: "Barcelona",
+  //       shortName: "Barcelona",
+  //       municipalityName: "Barcelona",
+  //       location: { lat: 41.2971, lon: 2.078459 },
+  //       countryCode: "ES",
+  //     },
+  //     scheduledTimeLocal: "2023-01-04 15:10+01:00",
+  //     actualTimeLocal: "2023-01-04 15:41+01:00",
+  //     scheduledTimeUtc: "2023-01-04 14:10Z",
+  //     actualTimeUtc: "2023-01-04 14:41Z",
+  //     terminal: "1",
+  //     quality: ["Basic", "Live"],
+  //   },
+  //   lastUpdatedUtc: "2023-01-04 14:55Z",
+  //   number: "TU 514",
+  //   callSign: "TAR514",
+  //   status: "Arrived",
+  //   codeshareStatus: "IsOperator",
+  //   isCargo: false,
+  //   aircraft: { reg: "TS-IMY", modeS: "02A198", model: "Airbus A320 NEO" },
+  //   airline: { name: "Tunisair" },
+  // }
+  const [flight, setFlight] = useState(null);
   const [text, setText] = useState("");
   const [onChangeValue, setOnChangeValue] = React.useState(0);
   const [onChangeEndValue, setOnChangeEndValue] = React.useState(0);
@@ -59,10 +124,28 @@ export default function AddPost({ navigation }) {
       )
       .then((res) => {
         setFlight(res.data[0]);
+        console.log(res.data[0]);
+        Ale(
+          "success",
+          "added " + res.data[0].airline.name,
+          "Plane : " + res.data[0].aircraft.model
+        );
+      })
+      .catch((err) => {
+        Ale("error", "Please try again", err);
       });
   };
   const post = (body) => {
-    Axios.post(``, body).then((res) => Alert("success"));
+    axios
+
+      .post(`http://192.168.1.132:5001/posts`, body)
+
+      .then((res) =>
+        Ale("success", "Your post is successfully submitted!", "Good luck!")
+      )
+      .catch((err) =>
+        Ale("error", "try again", "Make sure the flight number is correct!")
+      );
   };
   return (
     <NativeBaseProvider>
@@ -76,7 +159,7 @@ export default function AddPost({ navigation }) {
           alt="Alternate Text"
         />
       </Center>
-  
+
       <Center top={5} flex={1} px="3">
         <Text fontSize={17} bottom={180} right={100} width={150}>
           Flight name :
@@ -109,10 +192,16 @@ export default function AddPost({ navigation }) {
             Check
           </Button>
         }
-        <Text fontSize={17}  bottom={170} right={100} width={150}>
+        <Text fontSize={17} bottom={170} right={100} width={150}>
           Weight :{" "}
         </Text>
-        <Text fontSize={17}  bottom={190} left={1} width={150} textAlign="center">
+        <Text
+          fontSize={17}
+          bottom={190}
+          left={1}
+          width={150}
+          textAlign="center"
+        >
           {" "}
           {onChangeValue} KG{" "}
         </Text>
@@ -136,7 +225,7 @@ export default function AddPost({ navigation }) {
           </Stack>
         </Box>
 
-        <Text fontSize={17}  bottom={140} right={100} width={150}>
+        <Text fontSize={17} bottom={140} right={100} width={150}>
           Payment method :
         </Text>
         <Box style={{ bottom: 170, left: 105 }}>
@@ -157,13 +246,11 @@ export default function AddPost({ navigation }) {
             setValue={setValue}
             setItems={setItems}
           />
-          
-      </Box>
+        </Box>
         {flight && (
           <Box
             style={{
               bottom: 30,
-              
             }}
           >
             <HStack>
@@ -172,8 +259,14 @@ export default function AddPost({ navigation }) {
                 color="coolGray.800"
                 size={15}
               ></FontAwesome5>
-              <Text fontSize={17} fontWeight={700}> Departure country :</Text>
-              <Text fontSize={17}> {flight.departure.airport.municipalityName} </Text>
+              <Text fontSize={17} fontWeight={700}>
+                {" "}
+                Departure country :
+              </Text>
+              <Text fontSize={17}>
+                {" "}
+                {flight.departure.airport.municipalityName}{" "}
+              </Text>
             </HStack>
             <HStack marginTop={3}>
               <MaterialCommunityIcons
@@ -181,7 +274,10 @@ export default function AddPost({ navigation }) {
                 color="coolGray.800"
                 size={17}
               ></MaterialCommunityIcons>
-              <Text fontSize={17} fontWeight={700}> Departure time :</Text>
+              <Text fontSize={17} fontWeight={700}>
+                {" "}
+                Departure time :
+              </Text>
               <Text fontSize={17}> {flight.departure.scheduledTimeLocal} </Text>
             </HStack>
             <HStack marginTop={3}>
@@ -190,8 +286,13 @@ export default function AddPost({ navigation }) {
                 color="coolGray.800"
                 size={17}
               ></FontAwesome5>
-              <Text fontSize={17} fontWeight={700}>Arrival country :</Text>
-              <Text fontSize={17}> {flight.arrival.airport.municipalityName} </Text>
+              <Text fontSize={17} fontWeight={700}>
+                Arrival country :
+              </Text>
+              <Text fontSize={17}>
+                {" "}
+                {flight.arrival.airport.municipalityName}{" "}
+              </Text>
             </HStack>
             <HStack marginTop={3}>
               <MaterialCommunityIcons
@@ -199,7 +300,10 @@ export default function AddPost({ navigation }) {
                 color="coolGray.800"
                 size={17}
               ></MaterialCommunityIcons>
-              <Text fontSize={17} fontWeight={700}> Arrival time :</Text>
+              <Text fontSize={17} fontWeight={700}>
+                {" "}
+                Arrival time :
+              </Text>
               <Text fontSize={17}> {flight.arrival.scheduledTimeLocal} </Text>
             </HStack>
           </Box>
@@ -213,15 +317,17 @@ export default function AddPost({ navigation }) {
           onPress={() =>
             post({
               type: "shipper",
-              departureCountry: flight.departure.airport.municipalityName,
-              departureTime: flight.departure.scheduledTimeLocal,
+              departCountry: flight.departure.airport.municipalityName,
+              content: user.userName,
+              departTime: flight.departure.scheduledTimeLocal,
               arriveCountry: flight.departure.airport.municipalityName,
               arriveTime: flight.departure.scheduledTimeLocal,
-              weight: onChangeEndValue,
-              flight_id: flight,
+              weight: JSON.stringify(onChangeEndValue),
+              flight_id: flight.number,
               postTime: date,
               paymentWays: [],
               acceptedItems: [],
+              poster_id: user._id,
             })
           }
         >

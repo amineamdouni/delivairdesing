@@ -1,6 +1,15 @@
 //import liraries
 import * as React from "react";
 import {
+  Avatar,
+  Box,
+  HStack,
+  Center,
+  Content,
+  Heading,
+  VStack,
+} from "native-base";
+import {
   View,
   Text,
   StyleSheet,
@@ -11,246 +20,290 @@ import {
   Animated,
   SafeAreaView,
 } from "react-native";
-
-const { width } = Dimensions.get("screen");
-import { EvilIcons } from "@expo/vector-icons";
+import axios from "axios";
+import { Linking, Platform } from "react-native";
 import {
-  FlingGestureHandler,
-  Directions,
-  State,
-} from "react-native-gesture-handler";
-
-const Data = [
+  Entypo,
+  AntDesign,
+  FontAwesome,
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
+import Footer from "./Footer";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { UserContext } from "../UserContext";
+import { useContext, useState } from "react";
+import { async } from "@firebase/util";
+import Alert from "./Alert";
+import { useToast } from "native-base";
+const friends = [
   {
-    title: "Upcoming technology",
-    location: "Moon Knight",
-    date: "September 14, 2022",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672839276/Capture_cmiyp9.png",
+    name: "Amine Amdouni",
+    email: "amouna@gmail.com",
+    phone: "123-456-7890",
+    country: "United States",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
   },
   {
-    title: "Confluence Integration ",
-    location: " Eliza Martin",
-    date: " February 2, 2022",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842200/IMG-20220202-WA0018_ynpbmv.jpg",
+    name: "Jane Smith",
+    email: "jane@gmail.com",
+    phone: "098-765-4321",
+    country: "Canada",
+    profileImage: "https://picsum.photos/200",
   },
   {
-    title: "What Is Cryptocurrency ?",
-    location: "Selimkhandipu",
-    date: " September 18, 2022",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842259/3d416d2430854196a8531a38f2af2582_qephil.jpg",
+    name: "Wiem Mimouni",
+    email: "mimouni@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://res.cloudinary.com/duqxezt6m/image/upload/v1671620160/me_kosu6u_p95f3v.jpg",
   },
   {
-    title: "Using Video Conferencing",
-    location: " Kiera Ellis",
-    date: "August 24, 2020",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842331/time-business-news-default_uls7es.jpg",
+    name: "Mahdi Dissem",
+    email: "midox@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
   },
   {
-    title: "All About Printed Circuit ",
-    location: "Ali Raza",
-    date: "December 6, 2020",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842387/All-About-Printed-Circuit-Boards-What-You-Need-To-Know-800x445_ce5bqh.jpg",
-  },
-  {
-    title: "KSF SPACE TOGETHER !",
-    location: "KSF Space Lunar Rover",
-    date: " south pole of the Moon in 2023",
-    poster:
-      "https://res.cloudinary.com/dnwi9wvci/image/upload/v1672842440/ksf-lunar-mission-nanosatellite-cubesat_bmunxa.jpg",
+    name: "Abderrahim Ouertani",
+    email: "abdouu@gmail.com",
+    phone: "123-456-7890",
+    country: "tunisia",
+    profileImage:
+      "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
   },
 ];
 
-const OVERFLOW_HEIGHT = 70;
-const SPACING = 10;
-const ITEM_WIDTH = width * 0.76;
-const ITEM_HEIGHT = ITEM_WIDTH * 1.7;
-const VISIBLE_ITEMS = 3;
+export default function AllPosts({ navigation }) {
+  //----------
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
 
-const OverflowItems = ({ data, scrollXAnimated }) => {
-  const inputRange = [-1, 0, 1];
-  const translateY = scrollXAnimated.interpolate({
-    inputRange,
-    outputRange: [OVERFLOW_HEIGHT, 0, -OVERFLOW_HEIGHT],
-  });
+  //----------
+  React.useEffect(() => {
+    axios
+
+      .get(`http://192.168.1.132:5001/posts`)
+
+      .then((res) => {
+        setPosts(res.data);
+        Ale(
+          "success",
+          res.data.length + " people posted!",
+          "Make sure to verify everything before sending goods !"
+        );
+      })
+      .catch((err) => Ale("error", "oups", err));
+  }, []);
+
+  const relativeDate = (param) => {
+    var olddate = new Date(param);
+    var oldseconds = olddate.getTime() / 1000; //1440516958
+    const date = new Date();
+    const timestamp = date.getTime();
+    const seconds = Math.floor(timestamp / 1000);
+    const difference = seconds - oldseconds;
+    let output = ``;
+    if (difference < 60) {
+      // Less than a minute has passed:
+      output = `${difference} seconds ago`;
+    } else if (difference < 3600) {
+      // Less than an hour has passed:
+      output = `${Math.floor(difference / 60)} minutes ago`;
+    } else if (difference < 86400) {
+      // Less than a day has passed:
+      output = `${Math.floor(difference / 3600)} hours ago`;
+    } else if (difference < 2620800) {
+      // Less than a month has passed:
+      output = `${Math.floor(difference / 86400)} days ago`;
+    } else if (difference < 31449600) {
+      // Less than a year has passed:
+      output = `${Math.floor(difference / 2620800)} months ago`;
+    } else {
+      // More than a year has passed:
+      output = `${Math.floor(difference / 31449600)} years ago`;
+    }
+    return output;
+  };
+  const convertTime = (pa) => {
+    return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+  };
+
+  const { setOneUser, contactList } = useContext(UserContext);
+  const [posts, setPosts] = useState("");
+  const dialCall = (number) => {
+    let phoneNumber = "";
+    if (Platform.OS === "android") {
+      phoneNumber = `tel:${number}`;
+    } else {
+      phoneNumber = `telprompt:${number}`;
+    }
+    Linking.openURL(phoneNumber);
+  };
   return (
-    <View style={styles.overflowContainer}>
-      <Animated.View style={{ transform: [{ translateY }] }}>
-        {data.map((item, index) => {
+    <View>
+      <Box>
+        <Box backgroundColor={"#FFC8CE"}>
+          <Box style={styles.Header}>
+            <HStack>
+              <Center>
+                <Heading style={styles.logo}>Delivair</Heading>
+              </Center>
+            </HStack>
+          </Box>
+        </Box>
+      </Box>
+      {posts &&
+        posts.map((e, i) => {
+          console.log(e, "eeeee");
+          let test;
+          axios
+
+            .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
+
+            .then((res) => (test = res.data));
+          console.log(test, "titi");
           return (
-            <View key={index} style={styles.itemContainer}>
-              <Text style={[styles.title]} numberOfLines={1}>
-                {item.title}
-              </Text>
-              <View style={styles.itemContainerRow}>
-                <Text style={[styles.location]}>
-                  <EvilIcons
-                    name="location"
-                    size={16}
-                    color="black"
-                    style={{ marginRight: 5 }}
-                  />
-                  {item.location}
+            <View style={styles.friendItem}>
+              <Image
+                source={{ uri: friends[i].profileImage }}
+                style={styles.profileImage}
+              />
+              <View style={styles.friendInfo}>
+                <Text style={styles.friendName}>{friends[i].name}</Text>
+                <Text style={styles.friendEmail}>
+                  <MaterialCommunityIcons
+                    name="weight-kilogram"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  :{" "}
+                  <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                    3Kg
+                  </Text>
                 </Text>
-                <Text style={[styles.date]}>{item.date}</Text>
+                <Text style={styles.friendPhone}>
+                  <MaterialCommunityIcons
+                    name="clock-time-eight-outline"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  Going Tomorrow
+                </Text>
+                <Text style={styles.friendCountry}>
+                  <MaterialCommunityIcons
+                    name="airplane-marker"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  : {convertTime(e.departTime)}
+                </Text>
+
+                <Text>
+                  <MaterialCommunityIcons
+                    name="message"
+                    size={20}
+                    color="#FFC8CE"
+                  ></MaterialCommunityIcons>{" "}
+                  : {e.content}
+                </Text>
+              </View>
+              <View
+                style={{
+                  height: 80,
+                  marginTop: 15,
+                  justifyContent: "space-around",
+                }}
+              >
+                <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
+                  <AntDesign
+                    name="phone"
+                    color={"#5FC8C0"}
+                    size={25}
+                  ></AntDesign>
+                </TouchableOpacity>
               </View>
             </View>
           );
         })}
-      </Animated.View>
+      <Footer navigation={navigation} />
     </View>
-  );
-};
-
-export default function Events() {
-  const [data, setData] = React.useState(Data);
-  const scrollXIndex = React.useRef(new Animated.Value(0)).current;
-  const scrollXAnimated = React.useRef(new Animated.Value(0)).current;
-  const [index, setIndex] = React.useState(0);
-  const setActiveIndex = React.useCallback((activeIndex) => {
-    setIndex(activeIndex);
-    scrollXIndex.setValue(activeIndex);
-  });
-  React.useEffect(() => {
-    Animated.spring(scrollXAnimated, {
-      toValue: scrollXIndex,
-      useNativeDriver: true,
-    }).start();
-  });
-  return (
-    <FlingGestureHandler
-      key="left"
-      direction={Directions.LEFT}
-      onHandlerStateChange={(ev) => {
-        if (ev.nativeEvent.state === State.END) {
-          if (index === data.length - 1) {
-            return;
-          }
-          setActiveIndex(index + 1);
-        }
-      }}
-    >
-      <FlingGestureHandler
-        key="right"
-        direction={Directions.RIGHT}
-        onHandlerStateChange={(ev) => {
-          if (ev.nativeEvent.state === State.END) {
-            if (index === 0) {
-              return;
-            }
-            setActiveIndex(index - 1);
-          }
-        }}
-      >
-        <SafeAreaView style={styles.container}>
-          <StatusBar hidden />
-          <OverflowItems data={data} scrollXAnimated={scrollXAnimated} />
-          <FlatList
-            data={data}
-            keyExtractor={(_, index) => String(index)}
-            horizontal
-            inverted
-            contentContainerStyle={{
-              flex: 1,
-              justifyContent: "center",
-              padding: SPACING * 2,
-            }}
-            scrollEnabled={false}
-            removeClippedSubviews={false}
-            CellRendererComponent={({
-              item,
-              index,
-              children,
-              style,
-              ...props
-            }) => {
-              const newStyle = [style, { zIndex: data.length - index }];
-              return (
-                <View style={newStyle} index={index} {...props}>
-                  {children}
-                </View>
-              );
-            }}
-            renderItem={({ item, index }) => {
-              const inputRange = [index - 1, index, index + 1];
-              const translateX = scrollXAnimated.interpolate({
-                inputRange,
-                outputRange: [50, 0, -100],
-              });
-              const scale = scrollXAnimated.interpolate({
-                inputRange,
-                outputRange: [0.8, 1, 1.3],
-              });
-              const opacity = scrollXAnimated.interpolate({
-                inputRange,
-                outputRange: [1 - 1 / VISIBLE_ITEMS, 1, 0],
-              });
-              return (
-                <Animated.View
-                  style={{
-                    position: "absolute",
-                    left: -ITEM_WIDTH / 2,
-                    opacity,
-                    transform: [
-                      {
-                        translateX,
-                      },
-                      { scale },
-                    ],
-                  }}
-                >
-                  <Image
-                    source={{ uri: item.poster }}
-                    style={{
-                      width: ITEM_WIDTH,
-                      height: ITEM_HEIGHT,
-                    }}
-                  />
-                </Animated.View>
-              );
-            }}
-          />
-        </SafeAreaView>
-      </FlingGestureHandler>
-    </FlingGestureHandler>
   );
 }
 
-// define your styles
 const styles = StyleSheet.create({
-  container: {
+  Header: {
+    backgroundColor: "#FFC8CE",
+    paddingTop: 80,
+    width: 500,
+    height: 100,
+    left: 0,
+    top: -33,
+    ImageBackground:
+      "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
+    alignContent: "middle",
+  },
+  logo: {
+    color: "white",
+    width: 143,
+    height: 48,
+    left: 20,
+    top: 10,
+    fontSize: 30,
+  },
+  friendItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 20,
+    borderRadius: 30,
+    padding: 20,
+    backgroundColor: "white",
+  },
+  profileImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    marginRight: 20,
+  },
+  friendInfo: {
     flex: 1,
-    justifyContent: "center",
-
-    backgroundColor: "#fff",
   },
-  title: {
-    fontSize: 28,
-    fontWeight: "900",
-    textTransform: "uppercase",
-    letterSpacing: -1,
+  friendName: {
+    fontSize: 20,
+    fontWeight: "bold",
   },
-  location: {
+  friendEmail: {
     fontSize: 16,
   },
-  date: {
-    fontSize: 12,
+  friendPhone: {
+    fontSize: 16,
   },
-  itemContainer: {
-    height: OVERFLOW_HEIGHT,
-    padding: SPACING,
+  friendCountry: {
+    fontSize: 16,
   },
-  itemContainerRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  overflowContainer: {
-    height: OVERFLOW_HEIGHT,
-    overflow: "hidden",
+  verticleLine: {
+    height: "100%",
+    width: 1,
+    backgroundColor: "#5FC8C0",
   },
 });

@@ -1,18 +1,19 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   View,
-  TextInput,
   StyleSheet,
   Text,
   ImageBackground,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from "react-native";
 import { Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
-import { Image, Center, Avatar, Box } from "native-base";
+import { Image, Input, Center, Avatar, Box, useToast } from "native-base";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
+import Alert from "./Alert";
 
 import axios from "axios";
 
@@ -49,6 +50,26 @@ const SignUpForm = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
   const [progress, setProgress] = useState(0);
+
+  //---------------------alerts-----------------
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+  //---------------------------------------------
 
   //------------firebase upload picture---------
 
@@ -97,11 +118,17 @@ const SignUpForm = ({ navigation }) => {
         console.log(error);
         alert(error);
         blob.close();
+        Ale("error", "Oups there is an error", "Try again please!");
         return;
       },
 
       () => {
         snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          Ale(
+            "success",
+            "Upload successful",
+            "You can submit now! (don't forget to fill the rest of the form!"
+          );
           setUploading(false);
           setProgress(100);
           console.log("Download URL: ", url);
@@ -126,7 +153,8 @@ const SignUpForm = ({ navigation }) => {
 
   const handleSubmit = () => {
     axios
-      .post("http://192.168.104.18:5001/users", {
+
+      .post("http://192.168.167.101:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -135,123 +163,128 @@ const SignUpForm = ({ navigation }) => {
       })
       .then((response) => {
         axios
-          .get(`http://192.168.104.18:5001/users/${response.data.email}`)
+
+          .get(`http://192.168.167.101:5001/users/${response.data.email}`)
+
           .then((res) => {
             setUser(res.data);
             navigation.navigate("home");
+            Ale("success", "Thank you for updating your profile", "Enjoy!");
           });
       })
       .catch((error) => {
         console.log(error);
+        Ale("error", "An error occured", "Please fill up everything!");
       });
   };
 
   return (
     <ImageBackground
       source={{
-        uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
+        uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
       }}
       style={styles.image}
     >
-      <View style={styles.container}>
-        <Center>
-          <TouchableOpacity onPress={pickImage}>
-            {image ? (
-              <Avatar
-                bottom={100}
-                bg="lightBlue.400"
-                size={100}
-                borderRadius={100}
-                source={{ uri: image }}
-                alt="Alternate Text"
-              ></Avatar>
-            ) : (
-              <Avatar
-                borderColor={"black"}
-                borderWidth={1}
-                bottom={100}
-                size={100}
-                borderRadius={100}
-                source={{
-                  uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
-                }}
-                alt="Alternate Text"
+        <View style={styles.container}>
+          <Center>
+            <TouchableOpacity onPress={pickImage}>
+              {image ? (
+                <Avatar
+                  bottom={100}
+                  bg="lightBlue.400"
+                  size={100}
+                  borderRadius={100}
+                  source={{ uri: image }}
+                  alt="Alternate Text"
+                ></Avatar>
+              ) : (
+                <Avatar
+                  borderColor={"black"}
+                  borderWidth={1}
+                  bottom={100}
+                  size={100}
+                  borderRadius={100}
+                  source={{
+                    uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
+                  }}
+                  alt="Alternate Text"
+                />
+              )}
+            </TouchableOpacity>
+            <ProgressBar
+              progress={progress}
+              height={7}
+              backgroundColor="#4a0072"
               />
-            )}
-          </TouchableOpacity>
-          <ProgressBar
-            progress={progress}
-            height={7}
-            backgroundColor="#4a0072"
-          />
-          <View style={styles.activityIndicator}>
-            <AntDesign size={16} name="edit"></AntDesign>
-          </View>
-        </Center>
+            <View style={styles.activityIndicator}>
+              <AntDesign size={16} name="edit"></AntDesign>
+            </View>
 
-        <Text style={styles.title2}>Welcome! let's create your profile</Text>
-        <Box right={1}>
-          <Text style={styles.title}>Username</Text>
-          <TextInput
-            placeholder="Username"
-            value={userName}
-            onChangeText={(text) => setUsername(text)}
-            style={styles.input}
-          />
-          <Text style={styles.title}>Phone Number</Text>
-          <TextInput
-            keyboardType="number"
-            placeholder="Phone Number"
-            value={phoneNumber}
-            onChangeText={(text) => setPhone(text)}
-            style={styles.input}
-          />
+          </Center>
 
-          <View></View>
+          <Text style={styles.title2}>Welcome! let's create your profile</Text>
+          <Box right={1}>
+            <Text style={styles.title}>Username</Text>
+            <Input
+              variant="rounded"
+              borderColor={"white"}
+              placeholderTextColor={"white"}
+              mx="-5"
+              size="l"
+              placeholder="Username"
+              value={userName}
+              onChangeText={(text) => setUsername(text)}
+              style={styles.input}
+              />
+            <Text style={styles.title}>Phone Number</Text>
+            <Input
+              variant="rounded"
+              borderColor={"white"}
+              placeholderTextColor={"white"}
+              mx="-5"
+              size="l"
+              keyboardType="number"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChangeText={(text) => setPhone(text)}
+              style={styles.input}
+              />
 
-          <Text style={styles.title}>Add your Location</Text>
-          <TextInput
-            placeholder="Location"
-            value={location}
-            onChangeText={(text) => setLocation(text)}
-            style={styles.input}
-          />
-        </Box>
-        <Box top={20}>
-          <Button
-            isLoading={loading}
-            title="confirm"
-            onPress={handleSubmit}
-            backgroundColor={"#E7C7C8"}
-            isLoadingText="image uploading"
-            borderRadius={"1"}
-            _loading={{
-              bg: "#E7C7C8",
-              _text: {
-                color: "black",
-              },
-            }}
-          >
-            submit
-          </Button>
-          <Button
-            isLoading={loading}
-            title="upload"
-            onPress={uploadImage}
-            backgroundColor={"#E7C7C8"}
-            isLoadingText="image uploading"
-            borderRadius={"1"}
-            _loading={{
-              bg: "#E7C7C8",
-              _text: {
-                color: "black",
-              },
-            }}
-          >
-            upload
-          </Button>
-        </Box>
-      </View>
+            <View></View>
+
+            <Text style={styles.title}>Add your Location</Text>
+            <Input
+              variant="rounded"
+              borderColor={"white"}
+              placeholderTextColor={"white"}
+              mx="-5"
+              size="l"
+              placeholder="Location"
+              value={location}
+              onChangeText={(text) => setLocation(text)}
+              style={styles.input}
+            />
+          </Box>
+          <Box top={20}>
+            <Button
+              variant="subtle"
+              isLoading={loading}
+              title="confirm"
+              onPress={handleSubmit}
+            >
+              Submit
+            </Button>
+            <Button
+              style={styles.buttonupload}
+              variant="subtle"
+              isLoading={loading}
+              title="upload"
+              onPress={uploadImage}
+            >
+              Upload
+            </Button>
+          </Box>
+        </View>
     </ImageBackground>
   );
 };
@@ -271,17 +304,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   title: {
+    color: "white",
+    fontWeight: "bold",
     fontSize: 15,
-    marginBottom: 20,
+    padding: 10,
+    right: 20,
   },
   input: {
-    borderRadius: 10,
-    width: 350,
-    height: 44,
-    padding: 10,
-    borderWidth: 1,
-    borderColor: "black",
-    marginBottom: 10,
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
   image: {
     height: 1000,
@@ -291,14 +321,17 @@ const styles = StyleSheet.create({
   button: {
     top: 300,
   },
+  buttonupload: {
+    bottom: 490,
+  },
   activityIndicator: {
     backgroundColor: "#d8d8d8",
     height: 20,
     width: 20,
     borderRadius: 10,
-    bottom: 141,
-    right: 28,
-    borderColor: "black",
+    bottom: 130,
+    right: 43,
+    borderColor: "white",
     borderWidth: 1,
   },
 });

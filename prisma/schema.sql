@@ -3,7 +3,7 @@ CREATE TABLE "users"
 (
     "user_id" SERIAL ,
     "userName" TEXT ,
-    "password" TEXT ,
+    "banned" boolean ,
     "email" TEXT ,
     "phoneNumber" INTEGER ,
 
@@ -32,7 +32,13 @@ CREATE TABLE "users"
     "acceptedItems" TEXT[] NOT NULL,
     "weight" TEXT NOT NULL,
     "postTime" TEXT NOT NULL ,
-    "poster_id" INTEGER NOT NULL ,
+  
+"poster_image" TEXT
+NOT NULL ,
+"poster_name" TEXT
+NOT NULL ,
+"poster_id" INTEGER
+NOT NULL ,
     "flight_id" TEXT NOT NULL ,
 	
    
@@ -78,22 +84,40 @@ CREATE TABLE "users"
                 PRIMARY KEY ("reclamation_id")
         );
 
-        -- CreateTable
+    
+-- CreateTable
 
-        CREATE TABLE "articles"
+CREATE TABLE "articles"
 (
     "article_id" SERIAL NOT NULL,
     "title" TEXT NOT NULL ,
     "content" TEXT NOT NULL,
     "picture" TEXT NOT NULL,
     "summary" TEXT NOT NULL,
-  
-    
-	
-   
+
+
+
+
 
     PRIMARY KEY
     ("article_id")
+);
+
+-- CreateTable
+
+CREATE TABLE "notification"
+(
+    "notification_id" SERIAL NOT NULL,
+    "status" TEXT NOT NULL ,
+    "content" TEXT NOT NULL,
+   "notification_receiver" INTEGER NOT NULL
+
+
+
+
+
+    PRIMARY KEY
+    ("notification_id")
 );
 
         -- CreateIndex
@@ -118,3 +142,5 @@ ALTER TABLE "reviews" ADD FOREIGN KEY ("reviewReceiver") REFERENCES "users"("use
 
 -- AddForeignKey
 ALTER TABLE "reclamation" ADD FOREIGN KEY ("sender_id") REFERENCES "users"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
+-- AddForeignKey
+ALTER TABLE "notification" ADD FOREIGN KEY ("notification_receiver") REFERENCES "users"("user_id") ON DELETE CASCADE ON UPDATE CASCADE;
