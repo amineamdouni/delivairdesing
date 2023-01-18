@@ -182,10 +182,10 @@ if (oneUser) {
                 >
                   {oneUser.userName}
                 </S.LargeText>
-                {/*userStat()*/}
+                {userStat()}
                 <Rating starRating={rating} />
                 <Text>({oneUser && oneUser.ratings.length})reviews</Text>
-
+<Button>give review</Button>
                 {/* add star rating here  */}
                 <Box marginRight={-50}>
                   <S.HeaderInfoText
