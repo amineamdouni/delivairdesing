@@ -7,11 +7,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { Input, Box } from "native-base";
+import axios from "axios";
 
-export default function Rating() {
-  const [starRating, setStarRating] = useState(null);
-
+export default function Rating({ starRating, setStarRating }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
@@ -63,22 +61,6 @@ export default function Rating() {
           </TouchableOpacity>
         </View>
       </View>
-
-      <Box>
-        <View>
-          <Text>Message :</Text>
-          <Box>
-            <Input
-              variant="rounded"
-              borderColor={"white"}
-              placeholderTextColor={"white"}
-              size="l"
-              style={styles.Input}
-              width="100%"
-            />
-          </Box>
-        </View>
-      </Box>
     </SafeAreaView>
   );
 }
