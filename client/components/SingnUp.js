@@ -16,6 +16,7 @@ import {
   HStack,
   Link,
   useToast,
+  Modal,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IconButton } from "native-base";
@@ -44,6 +45,7 @@ const auth = getAuth();
 //-----------------------
 import { UserContext } from "../UserContext";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 export default function SignUp({ navigation }) {
   const ToastDetails = [
     {
@@ -60,6 +62,9 @@ export default function SignUp({ navigation }) {
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
   const { setUser, setConnected, setChatUser } = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
+  const [terms, setTerms] = useState(false);
+
   const toast = useToast();
   const Ale = (status, title, description) => {
     toast.show({
@@ -77,6 +82,7 @@ export default function SignUp({ navigation }) {
       },
     });
   };
+  console.log(terms);
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
@@ -85,7 +91,7 @@ export default function SignUp({ navigation }) {
       .then((res) => {
         axios
 
-          .post("http://192.168.1.6:3000/api/users/register", {
+          .post("http://192.168.1.119:3000/api/users/register", {
             email: Email,
             password,
             username,
@@ -96,6 +102,7 @@ export default function SignUp({ navigation }) {
             setConnected(res.data.user);
             setChatUser(res.data.user);
             navigation.navigate("notices");
+            Ale("success", "Welcome!", "Have fun and respect everyone !");
           })
           .catch((err) => {
             console.log(err);
@@ -198,16 +205,130 @@ export default function SignUp({ navigation }) {
                 />
               </Box>
               <HStack space={6}>
-                <Checkbox
+                {/* <Checkbox
                   shadow={2}
                   value="test"
                   accessibilityLabel="This is a dummy checkbox"
                   isChecked={false}
+                > */}
+                <Box>
+                  <TouchableOpacity onPress={() => setShowModal(true)}>
+                    <Text marginTop="5" color="white">
+                      <MaterialCommunityIcons
+                        name="alert-circle"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      Please click here to accept Terms & conditions
+                    </Text>
+                  </TouchableOpacity>
+                </Box>
+                <Modal
+                  isOpen={showModal}
+                  onClose={() => setShowModal(false)}
+                  _backdrop={{
+                    _dark: {
+                      bg: "coolGray.800",
+                    },
+                    bg: "warmGray.50",
+                  }}
                 >
-                  I accept the terms & conditions
-                </Checkbox>
+                  <Modal.Content maxWidth="350" maxH="212">
+                    <Modal.CloseButton />
+                    <Modal.Header>Terms and conditions</Modal.Header>
+                    <Modal.Body>
+                      <Text>
+                        DelivAir's licensed to You (End-User), located and
+                        registered at 04 rue des roses, tunis, tunisie 2070,
+                        Tunisia ("Licensor"), for use only under the terms of
+                        this License Agreement.
+                        <Text fontWeight="bold">
+                          We note that we are not responsible for any loss or
+                          theft of products, we are only a contact intermediary
+                          that helps people connect through our app.
+                        </Text>
+                        By downloading the Licensed Application from Apple's
+                        software distribution platform ("App Store"), and
+                        accepting the terms on signing up (as permitted by this
+                        License Agreement), You indicate that You agree to be
+                        bound by all of the terms and conditions of this License
+                        Agreement, and that You accept this License Agreement.
+                        App Store is referred to in this License Agreement as
+                        "Services." The parties of this License Agreement
+                        acknowledge that the Services are not a Party to this
+                        License Agreement and are not bound by any provisions or
+                        obligations with regard to the Licensed Application,
+                        such as warranty, liability, maintenance and support
+                        thereof. DelivAir, not the Services, is solely
+                        responsible for the Licensed Application and the
+                        content. This License Agreement may not provide for
+                        usage rules for the Licensed Application that are in
+                        conflict with the latest Apple Media Services Terms and
+                        Conditions ("Usage Rules"). DelivAir acknowledges that
+                        it had the opportunity to review the Usage Rules and
+                        this License Agreement is not conflicting with them.
+                        When downloaded through the Store, it is licensed to You
+                        for use only under the terms of this License Agreement.
+                        The Licensor reserves all rights not expressly granted
+                        to You. DelivAir is to be used on devices that operate
+                        with Apple's operating systems ("iOS" and "Mac
+                        OS").DelivAir's licensed to You (End-User), located and
+                        registered at 04 rue des roses, tunis, tunisie 2070,
+                        Tunisia ("Licensor"), for use only under the terms of
+                        this License Agreement. By downloading the Licensed
+                        Application from Apple's software distribution platform
+                        ("App Store"), and accepting the terms on signing up (as
+                        permitted by this License Agreement), You indicate that
+                        You agree to be bound by all of the terms and conditions
+                        of this License Agreement, and that You accept this
+                        License Agreement. App Store is referred to in this
+                        License Agreement as "Services." The parties of this
+                        License Agreement acknowledge that the Services are not
+                        a Party to this License Agreement and are not bound by
+                        any provisions or obligations with regard to the
+                        Licensed Application, such as warranty, liability,
+                        maintenance and support thereof. DelivAir, not the
+                        Services, is solely responsible for the Licensed
+                        Application and the content. This License Agreement may
+                        not provide for usage rules for the Licensed Application
+                        that are in conflict with the latest Apple Media
+                        Services Terms and Conditions ("Usage Rules"). DelivAir
+                        acknowledges that it had the opportunity to review the
+                        Usage Rules and this License Agreement is not
+                        conflicting with them. When downloaded through the
+                        Store, it is licensed to You for use only under the
+                        terms of this License Agreement. The Licensor reserves
+                        all rights not expressly granted to You. DelivAir is to
+                        be used on devices that operate with Apple's operating
+                        systems ("iOS" and "Mac OS").
+                      </Text>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button.Group space={2}>
+                        <Button
+                          variant="ghost"
+                          colorScheme="blueGray"
+                          onPress={() => {
+                            setShowModal(false);
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="subtle"
+                          onPress={() => {
+                            setShowModal(false);
+                            setTerms(true);
+                          }}
+                        >
+                          Accept!
+                        </Button>
+                      </Button.Group>
+                    </Modal.Footer>
+                  </Modal.Content>
+                </Modal>
+                {/* </Checkbox> */}
               </HStack>
-              ;
               <Box w={160}>
                 <HStack space={10} justifyContent="center" style={style.forgot}>
                   <Divider my={2} />
@@ -250,14 +371,26 @@ export default function SignUp({ navigation }) {
               </Box>
               <Box>
                 <Center>
-                  <Button
-                    variant="subtle"
-                    className="LoginButton"
-                    onPress={SignUpUser}
-                    style={style.LoginButton}
-                  >
-                    SignUp
-                  </Button>
+                  {terms ? (
+                    <Button
+                      variant="subtle"
+                      className="LoginButton"
+                      onPress={SignUpUser}
+                      style={style.LoginButton}
+                    >
+                      SignUp
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="subtle"
+                      className="LoginButton"
+                      onPress={SignUpUser}
+                      style={style.LoginButton}
+                      isDisabled
+                    >
+                      SignUp
+                    </Button>
+                  )}
                 </Center>
               </Box>
             </Box>

@@ -13,7 +13,7 @@ import Alert from "./Alert";
 import Main from "../src/screens/Main";
 import Form from "./Forme";
 
-import UserSetting from "./UserSetting"
+import UserSetting from "./UserSetting";
 import Chat from "./Chat";
 
 import Track from "./Track";
@@ -42,9 +42,9 @@ const Stacks = () => {
         }}
       >
 
-      
 
         <Stack.Screen name="setting" component={UserSetting}/>
+
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="form" component={Form} />
@@ -58,6 +58,7 @@ const Stacks = () => {
         <Stack.Screen name="contarct" component={Alert} />
         <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
+
         <Stack.Screen name="track" component={Track} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="addpost" component={AddPost} />

@@ -9,7 +9,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-import { Text, Container, Box, Input,  useToast, } from "native-base";
+import { Text, Container, Box, Input, useToast } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -30,10 +30,7 @@ const date = new Date();
 import Alert from "../../../components/Alert";
 import { Toast } from "native-base";
 
-
 export default function Main({ navigation }: any) {
-
-
   //---------
   const toast = useToast();
   const Ale = (status, title, description) => {
@@ -53,8 +50,6 @@ export default function Main({ navigation }: any) {
     });
   };
   //---------
-
-
 
   const [modalVisible, setModalVisible] = useState(false);
   const initialRef = useRef(null);
@@ -84,13 +79,25 @@ export default function Main({ navigation }: any) {
     } else {
       if (from.length == 0 && to.length == 0) {
         console.log("null");
-        Ale("error","please pick destination","Please pick both destination in order to get results")
+        Ale(
+          "error",
+          "please pick destination",
+          "Please pick both destination in order to get results"
+        );
 
         navigation.navigate("allposts");
       } else if (from.length > 0 && to.length == 0) {
-        Ale("error","Your destination is required !", "Please make sure to fill it")
+        Ale(
+          "error",
+          "Your destination is required !",
+          "Please make sure to fill it"
+        );
       } else if (to.length > 0 && from.length == 0) {
-        Ale("error","'From' field is required!", "Please make sure to fill it")
+        Ale(
+          "error",
+          "'From' field is required!",
+          "Please make sure to fill it"
+        );
       } else {
         setShowCardSelect(true);
       }
@@ -99,7 +106,7 @@ export default function Main({ navigation }: any) {
 
   useEffect(() => {
     axios
-      .get("http://192.168.1.6:5001/posts")
+      .get("http://192.168.1.119:5001/posts")
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -206,8 +213,18 @@ export default function Main({ navigation }: any) {
                 <TouchableOpacity
                   onPress={() => navigation.navigate("allposts")}
                 >
-                  <Text style={{color:"#5FC8C0", fontWeight:"bold", fontSize:20}}> Press here </Text>
-                </TouchableOpacity>to see all requests.
+                  <Text
+                    style={{
+                      color: "#5FC8C0",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    {" "}
+                    Press here{" "}
+                  </Text>
+                </TouchableOpacity>
+                to see all requests.
               </Text>
               <A.HStack>
                 <Text color={"black"} top={3}>
