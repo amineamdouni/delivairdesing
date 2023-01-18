@@ -11,6 +11,7 @@ const users = () => {
       .catch((err) => console.log(err));
   }, []);
   const ban = (user_id) => {
+    if (confirm("Are you sure you want to ban this user?")){
     axios
       .delete(`http://localhost:5001/users/${user_id}`)
       .then((res) =>{
@@ -19,7 +20,7 @@ window.location.reload();
 
       })
       .catch((err) => console.log(err));
-  };
+  }};
   const Verify = (id) => {
     axios
       .put(`http://localhost:5001/users/${id}`, { verified: true })
@@ -30,9 +31,7 @@ window.location.reload();
   const Search = () => {
     //search function
   };
-  const FilterUser = (state: any) => {
-    //Filter function
-  };
+  
   return (
     <center>
       <div className="col-lg-8 col-md-6 mt-5">
