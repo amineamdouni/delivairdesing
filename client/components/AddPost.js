@@ -137,7 +137,7 @@ export default function AddPost({ navigation }) {
   };
   const post = (body) => {
     axios
-      .post(`http://192.168.1.105:5001/posts`, body)
+      .post(`http://192.168.1.132:5001/posts`, body)
       .then((res) =>
         Ale("success", "Your post is successfully submitted!", "Good luck!")
       )

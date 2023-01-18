@@ -101,7 +101,7 @@ export default function AllPosts({ navigation }) {
   //----------
   React.useEffect(() => {
     axios
-      .get(`http://192.168.1.105:5001/posts`)
+      .get(`http://192.168.1.132:5001/posts`)
       .then((res) => {
         setPosts(res.data);
         Ale(
@@ -175,7 +175,7 @@ export default function AllPosts({ navigation }) {
           console.log(e, "eeeee");
           let test;
           axios
-            .get(`http://192.168.1.105:5001/users/id/${e.poster_id}`)
+            .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
             .then((res) => (test = res.data));
           console.log(test, "titi");
           return (
