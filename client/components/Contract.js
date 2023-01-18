@@ -11,19 +11,10 @@ import {
   FormControl
 } from "native-base";
 import { StyleSheet } from "react-native";
-const ProductForm = () => {
-  const [modalVisible, setModalVisible] = React.useState(false);
-  const [size, setSize] = React.useState("md");
-
-  const handleSizeClick = (newSize) => {
-    setSize(newSize);
-    setModalVisible(!modalVisible);
-  };
-  const createProduct=()=>{
-
-  }
+const ProductForm = ({size,setModalVisible,modalVisible}) => {
+ 
   return (
-    <>
+   
       <Modal isOpen={modalVisible} onClose={setModalVisible} size={size}>
         <Modal.Content>
           <Modal.CloseButton />
@@ -94,16 +85,8 @@ const ProductForm = () => {
         </Modal.Content>
       </Modal>
 
-      <Center>
-        <VStack top={300} space={4}>
-          {/* place this near the send message in the chat */}
-          <Button
-            onPress={() => handleSizeClick("full")}
-            key={size}
-          >{`Open ${size} Modal`}</Button>
-        </VStack>
-      </Center>
-    </>
+      
+    
   );
 };
 
