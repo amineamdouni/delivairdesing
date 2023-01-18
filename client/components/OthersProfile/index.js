@@ -15,6 +15,7 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import axios from "axios";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
@@ -28,6 +29,7 @@ import {
   Avatar,
   Button,
   Modal,
+  Input,
 } from "native-base";
 import SetRating from "./SetRating";
 
@@ -39,6 +41,7 @@ import { UserContext } from "../../UserContext";
 
 import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
+  const [starRating, setStarRating] = useState(null);
   const [rating, setRating] = useState(0);
   const { user, setConnected, oneUser, setOneUser, contactArray,setcontactArray } =
     useContext(UserContext);
@@ -46,6 +49,10 @@ export default function FlyContent({ navigation, posts }) {
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
+
+  const [message, setMessage] = useState("");
+  const [review, setReview] = useState([]);
+
   const unfriend = async() => {
     let contacts = [...oneUser.contactList];
     let idx = contacts.indexOf(user.email);
@@ -117,6 +124,7 @@ const acceptRequest=()=>{
         console.log("friend accepted succ");
       });
 }
+
   useEffect(() => {
     forceUpdate();
 
@@ -141,6 +149,27 @@ const acceptRequest=()=>{
 
     console.log(oneUser, "profile");
   }, [oneUser]);
+
+  const postReview = () => {
+    axios.post("http://192.168.1.119:5001/reviews/", {
+      content: message,
+      reviewSender: user.user_id,
+      reviewReceiver: oneUser.user_id,
+    });
+  };
+
+  useEffect(() => {
+    if (oneUser) {
+      axios
+        .get(`http://192.168.1.119:5001/reviews/${oneUser.user_id}`)
+        .then((res) => {
+          setReview(res.data);
+          console.log(review);
+        })
+        .catch((err) => console.log(err));
+    }
+  }, [oneUser]);
+
   const userStat = () => {
 
     console.log(userStatus);
@@ -169,6 +198,7 @@ const acceptRequest=()=>{
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
+  console.log(starRating);
 
   const headerAnimatedStyled = useAnimatedStyle(() => ({
     transform: [{ translateY: headertranslateY.value }],
@@ -338,10 +368,10 @@ const acceptRequest=()=>{
                           bg="cyan.500"
                           size="xs"
                           source={{
-                            uri: "https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
+                            uri: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
                           }}
                         ></Avatar>
-                        <Text top={3}>: was very professional. </Text>
+                        <Text top={3}>: {review[0].content} </Text>
                       </HStack>
                       <HStack space={7}>
                         <Avatar
@@ -377,7 +407,27 @@ const acceptRequest=()=>{
                     <Modal.CloseButton />
                     <Modal.Header>Review this person</Modal.Header>
                     <Modal.Body>
-                      <SetRating />
+                      <SetRating
+                        starRating={starRating}
+                        setStarRating={setStarRating}
+                        message={message}
+                      />
+                      <Box>
+                        <View>
+                          <Text>Message :</Text>
+                          <Box>
+                            <Input
+                              variant="rounded"
+                              borderColor={"white"}
+                              placeholderTextColor={"white"}
+                              size="l"
+                              style={styles.Input}
+                              width="100%"
+                              onChangeText={(text) => setMessage(text)}
+                            />
+                          </Box>
+                        </View>
+                      </Box>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button.Group space={2}>
@@ -393,6 +443,7 @@ const acceptRequest=()=>{
                         <Button
                           variant="subtle"
                           onPress={() => {
+                            postReview();
                             setShowModal(false);
                           }}
                         >
@@ -438,5 +489,8 @@ const styles = StyleSheet.create({
     borderradius: 25,
     height: 10,
     width: 10,
+  },
+  Input: {
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
 });
