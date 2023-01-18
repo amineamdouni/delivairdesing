@@ -40,35 +40,83 @@ import { UserContext } from "../../UserContext";
 import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
   const [rating, setRating] = useState(0);
-  const { user, connected, oneUser, setOneUser, contactArray } =
+  const { user, setConnected, oneUser, setOneUser, contactArray,setcontactArray } =
     useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const unfriend = (email) => {
+  const unfriend = async() => {
     let contacts = [...oneUser.contactList];
-    let idx = contacts.indexOf(email);
+    let idx = contacts.indexOf(user.email);
     contacts.splice(idx, 1);
     axios
       .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
         contactList: contacts,
       })
       .then((res) => {
+        setConnected(null)
         console.log("friend removed succ");
       });
       let usercontacts = [...user.contactList];
-      let index = usercontacts.indexOf(email);
-      contacts.splice(index, 1);
+      let index = usercontacts.indexOf(oneUser.email);
+       usercontacts.splice(index, 1);
       axios
-        .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
-          contactList: usercontacts,
-        })
-        .then((res) => {
-          console.log("friend removed succ");
-        });
-  };
+      .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
+        contactList: usercontacts,
+      })
+      .then((res) => {
+        setConnected(null)
+         setcontactArray(usercontacts);
+        console.log("friend removed succ");
+      });
+     
+        console.log(idx,'      ',index);
+      };
+const addFriend=()=>{
+    let contacts = [...oneUser.pendingRequests];
+  
+    contacts.push(user.email);
+   axios
+     .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
+       pendingRequests: contacts,
+     })
+     .then((res) => {
+      setConnected(null)
+   
+       console.log("friend sent  succ");
+     });
 
+
+     
+}
+const acceptRequest=()=>{
+  let pending = [...user.pendingRequests];
+  let idx = pending.indexOf(oneUser.email);
+  pending.splice(idx, 1);
+  let contacts=[...oneUser.contactList]
+  contacts.push(user.email)
+  axios
+    .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
+      
+      contactList:contacts
+    })
+    .then((res) => {
+      setConnected(null)
+      console.log("friend added succ");
+    });
+    let contactuser = [...user.contactList];
+    contactuser.push(oneUser.email);
+    axios
+      .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
+        pendingRequests: pending,
+        contactList: contacts,
+      })
+      .then((res) => {
+        setConnected(null)
+        console.log("friend accepted succ");
+      });
+}
   useEffect(() => {
     forceUpdate();
 
@@ -99,11 +147,21 @@ export default function FlyContent({ navigation, posts }) {
     if (userStatus === "waiting") {
       return <Button>remove request</Button>;
     } else if (userStatus === "pending") {
-      return <Button>accept</Button>;
+      return (
+        <Button
+          onPress={() => {
+            acceptRequest();
+          }}
+        >
+          accept
+        </Button>
+      );
     } else if (userStatus === "unknown") {
-      return <Button>add</Button>;
+      return <Button onPress={()=>{
+        addFriend()
+      }}>add</Button>;
     } else if (userStatus === "friend") {
-      return <Button>Unfriend</Button>;
+      return <Button onPress={()=>{unfriend()}}>Unfriend</Button>;
 
     }
   };
@@ -129,6 +187,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
+        setConnected(null)
         navigation.navigate("login");
         alert("Signed out");
       })
