@@ -15,7 +15,7 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import axios from "axios";
+
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
