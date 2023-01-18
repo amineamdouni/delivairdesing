@@ -18,6 +18,7 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
+
 import {
   Text,
   Box,
@@ -29,18 +30,45 @@ import {
   Modal,
 } from "native-base";
 import SetRating from "./SetRating";
+
 import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import { UserContext } from "../../UserContext";
+
+import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
   const [rating, setRating] = useState(0);
-  const { user, connected, oneUser, setOneUser } = useContext(UserContext);
+  const { user, connected, oneUser, setOneUser, contactArray } =
+    useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const unfriend = (email) => {
+    let contacts = [...oneUser.contactList];
+    let idx = contacts.indexOf(email);
+    contacts.splice(idx, 1);
+    axios
+      .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
+        contactList: contacts,
+      })
+      .then((res) => {
+        console.log("friend removed succ");
+      });
+      let usercontacts = [...user.contactList];
+      let index = usercontacts.indexOf(email);
+      contacts.splice(index, 1);
+      axios
+        .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
+          contactList: usercontacts,
+        })
+        .then((res) => {
+          console.log("friend removed succ");
+        });
+  };
+
   useEffect(() => {
     forceUpdate();
 
@@ -66,6 +94,7 @@ export default function FlyContent({ navigation, posts }) {
     console.log(oneUser, "profile");
   }, [oneUser]);
   const userStat = () => {
+
     console.log(userStatus);
     if (userStatus === "waiting") {
       return <Button>remove request</Button>;
@@ -75,6 +104,7 @@ export default function FlyContent({ navigation, posts }) {
       return <Button>add</Button>;
     } else if (userStatus === "friend") {
       return <Button>Unfriend</Button>;
+
     }
   };
   console.log(rating);
@@ -140,19 +170,23 @@ export default function FlyContent({ navigation, posts }) {
                       color="green"
                       size={17}
                     />
+
                     <TouchableOpacity onPress={() => setShowModal(true)}>
                       <Text>Give Review</Text>
                     </TouchableOpacity>
+
                   </HStack>
                 </Menu.Item>
                 <Menu.Item onPress={() => SignOut()}>
                   <HStack>
                     <MaterialCommunityIcons
+
                       name="account-off"
                       color="red"
                       size={17}
                     />
                     <Text>Unfriend</Text>
+
                   </HStack>
                 </Menu.Item>
               </Menu>
@@ -186,6 +220,7 @@ export default function FlyContent({ navigation, posts }) {
                   {userStat()}
                   <Rating starRating={rating} />
                   <Text>({oneUser && oneUser.ratings.length})reviews</Text>
+
                   {/* add star rating here  */}
                   <Box marginRight={-50}>
                     <S.HeaderInfoText
@@ -193,7 +228,7 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Phone Number :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        {" "}
+
                         {oneUser.phoneNumber}
                       </Text>
                     </S.HeaderInfoText>
@@ -267,6 +302,7 @@ export default function FlyContent({ navigation, posts }) {
                     </ScrollView>
                   </Box>
                 </SafeAreaView>
+
 
                 <Modal
                   isOpen={showModal}
