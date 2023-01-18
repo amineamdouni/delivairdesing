@@ -54,6 +54,7 @@ export default function Profile({ navigation }) {
     signOut(auth)
       .then((res) => {
         navigation.navigate("login");
+        
         Ale("success","Logout successful", "Sorry to see you go !")
       })
       .catch((error) => {
