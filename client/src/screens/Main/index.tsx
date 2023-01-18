@@ -8,8 +8,8 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { Text, Container, Box, Input } from "native-base";
+import { FontAwesome5, AntDesign } from "@expo/vector-icons";
+import { Text, Container, Box, Input, useToast } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -24,14 +24,40 @@ import StatusContent from "./components/StatusContent";
 import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
 import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
 const date = new Date();
+
+import Alert from "../../../components/Alert";
+import { Toast } from "native-base";
+
 export default function Main({ navigation }: any) {
+  //---------
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+  //---------
+
   const [modalVisible, setModalVisible] = useState(false);
   const initialRef = useRef(null);
   const finalRef = useRef(null);
   const [selectedDate, setSelectedDate] = useState(
     date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
   );
+
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);
   const airplaneShadowY = useSharedValue(0);
@@ -50,22 +76,39 @@ export default function Main({ navigation }: any) {
       setShowCardSelect(false);
       setConfirm(true);
       setShowStatus(true);
-      filterPosts(from, to);
     } else {
-      setShowCardSelect(true);
+      if (from.length == 0 && to.length == 0) {
+        console.log("null");
+        Ale(
+          "error",
+          "please pick destination",
+          "Please pick both destination in order to get results"
+        );
+
+        navigation.navigate("allposts");
+      } else if (from.length > 0 && to.length == 0) {
+        Ale(
+          "error",
+          "Your destination is required !",
+          "Please make sure to fill it"
+        );
+      } else if (to.length > 0 && from.length == 0) {
+        Ale(
+          "error",
+          "'From' field is required!",
+          "Please make sure to fill it"
+        );
+      } else {
+        setShowCardSelect(true);
+      }
     }
   };
-  const filterPosts = (departure, arrival) => {
-    let filtered = posts.filter(
-      (e): any => e.departCountry == departure && e.arriveCountry == arrival
-    );
-    console.log(filtered);
 
-    setPosts(filtered);
-  };
   useEffect(() => {
     axios
-      .get("")
+
+      .get("http://192.168.1.132:5001/posts")
+
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));
     if (confirm) {
@@ -130,17 +173,18 @@ export default function Main({ navigation }: any) {
           <S.FlyInfo exiting={FlipOutXUp.duration(600)}>
             <S.Content>
               <S.LargeText>DelivAir</S.LargeText>
+
               <S.TextRowContent>
                 <S.TextContent>
                   <S.SmallText>From</S.SmallText>
-                  <S.LargeText>{from}</S.LargeText>
+                  <S.HourContent>{from}</S.HourContent>
                 </S.TextContent>
-                <S.HourContent>
+                <A.Center style={{ position: "absolute", left: 150 }}>
                   <Entypo name="chevron-right" size={30} color="white" />
-                </S.HourContent>
+                </A.Center>
                 <S.TextContent alingment="right">
                   <S.SmallText>To</S.SmallText>
-                  <S.LargeText>{to}</S.LargeText>
+                  <S.HourContent>{to}</S.HourContent>
                 </S.TextContent>
               </S.TextRowContent>
             </S.Content>
@@ -167,55 +211,78 @@ export default function Main({ navigation }: any) {
           <S.InfoContent exiting={FadeOut.duration(600)}>
             <A.Center style={{ margin: 50 }}>
               <Text fontSize={18} style={{ paddingBottom: 100 }}>
-              Please enter destination {" "}
+                Please enter destination or
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("allposts")}
+                >
+                  <Text
+                    style={{
+                      color: "#5FC8C0",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    {" "}
+                    Press here{" "}
+                  </Text>
+                </TouchableOpacity>
+                to see all requests.
               </Text>
               <A.HStack>
-                <Text color={"black"}top={3}>
-                  <FontAwesome5  size={20} name="plane-departure" />
+                <Text color={"black"} top={3}>
+                  <FontAwesome5 size={20} name="plane-departure" />
                 </Text>
 
                 <Input
+                  maxLength={8}
                   onChangeText={(text) => setFrom(text)}
                   size="l"
                   mx="3"
                   placeholder="From"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
-                                />
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
+                />
               </A.HStack>
               <A.Divider my="6" />
               <A.HStack>
                 <Text color={"black"} top={3}>
-                  <FontAwesome5  size={20}  name="plane-arrival"  />
+                  <FontAwesome5 size={20} name="plane-arrival" />
                 </Text>
 
                 <Input
+                  maxLength={8}
                   onChangeText={(text) => setTo(text)}
                   size="l"
                   mx="3"
                   placeholder="To"
                   w="100%"
-                  borderColor="black" 
-                  backgroundColor= "white"                    
-                  borderWidth= "1"
-                  borderRadius= "7"
+                  borderColor="black"
+                  backgroundColor="white"
+                  borderWidth="1"
+                  borderRadius="7"
                 />
               </A.HStack>
             </A.Center>
           </S.InfoContent>
         )}
         {!confirm && (
-          <Button  showFlyInfo={showFlyInfo} onPress={handleConfirm} />
+          <Button showFlyInfo={showFlyInfo} onPress={handleConfirm} />
         )}
         {showCardSelect && <CardSelect />}
         {showStatus && <StatusContent />}
         {showFlyInfo && (
           <>
-            <FlyContent posts={posts} navigation={navigation} />
-            <Box style={{zIndex:10000,right:195,bottom:40}}>
+            <FlyContent
+              posts={posts}
+              from={from}
+              to={to}
+              navigation={navigation}
+              setPosts={setPosts}
+            />
+            <Box style={{ zIndex: 10000, right: 196, bottom: 40 }}>
               <Footer navigation={navigation} />
             </Box>
           </>

@@ -14,7 +14,7 @@ export const Header = styled(Animated.View)`
   width: 100%;
   height: 250px;
   align-items: center;
-  background: #ebc8cb;
+  background: #FFC8CE;
 `;
 
 export const HeaderInfoText = styled(Animated.Text)`
@@ -54,6 +54,7 @@ export const FlyInfo = styled(Animated.View)`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   margin-top: -125px;
+  
 `;
 export const FlyInfoTwo = styled(Animated.View)`
   width: 85%;

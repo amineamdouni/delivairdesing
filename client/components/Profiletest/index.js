@@ -21,15 +21,16 @@ import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
+import { TouchableOpacity } from "react-native-gesture-handler";
 export default function FlyContent({ navigation, posts }) {
-  console.log(posts);
- const { user, connected } = useContext(UserContext);
+  
+ const { user, setUser,setOneUser ,setConnected,setChatUser,contactList} = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
- 
+
  useEffect(() => {
   forceUpdate()
-   console.log(user, "profile");
+
  }, [user]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -52,7 +53,10 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        console.log(res);
+      setUser(null)
+      setChatUser(null)
+      setConnected(null)
+      
 navigation.navigate('login')
         alert("Signed out");
    
@@ -69,8 +73,8 @@ navigation.navigate('login')
       <S.HeaderContent style={headerContentAnimatedStyled}>
         <HStack justifyContent="space-between" space={220}>
           <Center>
-            <Text  color={"black"} fontSize={30} fontWeight={"light"}>
-              DelivAir
+            <Text left={120} color={"white"} fontSize={30} fontWeight={"bold"}>
+              Profile
             </Text>
           </Center>
 
@@ -80,6 +84,7 @@ navigation.navigate('login')
               trigger={(triggerProps) => {
                 return (
                   <Pressable
+                    right={4}
                     accessibilityLabel="More options menu"
                     {...triggerProps}
                   >
@@ -89,14 +94,18 @@ navigation.navigate('login')
               }}
             >
               <Menu.Item>
-                <HStack>
-                  <MaterialCommunityIcons
-                    name="account-edit-outline"
-                    color="green"
-                    size={17}
-                  />
-                  <Text>Edit Profile</Text>
-                </HStack>
+                <TouchableOpacity onPress={()=>{
+                  navigation.navigate('setting')
+                }}>
+                  <HStack>
+                    <MaterialCommunityIcons
+                      name="account-edit-outline"
+                      color="green"
+                      size={17}
+                    />
+                    <Text>Edit Profile</Text>
+                  </HStack>
+                </TouchableOpacity>
               </Menu.Item>
               <Menu.Item onPress={() => SignOut()}>
                 <HStack>
@@ -116,7 +125,7 @@ navigation.navigate('login')
                 size={150}
                 borderRadius={100}
                 source={{
-                  uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059132781097140294/B5D7F24B-388D-4038-8644-F999ACD00FAE.jpg",
+                  uri: user.image,
                 }}
                 alt="Alternate Text"
               />
@@ -127,7 +136,7 @@ navigation.navigate('login')
                 <S.LargeText
                   style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                 >
-                  Med Aziz Selini
+                  {user.userName}
                 </S.LargeText>
 
                 <Box marginRight={-50}>
@@ -136,8 +145,7 @@ navigation.navigate('login')
                   >
                     Phone Number :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {" "}
-                      + 216 52 224 782
+                      {user.phoneNumber}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -147,8 +155,7 @@ navigation.navigate('login')
                   >
                     Email :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {" "}
-                      medaziz@gmail.com
+                      {user.email}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -158,8 +165,7 @@ navigation.navigate('login')
                   >
                     Location :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {" "}
-                      Boumhal El bassattine
+                      {user.location}
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -183,86 +189,25 @@ navigation.navigate('login')
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                   >
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
+                    {contactList.map((e) => (
+                      <TouchableOpacity
+                        onPress={() => {
+                          setOneUser(e);
+                          navigation.navigate("otherprofile");
                         }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-                  </ScrollView>
-                </Center>
-              </Center>
-            </S.FlyInfoThree>
-            <S.FlyInfoThree entering={FlipInXDown.duration(900).delay(1500)}>
-              <Center marginRight={-50}>
-                <S.HeaderInfoText
-                  style={{ fontSize: 30, fontWeight: "bold", marginBottom: 30 }}
-                >
-                  Contact List
-                </S.HeaderInfoText>
-                <Center>
-                  <ScrollView
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                  >
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141724955484200/1FCD701D-518F-48E5-98DF-F99CC2DB91C4.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
-
-                    <Box style={styles.mediaImageContainer}>
-                      <Image
-                        source={{
-                          uri: "https://cdn.discordapp.com/attachments/1030292601489854626/1059141791535874099/FC88AABF-AEB3-4CBC-BEE4-5477C6CF3CE7.jpg",
-                        }}
-                        style={styles.image}
-                        alt="*"
-                        resizeMode="cover"
-                      />
-                    </Box>
+                      >
+                        <Box style={styles.mediaImageContainer}>
+                          <Image
+                            source={{
+                              uri: e.image,
+                            }}
+                            style={styles.image}
+                            alt="*"
+                            resizeMode="cover"
+                          />
+                        </Box>
+                      </TouchableOpacity>
+                    ))}
                   </ScrollView>
                 </Center>
               </Center>
@@ -286,6 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: "hidden",
     marginHorizontal: 15,
+    zIndex:10000
   },
   image: {
     flex: 1,

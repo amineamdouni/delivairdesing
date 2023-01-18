@@ -3,14 +3,14 @@ const bcrypt = require("bcrypt");
 
 module.exports.login = async (req, res, next) => {
   try {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (!user)
-      return res.json({ msg: "Incorrect Username or Password", status: false });
+      return res.json({ msg: "Incorrect Username ", status: false });
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid)
-      return res.json({ msg: "Incorrect Username or Password", status: false });
-    delete user.password;
+      return res.json({ msg: "Incorrect  Password", status: false });
+   
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
@@ -32,7 +32,7 @@ module.exports.register = async (req, res, next) => {
       username,
       password: hashedPassword,
     });
-    delete user.password;
+
     return res.json({ status: true, user });
   } catch (ex) {
     next(ex);
@@ -46,6 +46,7 @@ module.exports.getAllUsers = async (req, res, next) => {
       "username",
       "avatarImage",
       "_id",
+      "isAvatarImageSet"
     ]);
     return res.json(users);
   } catch (ex) {

@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import {
   StyleSheet,
   View,
@@ -22,22 +22,40 @@ import {
   NativeBaseProvider,
   VStack,
   Avatar,
+  useToast,
 } from "native-base";
 import Footer from "./Footer";
 import { getAuth, signOut } from "firebase/auth";
+import Alert from "./Alert";
 
 const auth = getAuth();
 export default function Profile({ navigation }) {
-  const {user} =useContext(UserContext)
+  const { user } = useContext(UserContext);
+
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
 
   function SignOut() {
     signOut(auth)
       .then((res) => {
-
-        console.log(res);
-
         alert("Signed out");
         navigation.navigate("login");
+        Ale("success","Logout successful", "Sorry to see you go !")
       })
       .catch((error) => {
         alert(error);
@@ -90,7 +108,6 @@ export default function Profile({ navigation }) {
               <Menu.Item onPress={() => SignOut()}>
                 {" "}
                 <VStack>
-
                   <Text>
                     {" "}
                     <MaterialCommunityIcons
@@ -150,7 +167,7 @@ export default function Profile({ navigation }) {
                     </View>
                 </View> */}
 
-          <View style={{ marginTop: 80}}>
+          <View style={{ marginTop: 80 }}>
             <ScrollView
               horizontal={true}
               showsHorizontalScrollIndicator={false}
@@ -167,7 +184,7 @@ export default function Profile({ navigation }) {
             </ScrollView>
           </View>
           {/* <Text style={[styles.subText, styles.recent] }>User information</Text> */}
-         
+
           <View style={{ alignItems: "center" }}>
             <View style={styles.recentItem}>
               {/* <View style={styles.activityIndicator}></View> */}
@@ -178,12 +195,10 @@ export default function Profile({ navigation }) {
                   <Text style={{ fontWeight: "800" }}>First Name :</Text> Med
                   Aziz
                 </Text>
-                
               </View>
             </View>
-           
+
             <View style={styles.recentItem}>
-               
               <View style={{ width: 250 }}>
                 <Text
                   style={[styles.text, { color: "#41444B", fontWeight: "400" }]}
@@ -192,7 +207,7 @@ export default function Profile({ navigation }) {
                 </Text>
               </View>
             </View>
-           
+
             <View style={styles.recentItem}>
               <View style={{ width: 250 }}>
                 <Text

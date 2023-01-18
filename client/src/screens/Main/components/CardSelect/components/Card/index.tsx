@@ -108,11 +108,13 @@ export default function Card({
             <Center><Image
               source={{
                 uri: card.icon,
-              }}
+              }} size="xl"
               alt="Alternate Text"
               size="xs"
-            /></Center>
-            <S.CardName>{card.content}</S.CardName>
+            />
+            
+            </Center>
+           <S.CardName>{card.content}</S.CardName>
           </S.CardTextView>
           <S.BottomCardLogo source={card.bottomLogo} resizeMode="contain" />
         </S.BottomCardView>

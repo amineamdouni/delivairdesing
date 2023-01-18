@@ -9,7 +9,7 @@ import {
 import { Entypo } from "@expo/vector-icons";
 
 import * as S from "./styles";
-import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading } from "native-base";
+import { Text, Box, Container, HStack,Divider,Center,Avatar,Heading,VStack,useToast } from "native-base";
 
 import profile from "../../../../assets/images/profile.jpeg";
 import nopic from "../../../../assets/images/nopic.jpeg";
@@ -18,8 +18,68 @@ import AllPosts from "../../../../../components/AllPosts";
 import CardSelect from "../CardSelect - Copy";
 import Swiper from "react-native-swiper";
 
-export default function FlyContent({navigation,posts}) {
-  console.log(posts);
+export default function FlyContent({navigation,posts,to,from,setPosts}) {
+ const toast = useToast();
+ const Ale = (status, title, description) => {
+   toast.show({
+     render: ({ id }) => {
+       return (
+         <Alert
+           id={id}
+           status={status}
+           variant={"left-accent"}
+           title={title}
+           description={description}
+           isClosable={true}
+         />
+       );
+     },
+   });
+ };
+  const search=(from,to)=> {
+    
+    let searchedData = posts.filter(
+      (e): any =>
+        e.departCountry.toLowerCase().includes(from.toLowerCase()) &&
+        e.arriveCountry.toLowerCase().includes(to.toLowerCase())
+    );
+    setPosts(searchedData)
+    console.log(searchedData,"search");
+    
+  console.log(posts,'ppppppppppppp');
+   
+  }
+ const relativeDate=(param)=>{
+   var olddate = new Date(param);
+   var oldseconds = olddate.getTime() / 1000; //1440516958
+   const date = new Date();
+   const timestamp = date.getTime();
+   const seconds = Math.floor(timestamp / 1000);
+   const difference = seconds - oldseconds;
+   let output = ``;
+   if (difference < 60) {
+     // Less than a minute has passed:
+     output = `${difference} seconds ago`;
+   } else if (difference < 3600) {
+     // Less than an hour has passed:
+     output = `${Math.floor(difference / 60)} minutes ago`;
+   } else if (difference < 86400) {
+     // Less than a day has passed:
+     output = `${Math.floor(difference / 3600)} hours ago`;
+   } else if (difference < 2620800) {
+     // Less than a month has passed:
+     output = `${Math.floor(difference / 86400)} days ago`;
+   } else if (difference < 31449600) {
+     // Less than a year has passed:
+     output = `${Math.floor(difference / 2620800)} months ago`;
+   } else {
+     // More than a year has passed:
+     output = `${Math.floor(difference / 31449600)} years ago`;
+   }return output
+ }
+  const convertTime = (pa) => {
+    return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+  };
   
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -37,101 +97,69 @@ export default function FlyContent({navigation,posts}) {
     headertranslateY.value = withTiming(0, { duration: 700 });
     headerContentTranslateY.value = withTiming(0, { duration: 900 });
     headerContentopacity.value = withTiming(1, { duration: 700 });
-    
+      search(from, to);
   }, []);
-
+useEffect(()=>{
+  if (posts.length==0) {
+    // Ale('error')
+  }
+},[posts])
   return (
     <S.Container>
       <StatusBar barStyle="light-content" />
       <S.Header style={headerAnimatedStyled}></S.Header>
       <S.HeaderContent style={headerContentAnimatedStyled}>
-        <S.HeaderText bold>Your order has submited</S.HeaderText>
-        <S.HeaderText>We are waiting for booking confirmation</S.HeaderText>
+        <S.HeaderText bold>Your destination has been submitted</S.HeaderText>
+        <S.HeaderText>We are waiting for your delivair</S.HeaderText>
       </S.HeaderContent>
       <S.FlyInfo entering={FlipInXDown.duration(900).delay(100)}>
         <S.FlyInfoContent intensity={70}>
           <S.TextRowContent>
             <S.TextContent>
-              <S.LargeText>LAS</S.LargeText>
+              <S.LargeText>{from}</S.LargeText>
             </S.TextContent>
             <S.HourContent>
               <Entypo name="chevron-right" size={30} color="white" />
             </S.HourContent>
             <S.TextContent alingment="right">
-              <S.LargeText>NYC</S.LargeText>
+              <S.LargeText>{to}</S.LargeText>
             </S.TextContent>
           </S.TextRowContent>
           <S.TicketInfo></S.TicketInfo>
           <Box style={{ zIndex: 10002, height: 200, width: 300 }}>
             <Swiper showsPagination={false}>
-              <Box width={300}>
-                <Container>
-                  <HStack space={2}>
-                    <Center style={style.left}>
-                      <Avatar
-                        source={{
-                          uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                        }}
-                      />
-                    </Center>
-                    <Container style={style.Middle}>
-                      <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text>e.postTime</Text>
-                      <Text>📍Ariana,Tunis</Text>
-                    </Container>
-                    <Container>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        e.type
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        3kg
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        Germany
-                      </Text>
-                    </Container>
-                  </HStack>
-                  <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                    <Text>Departure Time:</Text>
-                    <Text>e.departTime</Text>
+              {posts.map((e, i) => (
+                <Box width={300} style={style.graybox}>
+                  <Container margin={3}>
+                    <HStack space={2}>
+                      <VStack>
+                        <Center style={style.left}>
+                          <Avatar
+                            source={{
+                              uri: e.acceptedItems[0],
+                            }}
+                          />
+                        </Center>
+                        <Center backgroundColor="#EBC8CB" borderRadius="5">
+                          <Text>{e.weight}kg</Text>
+                        </Center>
+                      </VStack>
+                      <Center></Center>
+                      <VStack>
+                        <Container style={style.Middle}>
+                          <Heading size="sm">{e.content}</Heading>
+                          <Text color={"grey"}>{relativeDate(e.postTime)}</Text>
+                          <Text>{e.departCountry}</Text>
+                        </Container>
+                        <Container marginTop="3" fontWeight="400">
+                          <Text>Departure Time:</Text>
+                          <Text>{convertTime(e.departTime)}</Text>
+                        </Container>
+                      </VStack>
+                    </HStack>
                   </Container>
-                </Container>
-                <Divider my={2} />
-              </Box>
-              <Box style={{width:300}}>
-                <Container>
-                  <HStack space={2}>
-                    <Center style={style.left}>
-                      <Avatar
-                        source={{
-                          uri: "https://ca.slack-edge.com/T03T17WCLPP-U03TQKNA1V2-9b6948bb8dc7-72",
-                        }}
-                      />
-                    </Center>
-                    <Container style={style.Middle}>
-                      <Heading size="sm">Med Amine Amdouni</Heading>
-                      <Text>e.postTime</Text>
-                      <Text>📍Ariana,Tunis</Text>
-                    </Container>
-                    <Container>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        e.type
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        3kg
-                      </Text>
-                      <Text style={{ backgroundColor: "#B8E1BF", margin: 5 }}>
-                        Germany
-                      </Text>
-                    </Container>
-                  </HStack>
-                  <Container style={{ paddingLeft: 50 }} fontWeight="400">
-                    <Text>Departure Time:</Text>
-                    <Text>e.departTime</Text>
-                  </Container>
-                </Container>
-                <Divider my={2} />
-              </Box>
+                </Box>
+              ))}
             </Swiper>
           </Box>
         </S.FlyInfoContent>
@@ -151,7 +179,8 @@ const style = StyleSheet.create({
   },
   graybox: {
     color: "black",
-    backgroundColor: "#EAEAEA",
+    backgroundColor: "#e7f5e5",
+    borderRadius:10,
   },
   searchButtons: {
     color: "black",

@@ -10,9 +10,9 @@ const server = http.createServer(app);
 
 app.use(cors());
 app.use(express.json());
-
+mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb://127.0.0.1:27017/DelivChat", {
+  .connect("mongodb+srv://root:root@delivair.1zg97hn.mongodb.net/delivair", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -25,7 +25,7 @@ mongoose
 
 app.use("/api/messages", messageRoutes);
 app.use("/api/users", usersRoutes);
-// const server = app.listen(3000, () => console.log(`Server started on 3000`));
+
 server.listen(3000, () => console.log("server started on 3000"));
 
 const io = socket(server, {
@@ -38,24 +38,20 @@ const io = socket(server, {
 
 global.onlineUsers = new Map();
 
-io.on("connection", (socket) => {
-  global.chatSocket = socket;
-  socket.on("add-user", (userId) => {
-    onlineUsers.set(userId, socket.id);
+io.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+
+  //sends the message to all the users on the server
+  socket.on('message', (data) => {
+    io.emit('messageResponse', data);
   });
 
-  socket.on("send-msg", (data) => {
-    // console.log(data);
-    // const sendUserSocket = onlineUsers.get(data.to);
-    // console.log("userSocket::===>", sendUserSocket);
-    // if (sendUserSocket) {
-    //  socket.to(sendUserSocket).emit("msg-recieve", data.msg);
-    // }
-     socket.to("63b54b3536c92210d680f473").emit("msg-recieve", data.msg);
-  });
-
-  socket.on("disconnect", () => {
-    socket.disconnect();
-    console.log("🔥: A user disconnected");
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
   });
 });
+
+// socket.on("disconnect", () => {
+//   socket.disconnect();
+//   console.log("🔥: A user disconnected");
+// });

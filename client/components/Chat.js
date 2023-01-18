@@ -1,4 +1,4 @@
-import React, { useState,useContext,useEffect, useCallback } from "react";
+import React, { useState, useContext, useEffect, useCallback } from "react";
 import {
   Alert,
   Text,
@@ -6,11 +6,12 @@ import {
   Center,
   Heading,
   VStack,
-  Box,Avatar,
+  Box,
+  Avatar,
   Button,
   Image,
   Input,
-  ScrollView,
+  
   Flex,
   Divider,
   Icon,
@@ -18,14 +19,18 @@ import {
 } from "native-base";
 import {
   StyleSheet,
+  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
   ImageBackground,
   Dimensions,
-
 } from "react-native";
-import { MaterialCommunityIcons, AntDesign,Ionicons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  AntDesign,
+  Ionicons,
+} from "@expo/vector-icons";
 import Footer from "./Footer";
 import { SearchBar } from "react-native-screens";
 const windowWidth = Dimensions.get("window").width;
@@ -34,18 +39,35 @@ const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
 };
 import { UserContext } from "../UserContext";
+import axios from "axios";
+import Messages from "./Messages";
+import { TouchableOpacity } from "react-native-gesture-handler";
 export default function Chat({ navigation }) {
-  const { user, connected } = useContext(UserContext);
+  const { user, connected, setTo, socket,contactList } = useContext(UserContext);
+  const [allUsers, getAllUsers] = useState([]);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
+  // console.log(allUsers);
 
   useEffect(() => {
     forceUpdate();
-    console.log(user, "Chat");
   }, [user]);
+console.log(contactList);
+  useEffect(() => {
+    axios
+      .get(
+
+        "http://192.168.1.132:3000/api/users/allusers/63bc585f004eb697059c2a7d"
+
+      )
+      .then((res) => {
+        console.log(res.data.filter((e) => contactList.includes(e.email)));
+        getAllUsers(res.data);
+      })
+      .catch((err) => console.log(err));
+  },[]);
   return (
-    
-    <Box style={{ backgroundColor: "#EAC7CA" }}>
+    <Box style={{ backgroundColor: "#FFC8CE" }}>
       <Box style={styles.header}>
         <Heading fontSize="2xl" style={styles.heading}>
           Messages
@@ -55,12 +77,13 @@ export default function Chat({ navigation }) {
         <Box style={styles.containerTop}>
           <Box style={styles.SearchBar}>
             <Input
+              variant="rounded"
               placeholder="Search"
-              variant="filled"
+              backgroundColor={"rgba(0,0,0,0.1)"}
               width="100%"
-              borderRadius="10"
-              borderWidth={1}
-              borderColor="black"
+              mx="4"
+              right={4}
+              borderColor="white"
               fontSize="lg"
               py="1"
               px="2"
@@ -76,127 +99,71 @@ export default function Chat({ navigation }) {
           </Box>
 
           <ScrollView horizontal={true}>
-            <Box style={styles.contact}>
-              <HStack>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                >
-                  <Avatar.Badge bg="green.500" />
-                </Avatar>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                >
-                  <Avatar.Badge bg="green.500" />
-                </Avatar>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                >
-                  <Avatar.Badge bg="green.500" />
-                </Avatar>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-                <Avatar
-                  marginLeft={5}
-                  size="lg"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-              </HStack>
-            </Box>
+            {allUsers.map((e) => {
+              return (
+                <Box style={styles.contact}>
+                  <HStack>
+                    <Avatar
+                      marginLeft={5}
+                      size="lg"
+                      source={{
+                        uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                      }}
+                    >
+                      <Avatar.Badge bg="green.500" />
+                    </Avatar>
+                  </HStack>
+                </Box>
+              );
+            })}
           </ScrollView>
         </Box>
-        <Box height={windowHeight}>
-          <VStack>
-            <HStack style={styles.message}>
-              <Avatar
-                marginLeft={5}
-                size="lg"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                }}
-              >
-                
-              </Avatar>
-              <VStack style={styles.textContainer}>
-                <Text fontWeight={700} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-                <Text fontWeight={300} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
-          <VStack>
-            <HStack style={styles.message}>
-              <Avatar
-                marginLeft={5}
-                size="lg"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                }}
-              >
-                
-              </Avatar>
-              <VStack style={styles.textContainer}>
-                <Text fontWeight={700} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-                <Text fontWeight={300} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
-          <VStack>
-            <HStack style={styles.message}>
-              <Avatar
-                marginLeft={5}
-                size="lg"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1614289371518-722f2615943d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                }}
-              >
-                
-              </Avatar>
-              <VStack style={styles.textContainer}>
-                <Text fontWeight={700} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-                <Text fontWeight={300} fontSize={20}>
-                  Lorem ipsum dolor
-                </Text>
-              </VStack>
-            </HStack>
-          </VStack>
-        </Box>
+        <ScrollView useWindowScrolling={true}>
+          <Box height={windowHeight}>
+            {allUsers.map((e) => {
+              return (
+                <VStack>
+                  <TouchableOpacity
+                    onPress={() => {
+                      setTo(e._id);
+                      navigation.navigate("messages");
+                    }}
+                  >
+                    <HStack style={styles.message} key={e._id}>
+                      {e.isAvatarImageSet ? (
+                        <Avatar
+                          marginLeft={5}
+                          size="lg"
+                          source={{
+                            uri: e.avatarImage,
+                          }}
+                        ></Avatar>
+                      ) : (
+                        <Avatar
+                          marginLeft={5}
+                          size="lg"
+                          source={{
+                            uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2aSUcU-KC_ZGl1KIFES1pwRe4YOMv2gPx_g&usqp=CAU",
+                          }}
+                        ></Avatar>
+                      )}
+                      <VStack style={styles.textContainer}>
+                        <Text fontWeight={700} fontSize={20}>
+                          {e.username}
+                        </Text>
+                        <Text fontWeight={300} fontSize={20}>
+                          {e.email}
+                        </Text>
+                      </VStack>
+                    </HStack>
+                  </TouchableOpacity>
+                </VStack>
+              );
+            })}
+          </Box>
+        </ScrollView>
       </Box>
-      <Footer navigation={navigation}/>
+      <Footer navigation={navigation} />
     </Box>
   );
 }
@@ -211,12 +178,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 40,
   },
-  message:{
-    
-    padding:15
+  message: {
+    padding: 15,
   },
   header: {
-    backgroundColor: "#EAC7CA",
+    backgroundColor: "#FFC8CE",
     width: windowWidth,
     top: windowHeight - (windowHeight - 60),
     height: windowHeight - (windowHeight - 80),
@@ -233,8 +199,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     padding: 20,
   },
-textContainer:{
-paddingStart:20 
-},
+  textContainer: {
+    paddingStart: 20,
+  },
   SearchBar: { marginTop: 20, paddingEnd: 10, paddingStart: 10 },
 });

@@ -7,6 +7,7 @@ import {
   Text,
   Box,
   Image,
+  Badge,
   Center,
 } from "native-base";
 import { UserContext } from "../UserContext";
@@ -55,14 +56,31 @@ export default function Footer({ navigation, focused }) {
         <ActionSheet
           navigation={navigation}
           styles={style.middleButton}
-          icon={<MaterialCommunityIcons name="plus" size={25} />}
+          icon={
+            <MaterialCommunityIcons name="plus" color={"white"} size={25} />
+          }
         />
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("track");
             setSelected("radar");
           }}
         >
+          {<Badge // bg="red.400"
+            colorScheme="danger"
+            rounded="full"
+            mb={-4}
+            mr={-4}
+            zIndex={1}
+            variant="solid"
+            alignSelf="flex-end"
+            _text={{
+              fontSize: 8,
+            }}
+          >
+            2
+          </Badge>}
           <MaterialCommunityIcons
             name="radar"
             color={selected === "radar" ? "#5FC8C0" : "#5FC8C0"}
@@ -97,7 +115,7 @@ const style = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    shadowColor: "#5FC8C0",
+    shadowColor: "grey",
   },
   actionSheet: {
     backgroundColor: "#B1C4CB",
@@ -112,7 +130,7 @@ const style = StyleSheet.create({
     width: windowWidth,
     width: 55,
     height: 55,
-    backgroundColor: "#E8C6C8",
+    backgroundColor: "#FFC8CE",
     borderRadius: 30,
     marginBottom: 200,
     alignItems: "center",
@@ -120,6 +138,6 @@ const style = StyleSheet.create({
     shadow: 9,
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    shadowColor: "#5FC8C0",
+    shadowColor: "grey",
   },
 });

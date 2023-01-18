@@ -21,61 +21,131 @@ const config = {
 // extend the theme
 import { amine } from "./host.js";
 const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
+
+import socketIO from "socket.io-client";
+import { async } from "@firebase/util";
+
 export const theme = extendTheme({ config });
 export default function App() {
+
+  // const socket = socketIO.connect("http://192.168.1.132:3000");
+
+
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
+  const [chatUser, setChatUser] = useState(null);
   const [oneUser, setOneUser] = useState(null);
   const [onePost, setOnePost] = useState(null);
   const [to, setTo] = useState(null);
+  const [contactList, setContactList] = useState(null);
+  const [contactArray, setcontactArray] = useState([]);
+  const [pendingList, setPendingList] = useState([]);
+  const [pendingArray, setPendingArray] = useState([]);
   const [selected, setSelected] = useState("home");
   const [initializing, setInitializing] = useState(true);
+  var [socket, setSocket] = useState("");
   //Checking if there is a user connected
- 
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log(user);
-
-      if (!user) {
-        navigation.navigate("login");
-      } else {
-        setConnected(user.email);
-      }
       if (initializing) {
         setInitializing(false);
       }
+      if (user === null) {
+        navigation.navigate("login");
+      }
     });
-    console.log(connected, "user connected");
-    if (!connected) {
-      console.log("nothin");
-    } else if (connected) {
-      console.log("logeed");
-      axios
-        .get(`http://192.168.1.105:5000/users/${connected}`)
-        .then((res) => {
-          console.log("succ");
-          setUser(res.data);
-        })
-        .catch((err) => console.log("err"));
-    }
+   
   }, [connected]);
+  useEffect(()=>{
+    if(user){
 
-  console.log(connected, "heill");
+      axios.get(`http://192.168.1.132:5001/users/id/${user.user_id}`).then(
+        res=>{
+          setUser(res.data)
+        }
+      )
+    } 
+  },[connected])
+  useEffect(() => {
+    if (user) {
+      setcontactArray(user.contactList);
+
+      setPendingArray(user.pendingRequests);
+      console.log('hi again');
+    }
+  }, [user]);
+  useEffect(() => {
+    if (user) {
+      let contact = [];
+
+      for (let i = 0; i < user.contactList.length; i++) {
+        axios
+
+
+          .get(`http://192.168.1.132:5001/users/${user.contactList[i]}`)
+
+
+          .then((res) => {
+            contact.push(res.data);
+          });
+      }
+      let pending = [];
+
+      for (let i = 0; i < user.pendingRequests.length; i++) {
+        axios
+
+
+          .get(`http://192.168.1.132:5001/users/${user.pendingRequests[i]}`)
+
+
+          .then((res) => {
+            pending.push(res.data);
+          });
+      }
+      setTimeout(() => {
+        setPendingList(pending);
+        setContactList(contact);
+      }, 1);
+    }
+      console.log("hi again again");
+  }, [contactArray, pendingArray]);
+  useEffect(() => {
+    console.log(
+      contactList,
+      "================================>==================================>",
+      pendingList
+    );
+  }, [contactList]);
+  console.log(user, "user");
+  console.log(chatUser, "chat");
+  console.log(connected, "connected");
+
+  console.log(contactArray, "contact array");
 
   return (
     <UserContext.Provider
       value={{
+        chatUser,
+        setChatUser,
         user,
         setUser,
         selected,
         setSelected,
         connected,
+        setConnected,
         oneUser,
         setOneUser,
         onePost,
         setOnePost,
         to,
         setTo,
+        socket,
+        setSocket,
+        contactList,
+        contactArray,
+        setContactList,
+        setcontactArray,
       }}
     >
       <NativeBaseProvider>
@@ -86,7 +156,6 @@ export default function App() {
     </UserContext.Provider>
   );
 }
-
 // Color Switch Component
 function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();

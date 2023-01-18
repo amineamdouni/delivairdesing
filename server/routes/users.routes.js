@@ -1,8 +1,25 @@
 var router = require("express").Router();
-const {get,add,verify,getOne} = require("../controller/user.controller");
-router.get("/", get);
-router.post('/add',add)
-router.put('/:id',verify)
-router.get("/:email", getOne);
+const {
+  getAll,
+  add,
+  verify,
+  getOneByemail,
+  deleteAccount,
+  updateFriends,
+  getOneById,
+  ban,
+} = require("../controller/user.controller");
+router.get("/", getAll);
+
+router.post("/", add);
+router.put("/verify/:id", verify);
+router.put("/ban/:id", ban);
+router.get("/:email", getOneByemail);
+router.get("/id/:id", getOneById);
+router.delete("/:id", deleteAccount);
+
+router.put("/:id", updateFriends);
+
+
 
 module.exports = router;

@@ -27,9 +27,9 @@ export const FlyInfo = styled(Animated.View)`
 `;
 
 export const Content = styled(LinearGradient).attrs({
-  colors: ["#ffffff", "#E7C7C8", "#ABCED8"],
-  start: { x: 0.5, y: -0.6 },
-  end: { x: 0.5, y: 1 },
+  colors: ["#ffffff", "#FFC8CE", "#5FC8C0"],
+  start: { x: 0.2, y: -0.6 },
+  end: { x: 0.2, y: 1 },
 })`
   width: 100%;
   height: 100%;
@@ -55,17 +55,19 @@ export const TextContent = styled.View<Props>`
     alingment === "left" ? "flex-start" : "flex-end"};
 `;
 
-export const HourContent = styled.View<Props>`
-  align-items: center;
-  justify-content: flex-end;
-  padding-bottom: 8px;
+export const HourContent = styled.Text<Props>`
+color: white;
+margin-top: ${({ mt }) => (mt ? mt : 0)}px;
+font-weight:700;
+opacity: ${({ mt }) => (mt ? 1 : 0.8)};font-size: 25px;
+ 
 `;
 
 export const SmallText = styled.Text<Props>`
   color: white;
   margin-top: ${({ mt }) => (mt ? mt : 0)}px;
   font-weight: ${({ bold }) => (bold ? "600" : "normal")};
-  opacity: ${({ mt }) => (mt ? 1 : 0.8)};
+  opacity: ${({ mt }) => (mt ? 1 : 0.8)};font-size: 20px;
 `;
 
 export const LargeText = styled.Text`

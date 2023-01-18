@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import {
-  Alert,
   Text,
   Center,
   Heading,
   VStack,
   Box,
   Button,
+  Checkbox,
   Image,
   Input,
   Flex,
@@ -15,6 +15,8 @@ import {
   Icon,
   HStack,
   Link,
+  useToast,
+  Modal,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { IconButton } from "native-base";
@@ -24,7 +26,7 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
-
+import Alert from "./Alert";
 const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 //--------- We need to secure this amine !------
@@ -41,27 +43,75 @@ import { initializeApp } from "firebase/app";
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 //-----------------------
-
-export default function SignUp() {
+import { UserContext } from "../UserContext";
+import axios from "axios";
+import { TouchableOpacity } from "react-native-gesture-handler";
+export default function SignUp({ navigation }) {
+  const ToastDetails = [
+    {
+      title: "Network connection restored",
+      variant: "left-accent",
+      description:
+        "This is to inform you that your network connectivity is restored",
+      isClosable: true,
+    },
+  ];
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [dataInput, setDataInput] = useState([]);
-  const [user, setUser] = useState("");
- 
+  const { setUser, setConnected, setChatUser } = useContext(UserContext);
+  const [showModal, setShowModal] = useState(false);
+  const [terms, setTerms] = useState(false);
 
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+  console.log(terms);
   //SignUp function
   const SignUpUser = () => {
     const info = { Email: Email, passw: password };
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
-      .then((Credential) => {
-        setUser(Credential.user.uid);
-        navigation.navigate("form");
+      .then((res) => {
+        axios
+
+
+          .post("http://192.168.1.132:3000/api/users/register", {
+
+            email: Email,
+            password,
+            username,
+          })
+          .then((res) => {
+            console.log("mongo succ");
+
+            setConnected(res.data.user);
+            setChatUser(res.data.user);
+            navigation.navigate("notices");
+            Ale("success", "Welcome!", "Have fun and respect everyone !");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
-        alert(err);
+        Ale("error", "error", JSON.stringify(err.code));
       });
   };
 
@@ -75,7 +125,7 @@ export default function SignUp() {
       <Image
         style={style.backgroundImage}
         source={{
-          uri: "https://wallpapers.com/images/featured/pastel-iphone-nlfoag3cyqt5aoa8.jpg",
+          uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
         }}
         alt="*"
       />
@@ -87,17 +137,22 @@ export default function SignUp() {
               borderRadius={30}
               style={style.logoSignUp}
               source={{
-                uri: "https://i.ibb.co/WzPwN1m/Minimal-World-Travel-Blog-Suitcase-Logo.png",
+                uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443763/1_swzwcw.png",
               }}
               alt="Alternate Text"
             />
           </Center>
           <VStack space={1} alignItems="center">
-            <Heading size="lg">SignUp</Heading>
+            <Heading color={"white"} size="lg">
+              SignUp
+            </Heading>
             <Box space={5} alignItems="center" style={{ marginBottom: "40%" }}>
               <Text style={style.Text}>Username</Text>
               <Box alignItems="center">
                 <Input
+                  variant="rounded"
+                  borderColor={"white"}
+                  placeholderTextColor={"white"}
                   mx="4"
                   placeholder="Username"
                   style={style.Input}
@@ -109,8 +164,11 @@ export default function SignUp() {
               <Text style={style.Text}>Email</Text>
               <Box alignItems="center">
                 <Input
+                  variant="rounded"
+                  borderColor={"white"}
                   mx="4"
                   type="email"
+                  placeholderTextColor={"white"}
                   placeholder="Email"
                   style={style.Input}
                   size="l"
@@ -121,8 +179,11 @@ export default function SignUp() {
               <Text style={style.Text}>Password</Text>
               <Box alignItems="center">
                 <Input
+                  variant="rounded"
+                  borderColor={"white"}
                   type="password"
                   mx="4"
+                  placeholderTextColor={"white"}
                   placeholder="Password"
                   style={style.Input}
                   onChangeText={(text) => setPassword(text)}
@@ -133,8 +194,11 @@ export default function SignUp() {
               <Text style={style.Text}>Confirm Password</Text>
               <Box alignItems="center">
                 <Input
+                  variant="rounded"
+                  borderColor={"white"}
                   type="password"
                   mx="4"
+                  placeholderTextColor={"white"}
                   placeholder="Confirm Password"
                   style={style.Input}
                   onChangeText={(text) => setConfirm(text)}
@@ -142,10 +206,135 @@ export default function SignUp() {
                   shadow="12"
                 />
               </Box>
+              <HStack space={6}>
+                {/* <Checkbox
+                  shadow={2}
+                  value="test"
+                  accessibilityLabel="This is a dummy checkbox"
+                  isChecked={false}
+                > */}
+                <Box>
+                  <TouchableOpacity onPress={() => setShowModal(true)}>
+                    <Text marginTop="5" color="white">
+                      <MaterialCommunityIcons
+                        name="alert-circle"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      Please click here to accept Terms & conditions
+                    </Text>
+                  </TouchableOpacity>
+                </Box>
+                <Modal
+                  isOpen={showModal}
+                  onClose={() => setShowModal(false)}
+                  _backdrop={{
+                    _dark: {
+                      bg: "coolGray.800",
+                    },
+                    bg: "warmGray.50",
+                  }}
+                >
+                  <Modal.Content maxWidth="350" maxH="212">
+                    <Modal.CloseButton />
+                    <Modal.Header>Terms and conditions</Modal.Header>
+                    <Modal.Body>
+                      <Text>
+                        DelivAir's licensed to You (End-User), located and
+                        registered at 04 rue des roses, tunis, tunisie 2070,
+                        Tunisia ("Licensor"), for use only under the terms of
+                        this License Agreement.
+                        <Text fontWeight="bold">
+                          We note that we are not responsible for any loss or
+                          theft of products, we are only a contact intermediary
+                          that helps people connect through our app.
+                        </Text>
+                        By downloading the Licensed Application from Apple's
+                        software distribution platform ("App Store"), and
+                        accepting the terms on signing up (as permitted by this
+                        License Agreement), You indicate that You agree to be
+                        bound by all of the terms and conditions of this License
+                        Agreement, and that You accept this License Agreement.
+                        App Store is referred to in this License Agreement as
+                        "Services." The parties of this License Agreement
+                        acknowledge that the Services are not a Party to this
+                        License Agreement and are not bound by any provisions or
+                        obligations with regard to the Licensed Application,
+                        such as warranty, liability, maintenance and support
+                        thereof. DelivAir, not the Services, is solely
+                        responsible for the Licensed Application and the
+                        content. This License Agreement may not provide for
+                        usage rules for the Licensed Application that are in
+                        conflict with the latest Apple Media Services Terms and
+                        Conditions ("Usage Rules"). DelivAir acknowledges that
+                        it had the opportunity to review the Usage Rules and
+                        this License Agreement is not conflicting with them.
+                        When downloaded through the Store, it is licensed to You
+                        for use only under the terms of this License Agreement.
+                        The Licensor reserves all rights not expressly granted
+                        to You. DelivAir is to be used on devices that operate
+                        with Apple's operating systems ("iOS" and "Mac
+                        OS").DelivAir's licensed to You (End-User), located and
+                        registered at 04 rue des roses, tunis, tunisie 2070,
+                        Tunisia ("Licensor"), for use only under the terms of
+                        this License Agreement. By downloading the Licensed
+                        Application from Apple's software distribution platform
+                        ("App Store"), and accepting the terms on signing up (as
+                        permitted by this License Agreement), You indicate that
+                        You agree to be bound by all of the terms and conditions
+                        of this License Agreement, and that You accept this
+                        License Agreement. App Store is referred to in this
+                        License Agreement as "Services." The parties of this
+                        License Agreement acknowledge that the Services are not
+                        a Party to this License Agreement and are not bound by
+                        any provisions or obligations with regard to the
+                        Licensed Application, such as warranty, liability,
+                        maintenance and support thereof. DelivAir, not the
+                        Services, is solely responsible for the Licensed
+                        Application and the content. This License Agreement may
+                        not provide for usage rules for the Licensed Application
+                        that are in conflict with the latest Apple Media
+                        Services Terms and Conditions ("Usage Rules"). DelivAir
+                        acknowledges that it had the opportunity to review the
+                        Usage Rules and this License Agreement is not
+                        conflicting with them. When downloaded through the
+                        Store, it is licensed to You for use only under the
+                        terms of this License Agreement. The Licensor reserves
+                        all rights not expressly granted to You. DelivAir is to
+                        be used on devices that operate with Apple's operating
+                        systems ("iOS" and "Mac OS").
+                      </Text>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button.Group space={2}>
+                        <Button
+                          variant="ghost"
+                          colorScheme="blueGray"
+                          onPress={() => {
+                            setShowModal(false);
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          variant="subtle"
+                          onPress={() => {
+                            setShowModal(false);
+                            setTerms(true);
+                          }}
+                        >
+                          Accept!
+                        </Button>
+                      </Button.Group>
+                    </Modal.Footer>
+                  </Modal.Content>
+                </Modal>
+                {/* </Checkbox> */}
+              </HStack>
               <Box w={160}>
                 <HStack space={10} justifyContent="center" style={style.forgot}>
                   <Divider my={2} />
-                  <Text>OR</Text>
+                  <Text color={"white"}>OR</Text>
                   <Divider my={2} />
                 </HStack>
                 <Flex
@@ -158,7 +347,7 @@ export default function SignUp() {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="facebook"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
@@ -167,7 +356,7 @@ export default function SignUp() {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="google"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
@@ -176,22 +365,34 @@ export default function SignUp() {
                     <Icon
                       as={MaterialCommunityIcons}
                       name="twitter"
-                      color="coolGray.800"
+                      color="white"
                       size={30}
                     />
                   </Link>
                 </Flex>
               </Box>
-
               <Box>
                 <Center>
-                  <Button
-                    className="LoginButton"
-                    onPress={SignUpUser}
-                    style={style.LoginButton}
-                  >
-                    SignUp
-                  </Button>
+                  {terms ? (
+                    <Button
+                      variant="subtle"
+                      className="LoginButton"
+                      onPress={SignUpUser}
+                      style={style.LoginButton}
+                    >
+                      SignUp
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="subtle"
+                      className="LoginButton"
+                      onPress={SignUpUser}
+                      style={style.LoginButton}
+                      isDisabled
+                    >
+                      SignUp
+                    </Button>
+                  )}
                 </Center>
               </Box>
             </Box>
@@ -212,28 +413,21 @@ const style = StyleSheet.create({
     justifyContent: "center",
   },
   Input: {
-    backgroundColor: "white",
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 5,
+    backgroundColor: "rgba(0,0,0,0.1)",
   },
   LoginButton: {
-    backgroundColor: "#9EA7B6",
     marginTop: "20%",
     borderRadius: 5,
     width: "70%",
-    shadowColor: "black",
-    shadowOpacity: 0.8,
-    elevation: 1,
-    shadowRadius: 8,
-    shadowOffset: { width: 6, height: 5 },
   },
   Text: {
+    fontWeight: "bold",
     padding: 5,
     textAlign: "left",
     alignSelf: "flex-start",
     textAlign: "right",
     paddingLeft: 20,
+    color: "white",
   },
   forgot: {
     marginTop: 10,

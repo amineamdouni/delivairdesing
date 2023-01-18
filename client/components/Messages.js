@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Box, HStack, Center, Heading } from "native-base";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Avatar, Box, HStack, Center, Heading } from "native-base";
 import {
   StyleSheet,
   Text,
@@ -9,34 +9,55 @@ import {
   TextInput,
   FlatList,
   Button,
+  ScrollView,
 } from "react-native";
 import axios from "axios";
 import { io } from "socket.io-client";
-
+import { UserContext } from "../UserContext";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
+import ProductForm from "./Contract";
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
+
   const [newMsg, setNewMsg] = useState();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [size, setSize] = React.useState("md");
+  const handleSizeClick = (newSize) => {
+    setSize(newSize);
+    setModalVisible(!modalVisible);
+  };
+  const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.104.28:3000/");
-  socket.on("connection", () => {
-    console.log("hello from socket", socket.id);
-    //amine we can console log the connection here (socket.id)
-  });
+  const socket = io("http://192.168.1.132:3000/");
+
+  // socket.on("connection", () => {
+  //   console.log("hello from socket", socket.id);
+  //   //amine we can console log the connection here (socket.id)
+  // });
+
+  console.log("From ", chatUser._id);
+  console.log("to ", to);
 
   const handleSending = async () => {
     console.log(newMsg["text"]);
 
-    socket.emit("send-msg", {
-      from: "63b54b3536c92210d680f473",
-      to: "63b5490436c92210d680f46d",
+    socket.emit("message", {
+      to: to,
+      from: chatUser._id,
       message: newMsg["text"],
     });
     await axios
-      .post("http://192.168.104.28:3000/api/messages/addmsg/", {
-        from: "63b5490436c92210d680f46d",
-        to: "63b54b3536c92210d680f473",
+
+      .post("http://192.168.1.132:3000/api/messages/addmsg/", {
+        from: chatUser._id,
+        to: to,
         message: newMsg["text"],
       })
       .then((res) => {
@@ -51,9 +72,10 @@ export default Messages = () => {
 
   useEffect(() => {
     axios
-      .post("http://192.168.104.28:3000/api/messages/getmsg/", {
-        to: "63b5490436c92210d680f46d",
-        from: "63b54b3536c92210d680f473",
+
+      .post("http://192.168.1.132:3000/api/messages/getmsg/", {
+        from: chatUser._id,
+        to: to,
       })
       .then((res) => setMessages(res.data))
       .catch((err) => console.log(err));
@@ -64,29 +86,38 @@ export default Messages = () => {
   };
 
   useEffect(() => {
-    if (socket.current) {
-      socket.current.on("msg-recieve", (msg) => {
-        setArrivalMessage({ fromSelf: false, message: msg });
-      });
-    }
-  }, []);
+    socket.on("messageResponse", (data) => {
+      data.fromSelf = false;
+      console.log(data);
+      setMessages([...messages, { fromSelf: false, message: data["message"] }]);
+    });
+  }, [socket, messages]);
 
-  useEffect(() => {
-    arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage]);
+  // useEffect(() => {
+  //   if (socket.current) {
+  //     socket.current.on("msg-recieve", (msg) => {
+  //       setArrivalMessage({ fromSelf: false, message: msg });
+  //     });
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  // useEffect(() => {
+  //   arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
+  // }, [arrivalMessage]);
+
+  // useEffect(() => {
+  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  // }, [messages]);
 
   return (
     <View style={styles.container}>
+      <ProductForm size={size} setModalVisible={setModalVisible} modalVisible={modalVisible}/>
       <Box>
-        <Box backgroundColor={"#E7C7C8"}>
+        <Box backgroundColor={"#FFC8CE"}>
           <Box style={styles.Header}>
             <HStack>
               <Center>
-                <Heading style={styles.logo}>DeliVair</Heading>
+                <Heading style={styles.logo}>{user.userName}</Heading>
               </Center>
             </HStack>
           </Box>
@@ -104,6 +135,14 @@ export default Messages = () => {
           let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
           return (
             <View style={[styles.item, itemStyle]}>
+              <Avatar
+                bg="green.500"
+                alignSelf="center"
+                size="xs"
+                source={{
+                  uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                }}
+              ></Avatar>
               {!inMessage && renderDate(item.createdAt)}
               <View style={[styles.balloon]}>
                 <Text>{item.message}</Text>
@@ -114,17 +153,26 @@ export default Messages = () => {
         }}
       />
       <View style={styles.footer}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            style={styles.inputs}
-            placeholder="Write a message..."
-            underlineColorAndroid="transparent"
-            onChangeText={(text) => setNewMsg({ text })}
-          />
-        </View>
-
-        <TouchableOpacity style={styles.btnSend}>
-          <Button onPress={handleSending} title="submit"></Button>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
+        >
+          <View style={styles.inputContainer}>
+            <TextInput
+              style={styles.inputs}
+              placeholder="Write a message..."
+              underlineColorAndroid="transparent"
+              onChangeText={(text) => setNewMsg({ text })}
+            />
+          </View>
+        </ScrollView>
+        <TouchableOpacity
+          onPress={() => handleSizeClick("full")}
+          style={styles.btnSend}
+        >
+          <FontAwesome5 name="file-contract" size={20} color={"#fff"} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleSending} style={styles.btnSend}>
           <Image
             source={{
               uri: "https://img.icons8.com/small/75/ffffff/filled-sent.png",
@@ -153,7 +201,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   btnSend: {
-    backgroundColor: "#00BFFF",
+    backgroundColor: "#5FC8C0",
     width: 40,
     height: 40,
     borderRadius: 360,
@@ -161,15 +209,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   iconSend: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     alignSelf: "center",
   },
   inputContainer: {
-    borderBottomColor: "#F5FCFF",
-    backgroundColor: "#FFFFFF",
+    backgroundColor: "rgba(0,0,0,0.1)",
     borderRadius: 30,
-    borderBottomWidth: 1,
+
     height: 40,
     flexDirection: "row",
     alignItems: "center",
@@ -189,17 +236,18 @@ const styles = StyleSheet.create({
   },
   itemIn: {
     alignSelf: "flex-start",
-    backgroundColor: "#EAC7CA",
+    backgroundColor: "#FFC8CE",
   },
   itemOut: {
     alignSelf: "flex-end",
-    backgroundColor: "##5FC8C0",
+    backgroundColor: "#5FC8C0",
   },
   time: {
     alignSelf: "flex-end",
     margin: 15,
     fontSize: 12,
     color: "#808080",
+    top: 40,
   },
   item: {
     marginVertical: 14,
@@ -210,7 +258,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   Header: {
-    backgroundColor: "#EBC8CB",
+    backgroundColor: "#FFC8CE",
     paddingTop: 80,
     width: 500,
     height: 100,
@@ -220,10 +268,11 @@ const styles = StyleSheet.create({
       "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
   },
   logo: {
+    color: "white",
     width: 143,
     height: 48,
-    left: 12,
+    left: 150,
     top: 10,
-    fontSize: 30,
+    fontSize: 17,
   },
 });
