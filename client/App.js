@@ -55,12 +55,24 @@ export default function App() {
         navigation.navigate("login");
       }
     });
+   
   }, [connected]);
+  useEffect(()=>{
+    if(user){
+
+      axios.get(`http://192.168.1.132:5001/users/id/${user.user_id}`).then(
+        res=>{
+          setUser(res.data)
+        }
+      )
+    } 
+  },[connected])
   useEffect(() => {
     if (user) {
       setcontactArray(user.contactList);
 
       setPendingArray(user.pendingRequests);
+      console.log('hi again');
     }
   }, [user]);
   useEffect(() => {
@@ -96,6 +108,7 @@ export default function App() {
         setContactList(contact);
       }, 1);
     }
+      console.log("hi again again");
   }, [contactArray, pendingArray]);
   useEffect(() => {
     console.log(

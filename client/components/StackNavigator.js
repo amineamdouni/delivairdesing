@@ -43,7 +43,6 @@ const Stacks = () => {
       >
 
 
-        <Stack.Screen name="setting" component={UserSetting}/>
 
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
@@ -56,6 +55,7 @@ const Stacks = () => {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="otherprofile" component={OthersProfile} />
         <Stack.Screen name="contarct" component={Alert} />
+        <Stack.Screen name="setting" component={UserSetting}/>
         <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
 
