@@ -14,17 +14,28 @@ import {
 import axios from "axios";
 import { io } from "socket.io-client";
 import { UserContext } from "../UserContext";
-
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
+import ProductForm from "./Contract";
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
 
   const [newMsg, setNewMsg] = useState();
   const [arrivalMessage, setArrivalMessage] = useState(null);
   const scrollRef = useRef();
-
+  const [modalVisible, setModalVisible] = React.useState(false);
+  const [size, setSize] = React.useState("md");
+  const handleSizeClick = (newSize) => {
+    setSize(newSize);
+    setModalVisible(!modalVisible);
+  };
   const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.1.119:3000/");
+  const socket = io("http://192.168.1.132:3000/");
 
   // socket.on("connection", () => {
   //   console.log("hello from socket", socket.id);
@@ -44,7 +55,7 @@ export default Messages = () => {
     });
     await axios
 
-      .post("http://192.168.1.119:3000/api/messages/addmsg/", {
+      .post("http://192.168.1.132:3000/api/messages/addmsg/", {
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -62,7 +73,7 @@ export default Messages = () => {
   useEffect(() => {
     axios
 
-      .post("http://192.168.1.119:3000/api/messages/getmsg/", {
+      .post("http://192.168.1.132:3000/api/messages/getmsg/", {
         from: chatUser._id,
         to: to,
       })
@@ -100,6 +111,7 @@ export default Messages = () => {
 
   return (
     <View style={styles.container}>
+      <ProductForm size={size} setModalVisible={setModalVisible} modalVisible={modalVisible}/>
       <Box>
         <Box backgroundColor={"#FFC8CE"}>
           <Box style={styles.Header}>
@@ -154,7 +166,12 @@ export default Messages = () => {
             />
           </View>
         </ScrollView>
-
+        <TouchableOpacity
+          onPress={() => handleSizeClick("full")}
+          style={styles.btnSend}
+        >
+          <FontAwesome5 name="file-contract" size={20} color={"#fff"} />
+        </TouchableOpacity>
         <TouchableOpacity onPress={handleSending} style={styles.btnSend}>
           <Image
             source={{
