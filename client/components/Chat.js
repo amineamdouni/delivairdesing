@@ -11,7 +11,7 @@ import {
   Button,
   Image,
   Input,
-  ScrollView,
+  
   Flex,
   Divider,
   Icon,
@@ -19,6 +19,7 @@ import {
 } from "native-base";
 import {
   StyleSheet,
+  ScrollView,
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
@@ -41,17 +42,17 @@ import { UserContext } from "../UserContext";
 import axios from "axios";
 import Messages from "./Messages";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 export default function Chat({ navigation }) {
-  const { user, connected, setTo, socket } = useContext(UserContext);
+  const { user, connected, setTo, socket,contactList } = useContext(UserContext);
   const [allUsers, getAllUsers] = useState([]);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
+  // console.log(allUsers);
 
   useEffect(() => {
     forceUpdate();
   }, [user]);
-
+console.log(contactList);
   useEffect(() => {
     axios
       .get(
@@ -60,10 +61,11 @@ export default function Chat({ navigation }) {
 
       )
       .then((res) => {
+        console.log(res.data.filter((e) => contactList.includes(e.email)));
         getAllUsers(res.data);
       })
       .catch((err) => console.log(err));
-  });
+  },[]);
   return (
     <Box style={{ backgroundColor: "#FFC8CE" }}>
       <Box style={styles.header}>

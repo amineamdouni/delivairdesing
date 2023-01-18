@@ -11,11 +11,38 @@ import {
   Center,
   ScrollView,
 } from "native-base";
+import * as DocumentPicker from "expo-document-picker";
+import { AntDesign } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+import ProgressBar from "react-native-animated-progress";
+import Alert from "./Alert";
+//---------Firebase---------
+import firebase from "firebase/compat/app";
+import "firebase/compat/storage";
+import { initializeApp } from "firebase/app";
+const firebaseConfig = {
+  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+  authDomain: "delivair-959e9.firebaseapp.com",
+  projectId: "delivair-959e9",
+  storageBucket: "delivair-959e9.appspot.com",
+  messagingSenderId: "1084409904306",
+  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+const app = initializeApp(firebaseConfig);
+
+//------------firebase-----------
 import { useState } from "react";
 const PersonalInformationForm = () => {
   const [selected, setSelected] = useState("settings");
   const [settings, setSettings] = useState("settings");
-  const [posts, setPosts] = useState(null);
+  const [posts, setPosts] = useState(null);  const [loading, setLoading] = useState(false);
+  const [location, setLocation] = useState("");
+  const [progress, setProgress] = useState(0);
+
   const [history, setHistory] = useState(null);
   const changed = (pressed) => {
     if (pressed === "settings") {
@@ -34,9 +61,107 @@ const PersonalInformationForm = () => {
       setSettings(null);
     }
   };
+  //------------firebase upload picture---------
+
+  const [image, setImage] = useState(
+    "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+  );
+  const [uploading, setUploading] = useState(false);
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const uploadImage = async () => {
+    setProgress(0);
+    setLoading(true);
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", image, true);
+      xhr.send(null);
+    });
+    const ref = firebase.storage().ref().child(`Pictures/Image2`);
+    const snapshot = ref.put(blob);
+    snapshot.on(
+      firebase.storage.TaskEvent.STATE_CHANGED,
+      () => {
+        setUploading(true);
+      },
+      (error) => {
+        setUploading(false);
+        console.log(error);
+        alert(error);
+        blob.close();
+        Ale("error", "Oups there is an error", "Try again please!");
+        return;
+      },
+
+      () => {
+        snapshot.snapshot.ref.getDownloadURL().then((url) => {
+          Ale(
+            "success",
+            "Upload successful",
+            "You can submit now! (don't forget to fill the rest of the form!"
+          );
+          setUploading(false);
+          setProgress(100);
+          console.log("Download URL: ", url);
+          setImage(url);
+          setLoading(false);
+          blob.close();
+          return url;
+        });
+      }
+    );
+  };
+
+  //----------end of firebase upload picture----
+
   return (
     <Box backgroundColor={"#5FC8C0"} height={1000}>
-      <Avatar
+      <TouchableOpacity onPress={pickImage}>
+        {image ? (
+          <Avatar
+            top={200}
+            bg="lightBlue.400"
+            size="xl"
+            borderRadius={100}
+            source={{ uri: image }}
+            alt="Alternate Text"
+            alignSelf="center"
+          ></Avatar>
+        ) : (
+          <Avatar
+            borderColor={"black"}
+            borderWidth={1}
+            size="xl"
+            alignSelf="center"
+            top={200}
+            borderRadius={100}
+            source={{
+              uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
+            }}
+            alt="Alternate Text"
+          />
+        )}
+      </TouchableOpacity>
+      {/* <Avatar
         top={40}
         alignSelf="center"
         bg="amber.500"
@@ -44,7 +169,7 @@ const PersonalInformationForm = () => {
         source={{
           uri: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
         }}
-      ></Avatar>
+      ></Avatar> */}
       <Box top={250} alignItems="center">
         <Flex direction="row" h="58" p="4">
           <HStack>
@@ -195,15 +320,21 @@ const PersonalInformationForm = () => {
                   shadow={3}
                   shadowColor={"white"}
                 >
-                  <Avatar
-                    bg="green.500"
-                    left={2}
-                    top={1}
-                    size="xs"
-                    source={{
-                      uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                    }}
-                  ></Avatar>
+                  <HStack>
+
+                    <Avatar
+                      bg="green.500"
+                      left={2}
+                      top={1}
+                      size="xs"
+                      source={{
+                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                      }}
+                    ></Avatar><Box left={
+                      200}>
+                    <AntDesign color={'red'} name="delete" />
+</Box>
+                  </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}
                     I have 2 kilos from Tunisa to Paris 5 February{" "}
@@ -218,15 +349,21 @@ const PersonalInformationForm = () => {
                   shadow={3}
                   shadowColor={"white"}
                 >
-                  <Avatar
-                    bg="green.500"
-                    left={2}
-                    top={1}
-                    size="xs"
-                    source={{
-                      uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                    }}
-                  ></Avatar>
+                <HStack>
+
+                    <Avatar
+                      bg="green.500"
+                      left={2}
+                      top={1}
+                      size="xs"
+                      source={{
+                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                      }}
+                    ></Avatar><Box left={
+                      200}>
+                    <AntDesign color={'red'} name="delete" />
+</Box>
+                  </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}
                     I have 2 kilos from Tunisa to Paris 2 March{" "}
@@ -240,15 +377,21 @@ const PersonalInformationForm = () => {
                   shadow={3}
                   shadowColor={"white"}
                 >
-                  <Avatar
-                    bg="green.500"
-                    left={2}
-                    top={1}
-                    size="xs"
-                    source={{
-                      uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                    }}
-                  ></Avatar>
+                <HStack>
+
+                    <Avatar
+                      bg="green.500"
+                      left={2}
+                      top={1}
+                      size="xs"
+                      source={{
+                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                      }}
+                    ></Avatar><Box left={
+                      200}>
+                    <AntDesign color={'red'} name="delete" />
+</Box>
+                  </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}
                     I have 2 kilos from Tunisa to Paris 20 January{" "}

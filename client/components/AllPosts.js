@@ -185,12 +185,26 @@ export default function AllPosts({ navigation }) {
           console.log(test, "titi");
           return (
             <View style={styles.friendItem}>
-              <Image
-                source={{ uri: friends[i].profileImage }}
-                style={styles.profileImage}
-              />
+              <TouchableOpacity
+                onPress={async () => {
+                  await axios
+
+                    .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
+
+                    .then((res) => {
+                      setOneUser(res.data);
+                    });
+
+                  navigation.navigate("otherprofile");
+                }}
+              >
+                <Image
+                  source={{ uri: e.poster_image }}
+                  style={styles.profileImage}
+                />
+              </TouchableOpacity>
               <View style={styles.friendInfo}>
-                <Text style={styles.friendName}>{friends[i].name}</Text>
+                <Text style={styles.friendName}>{e.poster_name}</Text>
                 <Text style={styles.friendEmail}>
                   <MaterialCommunityIcons
                     name="weight-kilogram"

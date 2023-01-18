@@ -52,10 +52,10 @@ export default function Profile({ navigation }) {
 
   function SignOut() {
     signOut(auth)
-      .then((res) => {
-        alert("Signed out");
-        navigation.navigate("login");
         Ale("success","Logout successful", "Sorry to see you go !")
+        .then((res) => {
+        navigation.navigate("login");
+        
       })
       .catch((error) => {
         alert(error);
@@ -415,3 +415,4 @@ const styles = StyleSheet.create({
     marginRight: 20,
   },
 });
+
