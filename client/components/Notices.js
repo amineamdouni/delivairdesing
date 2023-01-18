@@ -33,7 +33,7 @@ const images = [
     "https://i.ibb.co/MncQBTh/System-Error-Illustration-Instagram-posts-11.png",
   ],
   [
-    "Let's go champ!",
+    "One last step!",
     "",
     "https://i.ibb.co/k4kw6zN/System-Error-Illustration-Instagram-posts-12.png",
   ],
@@ -91,7 +91,7 @@ const Notices = ({ navigation }) => {
                         style={styles.Begin}
                         onPress={() => navigation.navigate("form")}
                       >
-                        Begin!
+                        Edit profile
                       </Button>
                     ) : (
                       <Text style={{ color: "white", fontSize: 17 }}>
@@ -140,8 +140,8 @@ const styles = StyleSheet.create({
     flex: 2,
     resizeMode: "cover",
     position: "absolute",
-    width: "110%",
-    height: "110%",
+    width: "120%",
+    height: "120%",
     justifyContent: "center",
   },
   petitText: {
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     color: "white",
-    fontSize: 45,
+    fontSize: 40,
     fontWeight: "bold",
   },
   normalDot: {
