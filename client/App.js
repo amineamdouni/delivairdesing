@@ -27,7 +27,9 @@ import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.1.119:3000");
+
+  // const socket = socketIO.connect("http://192.168.1.132:3000");
+
 
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
@@ -53,12 +55,24 @@ export default function App() {
         navigation.navigate("login");
       }
     });
+   
   }, [connected]);
+  useEffect(()=>{
+    if(user){
+
+      axios.get(`http://192.168.1.132:5001/users/id/${user.user_id}`).then(
+        res=>{
+          setUser(res.data)
+        }
+      )
+    } 
+  },[connected])
   useEffect(() => {
     if (user) {
       setcontactArray(user.contactList);
 
       setPendingArray(user.pendingRequests);
+      console.log('hi again');
     }
   }, [user]);
   useEffect(() => {
@@ -68,7 +82,9 @@ export default function App() {
       for (let i = 0; i < user.contactList.length; i++) {
         axios
 
-          .get(`http://192.168.1.119:5001/users/${user.contactList[i]}`)
+
+          .get(`http://192.168.1.132:5001/users/${user.contactList[i]}`)
+
 
           .then((res) => {
             contact.push(res.data);
@@ -79,7 +95,9 @@ export default function App() {
       for (let i = 0; i < user.pendingRequests.length; i++) {
         axios
 
-          .get(`http://192.168.1.119:5001/users/${user.pendingRequests[i]}`)
+
+          .get(`http://192.168.1.132:5001/users/${user.pendingRequests[i]}`)
+
 
           .then((res) => {
             pending.push(res.data);
@@ -90,6 +108,7 @@ export default function App() {
         setContactList(contact);
       }, 1);
     }
+      console.log("hi again again");
   }, [contactArray, pendingArray]);
   useEffect(() => {
     console.log(
