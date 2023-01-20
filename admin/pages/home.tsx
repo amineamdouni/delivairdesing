@@ -1,5 +1,5 @@
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
-
+import React from 'react'
 const data = [
   { month: 'Jan', users: 1000 },
   { month: 'Feb', users: 800 },
