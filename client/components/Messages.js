@@ -29,13 +29,14 @@ export default Messages = () => {
   const scrollRef = useRef();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [size, setSize] = React.useState("md");
+  const [reciver, setReciver] = useState("");
   const handleSizeClick = (newSize) => {
     setSize(newSize);
     setModalVisible(!modalVisible);
   };
   const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.1.132:3000/");
+  const socket = io("http://192.168.104.7:3000/");
 
   // socket.on("connection", () => {
   //   console.log("hello from socket", socket.id);
@@ -55,7 +56,7 @@ export default Messages = () => {
     });
     await axios
 
-      .post("http://192.168.1.132:3000/api/messages/addmsg/", {
+      .post("http://192.168.104.7:3000/api/messages/addmsg/", {
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -69,11 +70,21 @@ export default Messages = () => {
     msgs.push({ fromSelf: true, message: newMsg["text"] });
     setMessages(msgs);
   };
-
+  useEffect(() => {
+    axios
+      .get(`http://192.168.104.7:3000/api/users/allusers/${to}`)
+      .then((res) => {
+        let torec = res.data.filter((e) => e._id == to);
+        console.log(res.data);
+        console.log(torec, "recc");
+        setReciver(torec);
+      });
+  }, []);
+  console.log(reciver);
   useEffect(() => {
     axios
 
-      .post("http://192.168.1.132:3000/api/messages/getmsg/", {
+      .post("http://192.168.104.7:3000/api/messages/getmsg/", {
         from: chatUser._id,
         to: to,
       })
@@ -111,7 +122,11 @@ export default Messages = () => {
 
   return (
     <View style={styles.container}>
-      <ProductForm size={size} setModalVisible={setModalVisible} modalVisible={modalVisible}/>
+      <ProductForm
+        size={size}
+        setModalVisible={setModalVisible}
+        modalVisible={modalVisible}
+      />
       <Box>
         <Box backgroundColor={"#FFC8CE"}>
           <Box style={styles.Header}>
@@ -135,19 +150,36 @@ export default Messages = () => {
           let itemStyle = inMessage ? styles.itemIn : styles.itemOut;
           return (
             <View style={[styles.item, itemStyle]}>
-              <Avatar
-                bg="green.500"
-                alignSelf="center"
-                size="xs"
-                source={{
-                  uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                }}
-              ></Avatar>
-              {!inMessage && renderDate(item.createdAt)}
-              <View style={[styles.balloon]}>
-                <Text>{item.message}</Text>
-              </View>
-              {inMessage && renderDate(item.createdAt)}
+              {inMessage && (
+                <>
+                  <Avatar
+                    bg="green.500"
+                    alignSelf="center"
+                    size="xs"
+                    source={{
+                      uri: chatUser.avatarImage,
+                    }}
+                  ></Avatar>
+                  <View style={[styles.balloon]}>
+                    <Text>{item.message}</Text>
+                  </View>
+                </>
+              )}
+              {!inMessage && (
+                <>
+                  <Avatar
+                    bg="green.500"
+                    alignSelf="center"
+                    size="xs"
+                    source={{
+                      uri: reciver.avatarImage,
+                    }}
+                  ></Avatar>
+                  <View style={[styles.balloon]}>
+                    <Text>{item.message}</Text>
+                  </View>
+                </>
+              )}
             </View>
           );
         }}
@@ -235,12 +267,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   itemIn: {
-    alignSelf: "flex-start",
-    backgroundColor: "#FFC8CE",
-  },
-  itemOut: {
     alignSelf: "flex-end",
     backgroundColor: "#5FC8C0",
+  },
+  itemOut: {
+    alignSelf: "flex-start",
+    backgroundColor: "#FFC8CE",
   },
   time: {
     alignSelf: "flex-end",

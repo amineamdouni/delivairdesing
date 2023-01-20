@@ -85,21 +85,21 @@ export default function SignUp({ navigation }) {
   console.log(terms);
   //SignUp function
   const SignUpUser = () => {
+    console.log("click");
     const info = { Email: Email, passw: password };
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
       .then((res) => {
+        console.log("firebase succ");
         axios
 
-
-          .post("http://192.168.1.132:3000/api/users/register", {
-
+          .post("http://192.168.104.7:3000/api/users/register", {
             email: Email,
             password,
             username,
           })
           .then((res) => {
-            console.log("mongo succ");
+            console.log(res.data.user);
 
             setConnected(res.data.user);
             setChatUser(res.data.user);
@@ -235,7 +235,7 @@ export default function SignUp({ navigation }) {
                     bg: "warmGray.50",
                   }}
                 >
-                  <Modal.Content maxWidth="350" maxH="212">
+                  <Modal.Content maxWidth="350" maxH="700">
                     <Modal.CloseButton />
                     <Modal.Header>Terms and conditions</Modal.Header>
                     <Modal.Body>

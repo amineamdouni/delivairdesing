@@ -11,7 +11,6 @@ import {
   Button,
   Image,
   Input,
-  
   Flex,
   Divider,
   Icon,
@@ -43,7 +42,8 @@ import axios from "axios";
 import Messages from "./Messages";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default function Chat({ navigation }) {
-  const { user, connected, setTo, socket,contactList } = useContext(UserContext);
+  const { user, connected, setTo, socket, contactList } =
+    useContext(UserContext);
   const [allUsers, getAllUsers] = useState([]);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
@@ -52,20 +52,18 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     forceUpdate();
   }, [user]);
-console.log(contactList);
+  console.log(contactList);
   useEffect(() => {
     axios
       .get(
-
-        "http://192.168.1.132:3000/api/users/allusers/63bc585f004eb697059c2a7d"
-
+        "http://192.168.104.7:3000/api/users/allusers/63bc585f004eb697059c2a7d"
       )
       .then((res) => {
         console.log(res.data.filter((e) => contactList.includes(e.email)));
         getAllUsers(res.data);
       })
       .catch((err) => console.log(err));
-  },[]);
+  }, []);
   return (
     <Box style={{ backgroundColor: "#FFC8CE" }}>
       <Box style={styles.header}>
