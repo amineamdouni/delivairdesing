@@ -15,15 +15,34 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
-import { Text, Box, Image, Center, HStack } from "native-base";
+import { Text, Box, Image, Center, HStack,useToast } from "native-base";
 import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import  {UserContext} from "../../UserContext"
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Alert from "../Alert";
 export default function FlyContent({ navigation, posts }) {
   
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
+
  const { user, setUser,setOneUser ,setConnected,setChatUser,contactList} = useContext(UserContext);
  const [, updateState] = useState();
  const forceUpdate = useCallback(() => updateState({}), []);
@@ -58,8 +77,7 @@ export default function FlyContent({ navigation, posts }) {
       setConnected(null)
       
 navigation.navigate('login')
-        alert("Signed out");
-   
+       Ale("success", "Please try again", "err");
       })
       .catch((error) => {
         alert(error);

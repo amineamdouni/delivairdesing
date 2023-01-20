@@ -138,7 +138,7 @@ export default function AddPost({ navigation }) {
   const post = (body) => {
     axios
 
-      .post(`http://192.168.1.132:5001/posts`, body)
+      .post(`http://192.168.103.8:5001/posts`, body)
 
       .then((res) =>
         Ale("success", "Your post is successfully submitted!", "Good luck!")
@@ -318,16 +318,18 @@ export default function AddPost({ navigation }) {
             post({
               type: "shipper",
               departCountry: flight.departure.airport.municipalityName,
-              content: user.userName,
+              content: "who need to send somthing ",
               departTime: flight.departure.scheduledTimeLocal,
               arriveCountry: flight.departure.airport.municipalityName,
               arriveTime: flight.departure.scheduledTimeLocal,
               weight: JSON.stringify(onChangeEndValue),
               flight_id: flight.number,
               postTime: date,
-              paymentWays: [],
+              paymentWays: ["paypal"],
               acceptedItems: [],
-              poster_id: user._id,
+              poster_id: user.user_id,
+              poster_image:user.image,
+              poster_name:user.userName
             })
           }
         >

@@ -8,6 +8,7 @@ import {
   Content,
   Heading,
   VStack,
+  ScrollView
 } from "native-base";
 import {
   View,
@@ -103,7 +104,7 @@ export default function AllPosts({ navigation }) {
   React.useEffect(() => {
     axios
 
-      .get(`http://192.168.1.132:5001/posts`)
+      .get(`http://192.168.103.8:5001/posts`)
 
       .then((res) => {
         setPosts(res.data);
@@ -173,93 +174,95 @@ export default function AllPosts({ navigation }) {
           </Box>
         </Box>
       </Box>
-      {posts &&
-        posts.map((e, i) => {
-          console.log(e, "eeeee");
-          let test;
-          axios
+      <ScrollView>
+        {posts &&
+          posts.map((e, i) => {
+            console.log(e, "eeeee");
+            let test;
+            axios
 
-            .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
+              .get(`http://192.168.103.8:5001/users/id/${e.poster_id}`)
 
-            .then((res) => (test = res.data));
-          console.log(test, "titi");
-          return (
-            <View style={styles.friendItem}>
-              <TouchableOpacity
-                onPress={async () => {
-                  await axios
+              .then((res) => (test = res.data));
+            console.log(test, "titi");
+            return (
+              <View style={styles.friendItem}>
+                <TouchableOpacity
+                  onPress={async () => {
+                    await axios
 
-                    .get(`http://192.168.1.132:5001/users/id/${e.poster_id}`)
+                      .get(`http://192.168.103.8:5001/users/id/${e.poster_id}`)
 
-                    .then((res) => {
-                      setOneUser(res.data);
-                    });
+                      .then((res) => {
+                        setOneUser(res.data);
+                      });
 
-                  navigation.navigate("otherprofile");
-                }}
-              >
-                <Image
-                  source={{ uri: e.poster_image }}
-                  style={styles.profileImage}
-                />
-              </TouchableOpacity>
-              <View style={styles.friendInfo}>
-                <Text style={styles.friendName}>{e.poster_name}</Text>
-                <Text style={styles.friendEmail}>
-                  <MaterialCommunityIcons
-                    name="weight-kilogram"
-                    size={20}
-                    color="#FFC8CE"
-                  ></MaterialCommunityIcons>{" "}
-                  :{" "}
-                  <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
-                    3Kg
-                  </Text>
-                </Text>
-                <Text style={styles.friendPhone}>
-                  <MaterialCommunityIcons
-                    name="clock-time-eight-outline"
-                    size={20}
-                    color="#FFC8CE"
-                  ></MaterialCommunityIcons>{" "}
-                  Going Tomorrow
-                </Text>
-                <Text style={styles.friendCountry}>
-                  <MaterialCommunityIcons
-                    name="airplane-marker"
-                    size={20}
-                    color="#FFC8CE"
-                  ></MaterialCommunityIcons>{" "}
-                  : {convertTime(e.departTime)}
-                </Text>
-
-                <Text>
-                  <MaterialCommunityIcons
-                    name="message"
-                    size={20}
-                    color="#FFC8CE"
-                  ></MaterialCommunityIcons>{" "}
-                  : {e.content}
-                </Text>
-              </View>
-              <View
-                style={{
-                  height: 80,
-                  marginTop: 15,
-                  justifyContent: "space-around",
-                }}
-              >
-                <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
-                  <AntDesign
-                    name="phone"
-                    color={"#5FC8C0"}
-                    size={25}
-                  ></AntDesign>
+                    navigation.navigate("otherprofile");
+                  }}
+                >
+                  <Image
+                    source={{ uri: e.poster_image }}
+                    style={styles.profileImage}
+                  />
                 </TouchableOpacity>
+                <View style={styles.friendInfo}>
+                  <Text style={styles.friendName}>{e.poster_name}</Text>
+                  <Text style={styles.friendEmail}>
+                    <MaterialCommunityIcons
+                      name="weight-kilogram"
+                      size={20}
+                      color="#FFC8CE"
+                    ></MaterialCommunityIcons>{" "}
+                    :{" "}
+                    <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                     {e.weight}
+                    </Text>
+                  </Text>
+                  <Text style={styles.friendPhone}>
+                    <MaterialCommunityIcons
+                      name="clock-time-eight-outline"
+                      size={20}
+                      color="#FFC8CE"
+                    ></MaterialCommunityIcons>{" "}
+                    Going Tomorrow
+                  </Text>
+                  <Text style={styles.friendCountry}>
+                    <MaterialCommunityIcons
+                      name="airplane-marker"
+                      size={20}
+                      color="#FFC8CE"
+                    ></MaterialCommunityIcons>{" "}
+                    : {convertTime(e.departTime)}
+                  </Text>
+
+                  <Text>
+                    <MaterialCommunityIcons
+                      name="message"
+                      size={20}
+                      color="#FFC8CE"
+                    ></MaterialCommunityIcons>{" "}
+                    : {e.content}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    height: 80,
+                    marginTop: 15,
+                    justifyContent: "space-around",
+                  }}
+                >
+                  <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
+                    <AntDesign
+                      name="phone"
+                      color={"#5FC8C0"}
+                      size={25}
+                    ></AntDesign>
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          );
-        })}
+            );
+          })}
+      </ScrollView>
       <Footer navigation={navigation} />
     </View>
   );

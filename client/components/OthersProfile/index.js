@@ -43,8 +43,14 @@ import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
   const [starRating, setStarRating] = useState(null);
   const [rating, setRating] = useState(0);
-  const { user, setConnected, oneUser, setOneUser, contactArray,setcontactArray } =
-    useContext(UserContext);
+  const {
+    user,
+    setConnected,
+    oneUser,
+    setOneUser,
+    contactArray,
+    setcontactArray,
+  } = useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
@@ -53,77 +59,73 @@ export default function FlyContent({ navigation, posts }) {
   const [message, setMessage] = useState("");
   const [review, setReview] = useState([]);
 
-  const unfriend = async() => {
+  const unfriend = async () => {
     let contacts = [...oneUser.contactList];
     let idx = contacts.indexOf(user.email);
     contacts.splice(idx, 1);
     axios
-      .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
+      .put(`http://192.168.103.8:5001/users/${oneUser.user_id}`, {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null)
+        setConnected(null);
         console.log("friend removed succ");
       });
-      let usercontacts = [...user.contactList];
-      let index = usercontacts.indexOf(oneUser.email);
-       usercontacts.splice(index, 1);
-      axios
-      .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
+    let usercontacts = [...user.contactList];
+    let index = usercontacts.indexOf(oneUser.email);
+    usercontacts.splice(index, 1);
+    axios
+      .put(`http://192.168.103.8:5001/users/${user.user_id}`, {
         contactList: usercontacts,
       })
       .then((res) => {
-        setConnected(null)
-         setcontactArray(usercontacts);
+        setConnected(null);
+        setcontactArray(usercontacts);
         console.log("friend removed succ");
       });
-     
-        console.log(idx,'      ',index);
-      };
-const addFriend=()=>{
+
+    console.log(idx, "      ", index);
+  };
+  const addFriend = () => {
     let contacts = [...oneUser.pendingRequests];
-  
+
     contacts.push(user.email);
-   axios
-     .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
-       pendingRequests: contacts,
-     })
-     .then((res) => {
-      setConnected(null)
-   
-       console.log("friend sent  succ");
-     });
+    axios
+      .put(`http://192.168.103.8:5001/users/${oneUser.user_id}`, {
+        pendingRequests: contacts,
+      })
+      .then((res) => {
+        setConnected(null);
 
-
-     
-}
-const acceptRequest=()=>{
-  let pending = [...user.pendingRequests];
-  let idx = pending.indexOf(oneUser.email);
-  pending.splice(idx, 1);
-  let contacts=[...oneUser.contactList]
-  contacts.push(user.email)
-  axios
-    .put(`http://192.168.1.132:5001/users/${oneUser.user_id}`, {
-      
-      contactList:contacts
-    })
-    .then((res) => {
-      setConnected(null)
-      console.log("friend added succ");
-    });
+        console.log("friend sent  succ");
+      });
+  };
+  const acceptRequest = () => {
+    let pending = [...user.pendingRequests];
+    let idx = pending.indexOf(oneUser.email);
+    pending.splice(idx, 1);
+    let contacts = [...oneUser.contactList];
+    contacts.push(user.email);
+    axios
+      .put(`http://192.168.103.8:5001/users/${oneUser.user_id}`, {
+        contactList: contacts,
+      })
+      .then((res) => {
+        setConnected(null);
+        console.log("friend added succ");
+      });
     let contactuser = [...user.contactList];
     contactuser.push(oneUser.email);
     axios
-      .put(`http://192.168.1.132:5001/users/${user.user_id}`, {
+      .put(`http://192.168.103.8:5001/users/${user.user_id}`, {
         pendingRequests: pending,
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null)
+        setConnected(null);
         console.log("friend accepted succ");
       });
-}
+  };
 
   useEffect(() => {
     forceUpdate();
@@ -151,33 +153,51 @@ const acceptRequest=()=>{
   }, [oneUser]);
 
   const postReview = () => {
-    axios.post("http://192.168.1.119:5001/reviews/", {
+    console.log('post');
+    axios.post("http://192.168.103.8:5001/reviews/", {
       content: message,
       reviewSender: user.user_id,
       reviewReceiver: oneUser.user_id,
-    });
+    }).then(()=>{})
   };
 
   useEffect(() => {
     if (oneUser) {
+      console.log(oneUser.user_id);
       axios
-        .get(`http://192.168.1.119:5001/reviews/${oneUser.user_id}`)
+        .get(`http://192.168.103.8:5001/reviews/${oneUser.user_id}`)
         .then((res) => {
           setReview(res.data);
-          console.log(review);
+          console.log(res.data,'res.data');
         })
         .catch((err) => console.log(err));
     }
   }, [oneUser]);
 
   const userStat = () => {
-
     console.log(userStatus);
     if (userStatus === "waiting") {
-      return <Button>remove request</Button>;
+      return (
+        <Button
+          mx="1"
+          backgroundColor={"#5FC8C0"}
+         
+          width={100}
+          borderColor={"black"}
+          height={36}
+        >
+          remove request
+        </Button>
+      );
     } else if (userStatus === "pending") {
       return (
         <Button
+          mx="1"
+          backgroundColor={"#5FC8C0"}
+         
+          width={100}
+          borderColor={"black"}
+          height={36}
           onPress={() => {
             acceptRequest();
           }}
@@ -186,12 +206,37 @@ const acceptRequest=()=>{
         </Button>
       );
     } else if (userStatus === "unknown") {
-      return <Button onPress={()=>{
-        addFriend()
-      }}>add</Button>;
+      return (
+        <Button
+          mx="1"
+          backgroundColor={"#5FC8C0"}
+         
+          width={100}
+          borderColor={"black"}
+          height={36}
+          onPress={() => {
+            addFriend();
+          }}
+        >
+          add
+        </Button>
+      );
     } else if (userStatus === "friend") {
-      return <Button onPress={()=>{unfriend()}}>Unfriend</Button>;
-
+      return (
+        <Button
+          mx="1"
+          backgroundColor={"#5FC8C0"}
+         
+          width={100}
+          borderColor={"black"}
+          height={36}
+          onPress={() => {
+            unfriend();
+          }}
+        >
+          Unfriend
+        </Button>
+      );
     }
   };
   console.log(rating);
@@ -217,7 +262,7 @@ const acceptRequest=()=>{
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        setConnected(null)
+        setConnected(null);
         navigation.navigate("login");
         alert("Signed out");
       })
@@ -263,19 +308,16 @@ const acceptRequest=()=>{
                     <TouchableOpacity onPress={() => setShowModal(true)}>
                       <Text>Give Review</Text>
                     </TouchableOpacity>
-
                   </HStack>
                 </Menu.Item>
                 <Menu.Item onPress={() => SignOut()}>
                   <HStack>
                     <MaterialCommunityIcons
-
                       name="account-off"
                       color="red"
                       size={17}
                     />
                     <Text>Unfriend</Text>
-
                   </HStack>
                 </Menu.Item>
               </Menu>
@@ -317,7 +359,6 @@ const acceptRequest=()=>{
                     >
                       Phone Number :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-
                         {oneUser.phoneNumber}
                       </Text>
                     </S.HeaderInfoText>
@@ -362,16 +403,8 @@ const acceptRequest=()=>{
                       showsHorizontalScrollIndicator={false}
                     >
                       <HStack space={7}>
-                        <Avatar
-                          left={3}
-                          top={2}
-                          bg="cyan.500"
-                          size="xs"
-                          source={{
-                            uri: "https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-                          }}
-                        ></Avatar>
-                        <Text top={3}>: {review[0].content} </Text>
+                        
+                      
                       </HStack>
                       <HStack space={7}>
                         <Avatar
@@ -391,7 +424,6 @@ const acceptRequest=()=>{
                     </ScrollView>
                   </Box>
                 </SafeAreaView>
-
 
                 <Modal
                   isOpen={showModal}
