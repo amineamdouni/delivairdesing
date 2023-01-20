@@ -71,21 +71,12 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-<<<<<<< HEAD
-      setUser(null)
-      setChatUser(null)
-      setConnected(null)
-      
-navigation.navigate('login')
-       Ale("success", "Please try again", "err");
-=======
         setUser(null);
         setChatUser(null);
         setConnected(null);
         Ale("success", "Logout successful", "Sorry to see you go !");
 
         navigation.navigate("login");
->>>>>>> 02a855af66f4b507214889f88c2d1169a9509aaa
       })
       .catch((error) => {
         alert(error);

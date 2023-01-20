@@ -29,14 +29,14 @@ export default Messages = () => {
   const scrollRef = useRef();
   const [modalVisible, setModalVisible] = React.useState(false);
   const [size, setSize] = React.useState("md");
-  const [reciver,setReciver]=useState('')
+  const [reciver, setReciver] = useState("");
   const handleSizeClick = (newSize) => {
     setSize(newSize);
     setModalVisible(!modalVisible);
   };
   const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.103.8:3000/");
+  const socket = io("http://192.168.104.7:3000/");
 
   // socket.on("connection", () => {
   //   console.log("hello from socket", socket.id);
@@ -56,7 +56,7 @@ export default Messages = () => {
     });
     await axios
 
-      .post("http://192.168.103.8:3000/api/messages/addmsg/", {
+      .post("http://192.168.104.7:3000/api/messages/addmsg/", {
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -70,18 +70,21 @@ export default Messages = () => {
     msgs.push({ fromSelf: true, message: newMsg["text"] });
     setMessages(msgs);
   };
-useEffect(()=>{
-   axios.get(`http://192.168.103.8:3000/api/users/allusers/${to}`).then((res)=>{
-   let torec=res.data.filter(e=>e._id==to)
-   console.log(res.data);
-   console.log(torec,'recc');
-   setReciver(torec)})
-},[])
-console.log(reciver);
+  useEffect(() => {
+    axios
+      .get(`http://192.168.104.7:3000/api/users/allusers/${to}`)
+      .then((res) => {
+        let torec = res.data.filter((e) => e._id == to);
+        console.log(res.data);
+        console.log(torec, "recc");
+        setReciver(torec);
+      });
+  }, []);
+  console.log(reciver);
   useEffect(() => {
     axios
 
-      .post("http://192.168.103.8:3000/api/messages/getmsg/", {
+      .post("http://192.168.104.7:3000/api/messages/getmsg/", {
         from: chatUser._id,
         to: to,
       })

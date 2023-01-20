@@ -84,7 +84,7 @@ export default function Login({ navigation }) {
         console.log("firebase succ");
         axios
 
-          .post("http://192.168.103.8:3000/api/users/login", {
+          .post("http://192.168.104.7:3000/api/users/login", {
             email,
             password,
           })
@@ -93,12 +93,17 @@ export default function Login({ navigation }) {
             setChatUser(result.data.user);
             axios
 
-              .get(`http://192.168.103.8:5001/users/${result.data.user.email}`)
+              .get(`http://192.168.104.7:5001/users/${result.data.user.email}`)
               .then((res) => {
                 setUser(res.data);
-                setSocket(socketIO.connect("http://192.168.103.8:3000"));
-
-                navigation.navigate("home");
+                setSocket(socketIO.connect("http://192.168.104.7:3000"));
+                if (res.data.verfied==false) {
+                  navigation.navigate("unverfied");
+                } else if (res.data.banned==true) {
+                  navigation.navigate("banned");
+                } else  {
+                  navigation.navigate("home");
+                }
 
                 Ale(
                   "success",

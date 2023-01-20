@@ -162,7 +162,7 @@ const SignUpForm = ({ navigation }) => {
     });
     axios
 
-      .post("http://192.168.103.8:5001/users", {
+      .post("http://192.168.104.7:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -173,11 +173,17 @@ const SignUpForm = ({ navigation }) => {
         console.log("refresh");
         axios
 
-          .get(`http://192.168.103.8:5001/users/${response.data.email}`)
+          .get(`http://192.168.104.7:5001/users/${response.data.email}`)
 
           .then((res) => {
             setUser(res.data);
-            navigation.navigate("home");
+        if (res.data.verfied == false) {
+          navigation.navigate("unverfied");
+        } else if (res.data.banned == true) {
+          navigation.navigate("banned");
+        } else {
+          navigation.navigate("home");
+        }
             Ale("success", "Thank you for updating your profile", "Enjoy!");
           });
       })

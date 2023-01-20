@@ -12,7 +12,8 @@ import History from "./History";
 import Alert from "./Alert";
 import Main from "../src/screens/Main";
 import Form from "./Forme";
-
+import Banned from "./BannedUser";
+import Unverifed from "./Unverifeduser";
 import UserSetting from "./UserSetting";
 import Chat from "./Chat";
 
@@ -51,34 +52,39 @@ const Stacks = () => {
       </Stack.Navigator>
     );
   } else if (user) {
-    return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="otherprofile" component={OthersProfile} />
-        <Stack.Screen name="contarct" component={Alert} />
-        <Stack.Screen name="setting" component={UserSetting}/>
-        <Stack.Screen name="home" component={Main} />
-        <Stack.Screen name="messages" component={Messages} />
+   
+   
+      return (
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="unverfied" component={Unverifed} />
+          <Stack.Screen name="otherprofile" component={OthersProfile} />
+          <Stack.Screen name="contarct" component={Alert} />
+          <Stack.Screen name="setting" component={UserSetting} />
+          <Stack.Screen name="home" component={Main} />
+          <Stack.Screen name="messages" component={Messages} />
+        <Stack.Screen name="banned" component={Banned} />
 
-        <Stack.Screen name="track" component={Track} />
-        <Stack.Screen name="profile" component={Profile} />
-        <Stack.Screen name="addpost" component={AddPost} />
-        <Stack.Screen
-          name="contact"
-          component={Contact}
-          options={{
-            headerShown: true,
-            title: "DelivAir",
-            headerTitleStyle: { fontWeight: "light" },
+          <Stack.Screen name="track" component={Track} />
+          <Stack.Screen name="profile" component={Profile} />
+          <Stack.Screen name="addpost" component={AddPost} />
+          <Stack.Screen
+            name="contact"
+            component={Contact}
+            options={{
+              headerShown: true,
+              title: "DelivAir",
+              headerTitleStyle: { fontWeight: "light" },
 
-            headerStyle: { backgroundColor: "#FFC8CE" },
-          }}
-        />
-        <Stack.Screen name="allposts" component={AllPosts} />
-        <Stack.Screen name="chat" component={Chat} />
-        <Stack.Screen name="reclamation" component={Reclamation} />
-        <Stack.Screen name="history" component={History} />
-      </Stack.Navigator>
-    );
+              headerStyle: { backgroundColor: "#FFC8CE" },
+            }}
+          />
+          <Stack.Screen name="allposts" component={AllPosts} />
+          <Stack.Screen name="chat" component={Chat} />
+          <Stack.Screen name="reclamation" component={Reclamation} />
+          <Stack.Screen name="history" component={History} />
+        </Stack.Navigator>
+      );
+    }
   }
-};
+
 export default Stacks;

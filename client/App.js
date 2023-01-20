@@ -10,8 +10,8 @@ import Stacks from "./components/StackNavigator";
 import { NativeBaseProvider } from "native-base";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();//Ignore all log notifications
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 const auth = getAuth();
 // Define the config
 const config = {
@@ -28,7 +28,7 @@ import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.103.8:3000");
+  // const socket = socketIO.connect("http://192.168.104.7:3000");
 
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
@@ -58,7 +58,7 @@ export default function App() {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://192.168.103.8:5001/users/id/${user.user_id}`)
+        .get(`http://192.168.104.7:5001/users/id/${user.user_id}`)
         .then((res) => {
           setUser(res.data);
         });
@@ -79,7 +79,7 @@ export default function App() {
       for (let i = 0; i < user.contactList.length; i++) {
         axios
 
-          .get(`http://192.168.103.8:5001/users/${user.contactList[i]}`)
+          .get(`http://192.168.104.7:5001/users/${user.contactList[i]}`)
 
           .then((res) => {
             contact.push(res.data);
@@ -90,7 +90,7 @@ export default function App() {
       for (let i = 0; i < user.pendingRequests.length; i++) {
         axios
 
-          .get(`http://192.168.103.8:5001/users/${user.pendingRequests[i]}`)
+          .get(`http://192.168.104.7:5001/users/${user.pendingRequests[i]}`)
 
           .then((res) => {
             pending.push(res.data);

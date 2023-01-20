@@ -85,7 +85,7 @@ export default function SignUp({ navigation }) {
   console.log(terms);
   //SignUp function
   const SignUpUser = () => {
-    console.log('click');
+    console.log("click");
     const info = { Email: Email, passw: password };
     setDataInput([info]);
     createUserWithEmailAndPassword(auth, Email, password)
@@ -93,7 +93,7 @@ export default function SignUp({ navigation }) {
         console.log("firebase succ");
         axios
 
-          .post("http://192.168.103.8:3000/api/users/register", {
+          .post("http://192.168.104.7:3000/api/users/register", {
             email: Email,
             password,
             username,
