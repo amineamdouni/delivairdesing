@@ -15,23 +15,41 @@ import {
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
-import { Text, Box, Image, Center, HStack } from "native-base";
+import { Text, Box, Image, Center, HStack, useToast } from "native-base";
 import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
-import  {UserContext} from "../../UserContext"
+import { UserContext } from "../../UserContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Alert from "../Alert";
 export default function FlyContent({ navigation, posts }) {
-  
- const { user, setUser,setOneUser ,setConnected,setChatUser,contactList} = useContext(UserContext);
- const [, updateState] = useState();
- const forceUpdate = useCallback(() => updateState({}), []);
+  const { user, setUser, setOneUser, setConnected, setChatUser, contactList } =
+    useContext(UserContext);
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
 
- useEffect(() => {
-  forceUpdate()
+  const toast = useToast();
+  const Ale = (status, title, description) => {
+    toast.show({
+      render: ({ id }) => {
+        return (
+          <Alert
+            id={id}
+            status={status}
+            variant={"left-accent"}
+            title={title}
+            description={description}
+            isClosable={true}
+          />
+        );
+      },
+    });
+  };
 
- }, [user]);
+  useEffect(() => {
+    forceUpdate();
+  }, [user]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -53,13 +71,12 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-      setUser(null)
-      setChatUser(null)
-      setConnected(null)
-      
-navigation.navigate('login')
-        alert("Signed out");
-   
+        setUser(null);
+        setChatUser(null);
+        setConnected(null);
+        Ale("success", "Logout successful", "Sorry to see you go !");
+
+        navigation.navigate("login");
       })
       .catch((error) => {
         alert(error);
@@ -94,9 +111,11 @@ navigation.navigate('login')
               }}
             >
               <Menu.Item>
-                <TouchableOpacity onPress={()=>{
-                  navigation.navigate('setting')
-                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("setting");
+                  }}
+                >
                   <HStack>
                     <MaterialCommunityIcons
                       name="account-edit-outline"
@@ -231,7 +250,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     overflow: "hidden",
     marginHorizontal: 15,
-    zIndex:10000
+    zIndex: 10000,
   },
   image: {
     flex: 1,
