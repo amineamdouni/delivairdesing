@@ -12,6 +12,7 @@ const posts = () => {
   }, []);
  
   const deletePost = (post_id) => {
+    if (confirm("Are you sure you want to delete this user?")){
     axios.delete(`http://localhost:5001/posts/${post_id}`)
       .then((response) => {
         console.log(response);
@@ -20,7 +21,7 @@ const posts = () => {
       .catch((error) => {
         console.error(error);
       });
-  };
+  }};
  
  
   return (
