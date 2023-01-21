@@ -31,7 +31,7 @@ export const IconViewOut = styled(Animated.View)`
   height: 100px;
   width: 100px;
   border-radius: 80px;
-  background: #5fC8c0;
+  background: #5fc8c0;
   align-items: center;
   justify-content: center;
   box-shadow: 0px 0px 8px rgba(1, 1, 1, 0.15);

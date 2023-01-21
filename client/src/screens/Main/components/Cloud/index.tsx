@@ -31,7 +31,9 @@ export default function Cloud({
   const { width } = useWindowDimensions();
 
   const sizeValue =
-    size === "lg" ? { height: 1500, width: 2000 } : { height: 1000, width: 800 };
+    size === "lg"
+      ? { height: 1500, width: 2000 }
+      : { height: 1000, width: 800 };
 
   const offeset = sizeValue.width / 3 + width;
 
@@ -58,5 +60,7 @@ export default function Cloud({
     shadowOpacity: noShadow ? 0 : 0.08,
   }));
 
-  return <S.Cloud source={cloud} style={cloudAnimatedStyle} resizeMode="contain" />;
+  return (
+    <S.Cloud source={cloud} style={cloudAnimatedStyle} resizeMode="contain" />
+  );
 }

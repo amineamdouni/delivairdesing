@@ -19,7 +19,7 @@ export const Buttom = styled.TouchableOpacity.attrs({
   activeOpacity: 1,
 })`
   width: 50%;
-  box-shadow: 0px 8px 6px #ffffff ;
+  box-shadow: 0px 8px 6px #ffffff;
 `;
 
 export const ButtomContent = styled(LinearGradient).attrs({

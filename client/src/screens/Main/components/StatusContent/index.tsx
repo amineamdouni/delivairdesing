@@ -58,13 +58,14 @@ export default function StatusContent() {
 
       wave2Scale.value = withDelay(
         800,
-        withRepeat(withTiming(1, { duration: 1200, easing: Easing.linear }), -1, false)
+        withRepeat(
+          withTiming(1, { duration: 1200, easing: Easing.linear }),
+          -1,
+          false
+        )
       );
 
-      waveBackground.value = withDelay(
-        8000,
-        withTiming("rgba(231,199,200)")
-      );
+      waveBackground.value = withDelay(8000, withTiming("rgba(231,199,200)"));
 
       const interval = setInterval(() => {
         if (index < texts.length - 1) {
@@ -77,7 +78,6 @@ export default function StatusContent() {
 
           if (index === 1) {
             setIcon("search-outline");
-          
           }
 
           if (index === 2) {
