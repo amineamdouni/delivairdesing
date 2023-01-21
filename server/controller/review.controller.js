@@ -31,7 +31,8 @@ const getByReviewReciver = async (req, res) => {
   } catch (err) {
     res.json(err);
   }
-};const getByReviewSender= async (req, res) => {
+};
+const getByReviewSender = async (req, res) => {
   try {
     reviews
       .findMany({
@@ -51,7 +52,6 @@ const deleteReview = async (req, res) => {
     reviews
       .deleteMany({
         where: {
-          
           reviewSender: req.body.reviewSender,
           reviewReceiver: req.body.reviewReceiver,
         },
@@ -80,4 +80,10 @@ const updateReview = async (req, res) => {
     res.json(err);
   }
 };
-module.exports = {deleteReview,addReview,getByReviewReciver,updateReview,getByReviewSender};
+module.exports = {
+  deleteReview,
+  addReview,
+  getByReviewReciver,
+  updateReview,
+  getByReviewSender,
+};

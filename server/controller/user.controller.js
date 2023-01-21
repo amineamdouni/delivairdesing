@@ -1,6 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
 
-
 const prisma = new PrismaClient();
 const users = prisma.users;
 
@@ -16,7 +15,7 @@ const getAll = async (req, res) => {
 
 const getOneByemail = async (req, res) => {
   try {
-    users.findFirst({where:{email:req.params.email}}).then((result) => {
+    users.findFirst({ where: { email: req.params.email } }).then((result) => {
       res.json(result);
     });
   } catch (err) {
@@ -24,10 +23,8 @@ const getOneByemail = async (req, res) => {
   }
 };
 
-
-
-const add = async (req,res)=>{
-  try{
+const add = async (req, res) => {
+  try {
     users
       .create({
         data: {
@@ -45,10 +42,10 @@ const add = async (req,res)=>{
         },
       })
       .then((result) => res.json(result));
-  } catch (err){
-    res.json(err)
+  } catch (err) {
+    res.json(err);
   }
-}
+};
 
 const verify = (req, res) => {
   users
@@ -62,7 +59,8 @@ const verify = (req, res) => {
     .catch((err) => {
       res.json(err);
     });
-};const ban = (req, res) => {
+};
+const ban = (req, res) => {
   users
     .update({
       where: { user_id: +req.params.id },
@@ -79,7 +77,7 @@ const deleteAccount = async (req, res) => {
   try {
     const result = await users.delete({
       where: {
-        user_id: +req.params.id
+        user_id: +req.params.id,
       },
     });
     res.json(result);
@@ -103,9 +101,7 @@ const updateFriends = async (req, res) => {
 const getOneById = async (req, res) => {
   try {
     const result = await users.findUnique({
-      where: { user_id: +req.params.id }
-  
-
+      where: { user_id: +req.params.id },
     });
     res.json(result);
   } catch (err) {
@@ -113,10 +109,13 @@ const getOneById = async (req, res) => {
   }
 };
 
-
-
-
-
-
-module.exports = { getAll, add ,verify,getOneByemail,deleteAccount,updateFriends,getOneById,ban};
-
+module.exports = {
+  getAll,
+  add,
+  verify,
+  getOneByemail,
+  deleteAccount,
+  updateFriends,
+  getOneById,
+  ban,
+};

@@ -67,7 +67,7 @@ const updateProduct = async (req, res) => {
       .updateMany({
         where: {
           shipper_id: req.body.shipper_id,
-          receiver_id: req.body.receiver_id
+          receiver_id: req.body.receiver_id,
         },
         data: {
           status: req.body.status,
@@ -81,4 +81,10 @@ const updateProduct = async (req, res) => {
   }
 };
 
-module.exports = { getAll, addProduct, getbyShipper,getbysender, updateProduct };
+module.exports = {
+  getAll,
+  addProduct,
+  getbyShipper,
+  getbysender,
+  updateProduct,
+};

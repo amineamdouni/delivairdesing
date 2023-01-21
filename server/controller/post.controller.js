@@ -64,5 +64,4 @@ const newPost = async (req, res) => {
   }
 };
 
-
-module.exports = { getAllPosts, newPost, deletePost,updatePost };
+module.exports = { getAllPosts, newPost, deletePost, updatePost };
