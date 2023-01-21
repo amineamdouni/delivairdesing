@@ -479,10 +479,10 @@ export default function FlyContent({ navigation, posts }) {
                   </Modal.Content>
                 </Modal>
 
-                {/* Add review with scroll and inputs for add other revieiw */}
+                
               </S.FlyInfoFour>
             </ScrollView>
-            {/* <S.TicketInfo></S.TicketInfo> */}
+            
           </S.FlyInfoContent>
         </S.FlyInfo>
         <Footer navigation={navigation} />
