@@ -14,12 +14,7 @@ import {
 import axios from "axios";
 import { io } from "socket.io-client";
 import { UserContext } from "../UserContext";
-import {
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import ProductForm from "./Contract";
 export default Messages = () => {
   const [messages, setMessages] = useState([]);
@@ -37,11 +32,6 @@ export default Messages = () => {
   const { chatUser, to, user } = useContext(UserContext);
 
   const socket = io("http://192.168.104.7:3000/");
-
-  // socket.on("connection", () => {
-  //   console.log("hello from socket", socket.id);
-  //   //amine we can console log the connection here (socket.id)
-  // });
 
   console.log("From ", chatUser._id);
   console.log("to ", to);
@@ -103,22 +93,6 @@ export default Messages = () => {
       setMessages([...messages, { fromSelf: false, message: data["message"] }]);
     });
   }, [socket, messages]);
-
-  // useEffect(() => {
-  //   if (socket.current) {
-  //     socket.current.on("msg-recieve", (msg) => {
-  //       setArrivalMessage({ fromSelf: false, message: msg });
-  //     });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
-  // }, [arrivalMessage]);
-
-  // useEffect(() => {
-  //   scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-  // }, [messages]);
 
   return (
     <View style={styles.container}>

@@ -66,7 +66,7 @@ const verify = (req, res) => {
   users
     .update({
       where: { user_id: +req.params.id },
-      data: { banned: true },
+      data: { banned: req.body.ban },
     })
     .then((result) => {
       res.json(result);

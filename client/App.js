@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Text, HStack, Switch, useColorMode, extendTheme } from "native-base";
 
@@ -11,7 +11,7 @@ import { NativeBaseProvider } from "native-base";
 
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { LogBox } from "react-native";
-LogBox.ignoreAllLogs(); //Ignore all log notifications
+LogBox.ignoreAllLogs();
 const auth = getAuth();
 // Define the config
 const config = {
@@ -20,15 +20,12 @@ const config = {
 };
 
 // extend the theme
-import { amine } from "./host.js";
-const imgBackground = "https://wallpaper.dog/large/20470680.jpg";
 
-import socketIO from "socket.io-client";
 import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  // const socket = socketIO.connect("http://192.168.104.7:3000");
+  
 
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
@@ -147,22 +144,5 @@ export default function App() {
         </NavigationContainer>
       </NativeBaseProvider>
     </UserContext.Provider>
-  );
-}
-// Color Switch Component
-function ToggleDarkMode() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <HStack space={2} alignItems="center">
-      <Text>Dark</Text>
-      <Switch
-        isChecked={colorMode === "light"}
-        onToggle={toggleColorMode}
-        aria-label={
-          colorMode === "light" ? "switch to dark mode" : "switch to light mode"
-        }
-      />
-      <Text>Light</Text>
-    </HStack>
   );
 }
