@@ -22,15 +22,7 @@ export default Example = ({
   ...rest
 }) => {
   const toast = useToast();
-  const ToastDetails = [
-    {
-      title: "Network connection restored",
-      variant: "left-accent",
-      description:
-        "This is to inform you that your network connectivity is restored",
-      isClosable: true,
-    },
-  ];
+  
 
   return (
     <Alert

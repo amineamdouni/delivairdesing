@@ -1,36 +1,10 @@
 //import liraries
 import * as React from "react";
-import {
-  Avatar,
-  Box,
-  HStack,
-  Center,
-  Content,
-  Heading,
-  VStack,
-  ScrollView,
-} from "native-base";
-import {
-  View,
-  Text,
-  StyleSheet,
-  StatusBar,
-  Image,
-  FlatList,
-  Dimensions,
-  Animated,
-  SafeAreaView,
-} from "react-native";
+import { Box, HStack, Center, Heading, ScrollView } from "native-base";
+import { View, Text, StyleSheet, Image } from "react-native";
 import axios from "axios";
 import { Linking, Platform } from "react-native";
-import {
-  Entypo,
-  AntDesign,
-  FontAwesome,
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import Footer from "./Footer";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { UserContext } from "../UserContext";

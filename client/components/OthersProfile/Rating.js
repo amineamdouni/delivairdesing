@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, SafeAreaView } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
 export default function Rating({ starRating }) {

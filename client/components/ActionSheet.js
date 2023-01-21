@@ -1,12 +1,4 @@
-import {
- 
-  Button,
-  Actionsheet,
-  useDisclose,
-  Text,
- 
-  Center,
-} from "native-base";
+import { Button, Actionsheet, useDisclose, Text, Center } from "native-base";
 
 import { StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 
@@ -16,7 +8,7 @@ import {
   FontAwesome5,
 } from "@expo/vector-icons";
 import { useState } from "react";
-export default function ActionSheet({ navigation, focused,icon,styles }) {
+export default function ActionSheet({ navigation, focused, icon, styles }) {
   const { isOpen, onOpen, onClose } = useDisclose();
   return (
     <Center>
@@ -27,7 +19,13 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
         <Actionsheet.Content style={style.actionSheet}>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<MaterialCommunityIcons  color={"white"} name="home-outline" size={26} />}
+            startIcon={
+              <MaterialCommunityIcons
+                color={"white"}
+                name="home-outline"
+                size={26}
+              />
+            }
             onPress={() => navigation.navigate("main")}
           >
             <TouchableOpacity>
@@ -36,8 +34,9 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           </Actionsheet.Item>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<MaterialCommunityIcons color={"white"}  name="chat" size={26} />}
-          
+            startIcon={
+              <MaterialCommunityIcons color={"white"} name="chat" size={26} />
+            }
             onPress={() => navigation.navigate("chat")}
           >
             <TouchableOpacity>
@@ -46,16 +45,24 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           </Actionsheet.Item>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<MaterialCommunityIcons color={"white"}  name="account" size={26} />}
+            startIcon={
+              <MaterialCommunityIcons
+                color={"white"}
+                name="account"
+                size={26}
+              />
+            }
             onPress={() => navigation.navigate("profile")}
           >
             <TouchableOpacity>
-              <Text color={"white"} >Profile</Text>
+              <Text color={"white"}>Profile</Text>
             </TouchableOpacity>
           </Actionsheet.Item>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<MaterialCommunityIcons color={"white"}  name="radar" size={26} />}
+            startIcon={
+              <MaterialCommunityIcons color={"white"} name="radar" size={26} />
+            }
             onPress={() => navigation.navigate("track")}
           >
             <TouchableOpacity>
@@ -64,7 +71,13 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           </Actionsheet.Item>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<MaterialCommunityIcons color={"white"}  name="history" size={26} />}
+            startIcon={
+              <MaterialCommunityIcons
+                color={"white"}
+                name="history"
+                size={26}
+              />
+            }
             onPress={() => navigation.navigate("history")}
           >
             <TouchableOpacity>
@@ -73,7 +86,9 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           </Actionsheet.Item>
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
-            startIcon={<FontAwesome5 color={"white"}  name="user-friends" size={26} />}
+            startIcon={
+              <FontAwesome5 color={"white"} name="user-friends" size={26} />
+            }
             onPress={() => navigation.navigate("contact")}
           >
             <TouchableOpacity>
@@ -83,7 +98,11 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
             startIcon={
-              <MaterialCommunityIcons color={"white"}  name="text-box-plus-outline" size={26} />
+              <MaterialCommunityIcons
+                color={"white"}
+                name="text-box-plus-outline"
+                size={26}
+              />
             }
             onPress={() => navigation.navigate("addpost")}
           >
@@ -106,7 +125,6 @@ export default function ActionSheet({ navigation, focused,icon,styles }) {
   );
 }
 const style = StyleSheet.create({
-  
   actionSheet: {
     backgroundColor: "#5FC8C0",
 
@@ -114,5 +132,4 @@ const style = StyleSheet.create({
     backgroundSize: "cover",
     backgroundRepeat: "no-repeat",
   },
- 
 });

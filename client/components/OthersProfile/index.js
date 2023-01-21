@@ -16,7 +16,6 @@ import {
   withTiming,
 } from "react-native-reanimated";
 
-import { Entypo, Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
 
@@ -33,7 +32,7 @@ import {
 } from "native-base";
 import SetRating from "./SetRating";
 
-import { Menu, Pressable, HamburgerIcon, ChevronDownIcon } from "native-base";
+import { Menu, Pressable, ChevronDownIcon } from "native-base";
 import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
@@ -47,8 +46,7 @@ export default function FlyContent({ navigation, posts }) {
     user,
     setConnected,
     oneUser,
-    setOneUser,
-    contactArray,
+
     setcontactArray,
   } = useContext(UserContext);
   const [, updateState] = useState();
