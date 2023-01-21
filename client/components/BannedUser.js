@@ -1,16 +1,16 @@
 import {
-  View,
+ 
   StyleSheet,
-  ImageBackground,
+ 
   TouchableOpacity,
   Linking,
 } from "react-native";
-import { Button, Text, Box, Image, Container, Center } from "native-base";
+import { Text, Box, Image,  } from "native-base";
 export default function Banned() {
   const handleEmailPress = () => {
     const to = "delivaireclamtion@gmail.com";
     const subject = "Reclamation";
-    const body = "Write here the body of the email";
+    const body = "";
     Linking.openURL(`mailto:${to}?subject=${subject}&body=${body}`);
   };
   return (
