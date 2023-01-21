@@ -20,7 +20,6 @@ export default Example = ({
 }) => {
   const toast = useToast();
 
-
   return (
     <Alert
       maxWidth="100%"
