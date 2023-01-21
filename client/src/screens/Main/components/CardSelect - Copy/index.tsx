@@ -47,7 +47,11 @@ export default function CardSelect() {
 
       currCardRotationX.value = interpolate(value, [0, 170], [0, 60]);
       nextCardRotationX.value = interpolate(value, [0, 170], [60, 0]);
-      prevCardRotationX.value = interpolate(value, [0, 170], [60, toDown.value ? 60 : 0]);
+      prevCardRotationX.value = interpolate(
+        value,
+        [0, 170],
+        [60, toDown.value ? 60 : 0]
+      );
 
       currentCardMarginBottom.value = interpolate(value, [0, 170], [-40, 0]);
       nextCardMarginBottom.value = interpolate(value, [0, 170], [-140, -40]);
@@ -68,7 +72,6 @@ export default function CardSelect() {
         entering={FlipInXDown.duration(600)}
         exiting={FlipOutXDown.duration(600)}
       >
-        
         <S.CardScroll
           bounces={false}
           showsVerticalScrollIndicator={false}

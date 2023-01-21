@@ -6,9 +6,8 @@ const {
   sendNotification,
 } = require("../controller/notification.controller");
 
-
 router.get("/", getNotifactionByReciver);
-router.post("/",sendNotification)
-router.put("/",updateNotification)
+router.post("/", sendNotification);
+router.put("/", updateNotification);
 router.delete("/", deleteNotification);
 module.exports = router;

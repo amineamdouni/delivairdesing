@@ -22,7 +22,9 @@ export default function Button({ showFlyInfo, onPress }: Props) {
   }));
 
   const handlePress = (press: string) => {
-    buttonScale.value = withTiming(press === "pressIn" ? 0.9 : 1, { duration: 80 });
+    buttonScale.value = withTiming(press === "pressIn" ? 0.9 : 1, {
+      duration: 80,
+    });
   };
 
   return (

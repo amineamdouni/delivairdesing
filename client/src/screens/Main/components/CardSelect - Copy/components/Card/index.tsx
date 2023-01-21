@@ -50,10 +50,16 @@ export default function Card({
 
   setTimeout(() => {
     if (index === 0) {
-      currCardRotationX.value = withDelay(450, withTiming(0, { duration: 600 }));
+      currCardRotationX.value = withDelay(
+        450,
+        withTiming(0, { duration: 600 })
+      );
       cardTop.value = withDelay(300, withTiming(0, { duration: 600 }));
     } else {
-      cardTop.value = withDelay(index * 50 + 300, withTiming(0, { duration: 600 }));
+      cardTop.value = withDelay(
+        index * 50 + 300,
+        withTiming(0, { duration: 600 })
+      );
     }
   }, 100);
 
@@ -105,13 +111,15 @@ export default function Card({
       <S.CardContent colors={card.colors}>
         <S.BottomCardView>
           <S.CardTextView>
-            <Center><Image
-              source={{
-                uri: card.icon,
-              }}
-              alt="Alternate Text"
-              size="xs"
-            /></Center>
+            <Center>
+              <Image
+                source={{
+                  uri: card.icon,
+                }}
+                alt="Alternate Text"
+                size="xs"
+              />
+            </Center>
             <S.CardName>{card.content}</S.CardName>
           </S.CardTextView>
           <S.BottomCardLogo source={card.bottomLogo} resizeMode="contain" />

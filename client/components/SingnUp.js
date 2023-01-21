@@ -19,7 +19,7 @@ import {
   Modal,
 } from "native-base";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { IconButton } from "native-base";
+
 import {
   StyleSheet,
   TouchableWithoutFeedback,
@@ -27,7 +27,6 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import Alert from "./Alert";
-const imgBackground = { uri: "https://wallpaper.dog/large/20470680.jpg" };
 
 //--------- We need to secure this amine !------
 const firebaseConfig = {
@@ -47,15 +46,6 @@ import { UserContext } from "../UserContext";
 import axios from "axios";
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default function SignUp({ navigation }) {
-  const ToastDetails = [
-    {
-      title: "Network connection restored",
-      variant: "left-accent",
-      description:
-        "This is to inform you that your network connectivity is restored",
-      isClosable: true,
-    },
-  ];
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -207,12 +197,6 @@ export default function SignUp({ navigation }) {
                 />
               </Box>
               <HStack space={6}>
-                {/* <Checkbox
-                  shadow={2}
-                  value="test"
-                  accessibilityLabel="This is a dummy checkbox"
-                  isChecked={false}
-                > */}
                 <Box>
                   <TouchableOpacity onPress={() => setShowModal(true)}>
                     <Text marginTop="5" color="white">

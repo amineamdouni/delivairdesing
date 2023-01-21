@@ -33,13 +33,12 @@ const getNotifactionByReciver = async (req, res) => {
   }
 };
 
-const deleteNotification= async (req, res) => {
+const deleteNotification = async (req, res) => {
   try {
     notification
       .deleteMany({
         where: {
           notification_receiver: req.body.notificationender,
-         
         },
       })
       .then((result) => res.json(result));
@@ -67,5 +66,8 @@ const updateNotification = async (req, res) => {
   }
 };
 module.exports = {
- updateNotification,getNotifactionByReciver,deleteNotification,sendNotification
+  updateNotification,
+  getNotifactionByReciver,
+  deleteNotification,
+  sendNotification,
 };

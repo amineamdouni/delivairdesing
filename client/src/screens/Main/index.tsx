@@ -8,8 +8,8 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
-import { FontAwesome5, AntDesign } from "@expo/vector-icons";
-import { Text, Container, Box, Input, useToast } from "native-base";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Text, Box, Input, useToast } from "native-base";
 import * as A from "native-base";
 import { StatusBar } from "react-native";
 import { Entypo } from "@expo/vector-icons";
@@ -50,13 +50,6 @@ export default function Main({ navigation }: any) {
     });
   };
   //---------
-
-  const [modalVisible, setModalVisible] = useState(false);
-  const initialRef = useRef(null);
-  const finalRef = useRef(null);
-  const [selectedDate, setSelectedDate] = useState(
-    date.getFullYear() + "/" + date.getMonth() + "/" + date.getDate()
-  );
 
   const backgroundColor = useSharedValue("white");
   const airplaneRotateZ = useSharedValue(0);

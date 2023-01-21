@@ -20,6 +20,4 @@ router.delete("/:id", deleteAccount);
 
 router.put("/:id", updateFriends);
 
-
-
 module.exports = router;

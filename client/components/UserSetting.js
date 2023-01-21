@@ -1,5 +1,4 @@
 import { StyleSheet, View, Button, Text, TouchableOpacity } from "react-native";
-import Footer from "./Footer";
 import {
   Box,
   Flex,
@@ -8,14 +7,12 @@ import {
   Input,
   HStack,
   VStack,
-  Center,
   ScrollView,
 } from "native-base";
-import * as DocumentPicker from "expo-document-picker";
+
 import { AntDesign } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import ProgressBar from "react-native-animated-progress";
-import Alert from "./Alert";
+
 //---------Firebase---------
 import firebase from "firebase/compat/app";
 import "firebase/compat/storage";
@@ -39,7 +36,8 @@ import { useState } from "react";
 const PersonalInformationForm = () => {
   const [selected, setSelected] = useState("settings");
   const [settings, setSettings] = useState("settings");
-  const [posts, setPosts] = useState(null);  const [loading, setLoading] = useState(false);
+  const [posts, setPosts] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [location, setLocation] = useState("");
   const [progress, setProgress] = useState(0);
 
@@ -161,15 +159,7 @@ const PersonalInformationForm = () => {
           />
         )}
       </TouchableOpacity>
-      {/* <Avatar
-        top={40}
-        alignSelf="center"
-        bg="amber.500"
-        size="xl"
-        source={{
-          uri: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
-        }}
-      ></Avatar> */}
+
       <Box top={250} alignItems="center">
         <Flex direction="row" h="58" p="4">
           <HStack>
@@ -321,7 +311,6 @@ const PersonalInformationForm = () => {
                   shadowColor={"white"}
                 >
                   <HStack>
-
                     <Avatar
                       bg="green.500"
                       left={2}
@@ -330,10 +319,10 @@ const PersonalInformationForm = () => {
                       source={{
                         uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                       }}
-                    ></Avatar><Box left={
-                      200}>
-                    <AntDesign color={'red'} name="delete" />
-</Box>
+                    ></Avatar>
+                    <Box left={200}>
+                      <AntDesign color={"red"} name="delete" />
+                    </Box>
                   </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}
@@ -349,8 +338,7 @@ const PersonalInformationForm = () => {
                   shadow={3}
                   shadowColor={"white"}
                 >
-                <HStack>
-
+                  <HStack>
                     <Avatar
                       bg="green.500"
                       left={2}
@@ -359,10 +347,10 @@ const PersonalInformationForm = () => {
                       source={{
                         uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                       }}
-                    ></Avatar><Box left={
-                      200}>
-                    <AntDesign color={'red'} name="delete" />
-</Box>
+                    ></Avatar>
+                    <Box left={200}>
+                      <AntDesign color={"red"} name="delete" />
+                    </Box>
                   </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}
@@ -377,8 +365,7 @@ const PersonalInformationForm = () => {
                   shadow={3}
                   shadowColor={"white"}
                 >
-                <HStack>
-
+                  <HStack>
                     <Avatar
                       bg="green.500"
                       left={2}
@@ -387,10 +374,10 @@ const PersonalInformationForm = () => {
                       source={{
                         uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
                       }}
-                    ></Avatar><Box left={
-                      200}>
-                    <AntDesign color={'red'} name="delete" />
-</Box>
+                    ></Avatar>
+                    <Box left={200}>
+                      <AntDesign color={"red"} name="delete" />
+                    </Box>
                   </HStack>
                   <Text style={{ color: "grey", left: 27, width: 230 }}>
                     {" "}

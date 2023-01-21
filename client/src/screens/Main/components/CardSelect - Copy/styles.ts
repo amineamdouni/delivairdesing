@@ -40,7 +40,9 @@ export const Button = styled.TouchableOpacity.attrs({
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.15);
 `;
 
-export const CardScroll = styled(Animated.ScrollView)`width:100%`;
+export const CardScroll = styled(Animated.ScrollView)`
+  width: 100%;
+`;
 
 export const BottomGradient = styled(LinearGradient).attrs({
   colors: ["rgba(255, 255, 255, 0)", "white"],

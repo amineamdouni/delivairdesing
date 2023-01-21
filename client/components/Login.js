@@ -49,12 +49,7 @@ const auth = getAuth();
 import { UserContext } from "../UserContext";
 import axios from "axios";
 
-const imgBackground = {
-  uri: "https://res.cloudinary.com/duqxezt6m/image/upload/v1673443612/Sans_titre_4_tv1aq8.gif",
-};
-
 import socketIO from "socket.io-client";
-import { getMediaLibraryPermissionsAsync } from "expo-image-picker";
 
 export default function Login({ navigation }) {
   const toast = useToast();
@@ -97,11 +92,11 @@ export default function Login({ navigation }) {
               .then((res) => {
                 setUser(res.data);
                 setSocket(socketIO.connect("http://192.168.104.7:3000"));
-                if (res.data.verfied==false) {
+                if (res.data.verfied == false) {
                   navigation.navigate("unverfied");
-                } else if (res.data.banned==true) {
+                } else if (res.data.banned == true) {
                   navigation.navigate("banned");
-                } else  {
+                } else {
                   navigation.navigate("home");
                 }
 

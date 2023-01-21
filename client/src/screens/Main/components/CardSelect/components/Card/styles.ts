@@ -37,9 +37,7 @@ export const BottomCardView = styled.View`
   justify-content: space-between;
 `;
 
-export const CardTextView = styled.View`
-
-`;
+export const CardTextView = styled.View``;
 
 export const CardNumber = styled.Text`
   color: white;
@@ -52,7 +50,7 @@ export const CardName = styled.Text`
   font-weight: bold;
   font-size: 18px;
   margin-top: 8px;
-  margin-left:20px;
+  margin-left: 20px;
 `;
 
 export const BottomCardLogo = styled.Image`

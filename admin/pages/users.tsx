@@ -10,10 +10,10 @@ const users = () => {
       .then((response) => setUser(response.data))
       .catch((err) => console.log(err));
   }, []);
-  const ban = (user_id) => {
+  const ban = (user_id:Number,para:boolean) => {
     if (confirm("Are you sure you want to ban this user?")){
     axios
-      .delete(`http://localhost:5001/users/${user_id}`)
+      .put(`http://localhost:5001/users/ban/${user_id}`,{ban:para})
       .then((res) =>{
 console.log(res);
 window.location.reload();
@@ -21,9 +21,9 @@ window.location.reload();
       })
       .catch((err) => console.log(err));
   }};
-  const Verify = (id) => {
+  const Verify = (id:any) => {
     axios
-      .put(`http://localhost:5001/users/${id}`, { verified: true })
+      .put(`http://localhost:5001/users/verify/${id}`, { verified: true })
       .then((res) => console.log("succ"))
       
       .catch((err) => console.log(err));
@@ -148,7 +148,7 @@ window.location.reload();
                   </tr>
                 </thead>
                 <tbody>
-                  {user.map((e, i) => (
+                  {user.map((e: object, i) => (
                     <>
                       <tr>
                         <td>
@@ -206,9 +206,22 @@ window.location.reload();
                           >
                             verify
                           </button>
-                          <button className="btn btn-danger" onClick={() => ban(e.user_id)}>
-  ban
-</button>
+                          {!e.banned && (
+                            <button
+                              className="btn btn-outline-danger"
+                              onClick={() => ban(e.user_id, true)}
+                            >
+                              ban
+                            </button>
+                          )}
+                          {e.banned && (
+                            <button
+                              className="btn btn-outline-warning"
+                              onClick={() => ban(e.user_id, false)}
+                            >
+                              rmve ban
+                            </button>
+                          )}
                         </td>
                       </tr>
                     </>

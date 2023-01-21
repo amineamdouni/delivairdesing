@@ -1,16 +1,13 @@
-import {
-  View,
-  StyleSheet,
-  ImageBackground,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
-import { Button, Text, Box, Image, Container, Center } from "native-base";
-import { TextInput } from "react-native-gesture-handler";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import { Text, Box, Image } from "native-base";
 
+import { UserContext } from "../UserContext";
+import { useContext } from "react";
 export default function Unverifed({ navigation }) {
+  const { setUser } = useContext(UserContext);
   const handleOK = () => {
-    navigation.navigate("profile");
+    setUser(null);
+    navigation.navigate("login");
   };
 
   return (
