@@ -1,11 +1,5 @@
-import {
- 
-  StyleSheet,
- 
-  TouchableOpacity,
-  Linking,
-} from "react-native";
-import { Text, Box, Image,  } from "native-base";
+import { StyleSheet, TouchableOpacity, Linking } from "react-native";
+import { Text, Box, Image } from "native-base";
 export default function Banned() {
   const handleEmailPress = () => {
     const to = "delivaireclamtion@gmail.com";

@@ -478,11 +478,8 @@ export default function FlyContent({ navigation, posts }) {
                     </Modal.Footer>
                   </Modal.Content>
                 </Modal>
-
-                
               </S.FlyInfoFour>
             </ScrollView>
-            
           </S.FlyInfoContent>
         </S.FlyInfo>
         <Footer navigation={navigation} />

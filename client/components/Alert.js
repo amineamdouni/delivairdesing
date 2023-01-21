@@ -1,15 +1,12 @@
 import React from "react";
 import {
-  Button,
   useToast,
   VStack,
   HStack,
   Text,
-  Center,
   IconButton,
   CloseIcon,
   Alert,
-  NativeBaseProvider,
 } from "native-base";
 
 export default Example = ({
@@ -22,7 +19,6 @@ export default Example = ({
   ...rest
 }) => {
   const toast = useToast();
-  
 
   return (
     <Alert
@@ -82,32 +78,4 @@ export default Example = ({
       </VStack>
     </Alert>
   );
-
-//   return (
-//     <Center>
-//       <VStack space={2}>
-//         <Button
-//           onPress={() =>
-//             toast.show({
-//               render: ({ id }) => {
-//                 return (
-//                   <ToastAlert
-//                     id={id}
-//                     status={ToastDetails[0].status}
-//                     variant={ToastDetails[0].variant}
-//                     title={ToastDetails[0].title}
-//                     description={ToastDetails[0].description}
-//                     isClosable={true}
-//                   />
-//                 );
-//               },
-//             })
-//           }
-//         >
-//           {ToastDetails[0].variant}
-//         </Button>
-//       </VStack>
-//     </Center>
-//   );
 };
-

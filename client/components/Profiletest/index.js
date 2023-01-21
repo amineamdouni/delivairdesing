@@ -226,7 +226,6 @@ export default function FlyContent({ navigation, posts }) {
               </Center>
             </S.FlyInfoThree>
           </ScrollView>
-         
         </S.FlyInfoContent>
       </S.FlyInfo>
       <Footer navigation={navigation} />
