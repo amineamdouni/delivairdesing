@@ -21,7 +21,7 @@ const ReclamationForm = () => {
     }} alt="Alternate Text" size="xl" />
   
     <Box>
-   <Text style={styles.textrec}>When something isn't working properly, the reports we receive on DelivAir help us to identify and fix the issues. A detailed report (e.g. with screenshot and description) helps us to find what is wrong. When you report issues as soon as they happen pressing in this link : </Text>
+   <Text style={styles.textrec}>When something isn't working properly, the reports we receive on DelivAir help us identify and fix the issues. A detailed report (e.g. with screenshot and description) helps us to find what is wrong. When you report issues as soon as they happen pressing in this link : </Text>
    <TouchableOpacity  onPress={handleEmailPress}>
    <Text style={styles.textlink}>delivaireclamtion@gmail.com</Text></TouchableOpacity>
    <Image style={styles.image2} source={{uri:"https://res.cloudinary.com/duqxezt6m/image/upload/v1673367250/Sans_titre-2_znvrkq.gif"}} ></Image>
