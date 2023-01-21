@@ -5,12 +5,11 @@ import {
   Text,
   ImageBackground,
   TouchableOpacity,
-  KeyboardAvoidingView,
 } from "react-native";
 import { Button } from "native-base";
 import { AntDesign } from "@expo/vector-icons";
 import { Image, Input, Center, Avatar, Box, useToast } from "native-base";
-import * as DocumentPicker from "expo-document-picker";
+
 import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
 import Alert from "./Alert";
@@ -143,14 +142,6 @@ const SignUpForm = ({ navigation }) => {
 
   //----------end of firebase upload picture----
 
-  // const _pickDocument = async () => {
-  //   let result = await DocumentPicker.getDocumentAsync({});
-
-  //   alert(result.uri);
-  //   setImage(result);
-  //
-  // };
-
   const handleSubmit = () => {
     console.log("submit");
     console.log({
@@ -177,13 +168,13 @@ const SignUpForm = ({ navigation }) => {
 
           .then((res) => {
             setUser(res.data);
-        if (res.data.verfied == false) {
-          navigation.navigate("unverfied");
-        } else if (res.data.banned == true) {
-          navigation.navigate("banned");
-        } else {
-          navigation.navigate("home");
-        }
+            if (res.data.verfied == false) {
+              navigation.navigate("unverfied");
+            } else if (res.data.banned == true) {
+              navigation.navigate("banned");
+            } else {
+              navigation.navigate("home");
+            }
             Ale("success", "Thank you for updating your profile", "Enjoy!");
           });
       })

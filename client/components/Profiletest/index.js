@@ -1,18 +1,12 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
-import {
-  StatusBar,
-  ScrollView,
-  SafeAreaView,
-  View,
-  StyleSheet,
-} from "react-native";
+import { StatusBar, ScrollView, StyleSheet } from "react-native";
 import {
   FlipInXDown,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Entypo, Ionicons } from "@expo/vector-icons";
+
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./profileTestcss";
 import { Text, Box, Image, Center, HStack, useToast } from "native-base";

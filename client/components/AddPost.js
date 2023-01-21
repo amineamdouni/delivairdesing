@@ -1,31 +1,20 @@
 import React, { useState, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../UserContext";
 import DropDownPicker from "react-native-dropdown-picker";
-import axios, { Axios } from "axios";
+import axios from "axios";
 import {
   Text,
-  Link,
   Center,
   Input,
   Stack,
   Slider,
   NativeBaseProvider,
-  Heading,
-  VStack,
   Box,
   Button,
   Image,
-  Flex,
-  Divider,
-  Icon,
   HStack,
 } from "native-base";
-import {
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-} from "react-native";
+
 import Alert from "./Alert";
 import { useToast } from "native-base";
 const date = new Date();
@@ -56,55 +45,7 @@ export default function AddPost({ navigation }) {
 
   useEffect(() => {
     forceUpdate();
-  }, [user]); // {
-  //   greatCircleDistance: {
-  //     meter: 860121.12,
-  //     km: 860.121,
-  //     mile: 534.454,
-  //     nm: 464.428,
-  //     feet: 2821919.69,
-  //   },
-  //   departure: {
-  //     airport: {
-  //       icao: "DTTA",
-  //       iata: "TUN",
-  //       name: "Tunis, Tunis Carthage",
-  //       shortName: "Carthage",
-  //       municipalityName: "Tunis",
-  //       location: { lat: 36.851, lon: 10.227199 },
-  //       countryCode: "TN",
-  //     },
-  //     scheduledTimeLocal: "2023-01-04 13:25+01:00",
-  //     scheduledTimeUtc: "2023-01-04 12:25Z",
-  //     terminal: "M",
-  //     quality: ["Basic"],
-  //   },
-  //   arrival: {
-  //     airport: {
-  //       icao: "LEBL",
-  //       iata: "BCN",
-  //       name: "Barcelona",
-  //       shortName: "Barcelona",
-  //       municipalityName: "Barcelona",
-  //       location: { lat: 41.2971, lon: 2.078459 },
-  //       countryCode: "ES",
-  //     },
-  //     scheduledTimeLocal: "2023-01-04 15:10+01:00",
-  //     actualTimeLocal: "2023-01-04 15:41+01:00",
-  //     scheduledTimeUtc: "2023-01-04 14:10Z",
-  //     actualTimeUtc: "2023-01-04 14:41Z",
-  //     terminal: "1",
-  //     quality: ["Basic", "Live"],
-  //   },
-  //   lastUpdatedUtc: "2023-01-04 14:55Z",
-  //   number: "TU 514",
-  //   callSign: "TAR514",
-  //   status: "Arrived",
-  //   codeshareStatus: "IsOperator",
-  //   isCargo: false,
-  //   aircraft: { reg: "TS-IMY", modeS: "02A198", model: "Airbus A320 NEO" },
-  //   airline: { name: "Tunisair" },
-  // }
+  }, [user]);
   const [flight, setFlight] = useState(null);
   const [text, setText] = useState("");
   const [onChangeValue, setOnChangeValue] = React.useState(0);

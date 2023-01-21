@@ -1,29 +1,13 @@
-import {
-  VStack,
-  HStack,
-  Button,
-  Actionsheet,
-  useDisclose,
-  Text,
-  Box,
-  Image,
-  Badge,
-  Center,
-} from "native-base";
+import { VStack, HStack, useDisclose, Badge, Center } from "native-base";
 import { UserContext } from "../UserContext";
 import { StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import ActionSheet from "./ActionSheet";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-import {
-  MaterialCommunityIcons,
-  AntDesign,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState, useContext } from "react";
 export default function Footer({ navigation, focused }) {
-  const { isOpen, onOpen, onClose } = useDisclose();
   const { selected, setSelected } = useContext(UserContext);
 
   return (
@@ -67,20 +51,22 @@ export default function Footer({ navigation, focused }) {
             setSelected("radar");
           }}
         >
-          {<Badge // bg="red.400"
-            colorScheme="danger"
-            rounded="full"
-            mb={-4}
-            mr={-4}
-            zIndex={1}
-            variant="solid"
-            alignSelf="flex-end"
-            _text={{
-              fontSize: 8,
-            }}
-          >
-            2
-          </Badge>}
+          {
+            <Badge // bg="red.400"
+              colorScheme="danger"
+              rounded="full"
+              mb={-4}
+              mr={-4}
+              zIndex={1}
+              variant="solid"
+              alignSelf="flex-end"
+              _text={{
+                fontSize: 8,
+              }}
+            >
+              2
+            </Badge>
+          }
           <MaterialCommunityIcons
             name="radar"
             color={selected === "radar" ? "#5FC8C0" : "#5FC8C0"}

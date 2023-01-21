@@ -2,17 +2,11 @@ import React, { useState, useContext, useEffect, useCallback } from "react";
 import {
   Alert,
   Text,
-  Link,
-  Center,
   Heading,
   VStack,
   Box,
   Avatar,
-  Button,
-  Image,
   Input,
-  Flex,
-  Divider,
   Icon,
   HStack,
 } from "native-base";
@@ -20,18 +14,11 @@ import {
   StyleSheet,
   ScrollView,
   TouchableWithoutFeedback,
-  Keyboard,
-  KeyboardAvoidingView,
-  ImageBackground,
   Dimensions,
 } from "react-native";
-import {
-  MaterialCommunityIcons,
-  AntDesign,
-  Ionicons,
-} from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import Footer from "./Footer";
-import { SearchBar } from "react-native-screens";
+
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 const imaage = {
@@ -39,11 +26,10 @@ const imaage = {
 };
 import { UserContext } from "../UserContext";
 import axios from "axios";
-import Messages from "./Messages";
+
 import { TouchableOpacity } from "react-native-gesture-handler";
 export default function Chat({ navigation }) {
-  const { user, connected, setTo, socket, contactList } =
-    useContext(UserContext);
+  const { user, setTo, contactList } = useContext(UserContext);
   const [allUsers, getAllUsers] = useState([]);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);

@@ -1,8 +1,6 @@
 import {
   Text,
   VStack,
-  Divider,
-  Header,
   Box,
   Input,
   Center,
@@ -10,27 +8,20 @@ import {
   Button,
   Container,
   Heading,
-  Avatar,
   ScrollView,
-  Menu,
   Modal,
   Image,
-  Pressable,
   AspectRatio,
   Stack,
 } from "native-base";
-import {
-  Ionicons,
-  MaterialIcons,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+
 import DropDownPicker from "react-native-dropdown-picker";
 import { ImageBackground, StyleSheet } from "react-native";
-import axios from "axios";
+
 import React, { useState, useEffect } from "react";
-import Footer from "./Footer";
+
 import DatePicker from "react-native-modern-datepicker";
-import { TouchableOpacity } from "react-native";
+
 const date = new Date();
 const imaage = {
   uri: "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
@@ -201,7 +192,6 @@ export default function Home({ navigation }) {
                   <HStack>
                     <Container>
                       <Image
-                        // marginRight={30}
                         margin={30}
                         size={10}
                         source={{
@@ -228,7 +218,6 @@ export default function Home({ navigation }) {
                   <HStack>
                     <Container>
                       <Image
-                        // marginRight={30}
                         margin={30}
                         size={10}
                         source={{
@@ -255,7 +244,6 @@ export default function Home({ navigation }) {
                   <HStack>
                     <Container>
                       <Image
-                        // marginRight={30}
                         margin={30}
                         size={10}
                         source={{
@@ -282,7 +270,6 @@ export default function Home({ navigation }) {
                   <HStack>
                     <Container>
                       <Image
-                        // marginRight={30}
                         margin={30}
                         size={10}
                         source={{
@@ -451,9 +438,6 @@ export default function Home({ navigation }) {
             placeholder="Subscribe to our Newsletter"
           />
         </Box>
-        {/* <Box style={style.secondinputBox}>
-
-        </Box> */}
       </ScrollView>
     </>
   );
@@ -461,7 +445,6 @@ export default function Home({ navigation }) {
 
 const style = StyleSheet.create({
   Header: {
-    // backgroundColor: "#EBC8CB",
     paddingTop: 80,
     width: 500,
     height: 379,
@@ -559,7 +542,6 @@ const style = StyleSheet.create({
     bordercolor: "black",
   },
   inputto: {
-    
     width: 150,
     height: 36,
     left: -410,
