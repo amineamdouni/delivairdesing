@@ -66,7 +66,7 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus('unknown')
         console.log("friend removed succ");
       });
     let usercontacts = [...user.contactList];
@@ -77,8 +77,8 @@ export default function FlyContent({ navigation, posts }) {
         contactList: usercontacts,
       })
       .then((res) => {
-        setConnected(null);
-        setcontactArray(usercontacts);
+        
+      
         console.log("friend removed succ");
       });
 
@@ -93,7 +93,7 @@ export default function FlyContent({ navigation, posts }) {
         pendingRequests: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus("waiting")
 
         console.log("friend sent  succ");
       });
@@ -109,7 +109,7 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus('friend')
         console.log("friend added succ");
       });
     let contactuser = [...user.contactList];
@@ -120,7 +120,7 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        
         console.log("friend accepted succ");
       });
   };
@@ -258,7 +258,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        setConnected(null);
+        
         navigation.navigate("login");
         alert("Signed out");
       })
