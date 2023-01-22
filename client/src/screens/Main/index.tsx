@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import {
   FadeOut,
   FlipOutXUp,
@@ -31,6 +31,9 @@ import Alert from "../../../components/Alert";
 import { Toast } from "native-base";
 
 export default function Main({ navigation }: any) {
+  const [, updateState] = useState();
+  const forceUpdate = useCallback(() => updateState({}), []);
+  useEffect(()=>  forceUpdate(),[])
   //---------
   const toast = useToast();
   const Ale = (status, title, description) => {
