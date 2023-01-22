@@ -42,13 +42,8 @@ import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
   const [starRating, setStarRating] = useState(null);
   const [rating, setRating] = useState(0);
-  const {
-    user,
-    setConnected,
-    oneUser,
-
-    setcontactArray,
-  } = useContext(UserContext);
+  const { user, setConnected, oneUser, setUser, setcontactArray } =
+    useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
@@ -66,7 +61,7 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus("unknown");
         console.log("friend removed succ");
       });
     let usercontacts = [...user.contactList];
@@ -77,8 +72,6 @@ export default function FlyContent({ navigation, posts }) {
         contactList: usercontacts,
       })
       .then((res) => {
-        setConnected(null);
-        setcontactArray(usercontacts);
         console.log("friend removed succ");
       });
 
@@ -93,7 +86,7 @@ export default function FlyContent({ navigation, posts }) {
         pendingRequests: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus("waiting");
 
         console.log("friend sent  succ");
       });
@@ -109,7 +102,7 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
+        setUserStatus("friend");
         console.log("friend added succ");
       });
     let contactuser = [...user.contactList];
@@ -120,7 +113,6 @@ export default function FlyContent({ navigation, posts }) {
         contactList: contacts,
       })
       .then((res) => {
-        setConnected(null);
         console.log("friend accepted succ");
       });
   };
@@ -258,7 +250,7 @@ export default function FlyContent({ navigation, posts }) {
   function SignOut() {
     signOut(auth)
       .then((res) => {
-        setConnected(null);
+        setUser(null);
         navigation.navigate("login");
         alert("Signed out");
       })
