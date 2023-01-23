@@ -33,7 +33,7 @@ import { Toast } from "native-base";
 export default function Main({ navigation }: any) {
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
-  useEffect(()=>  forceUpdate(),[])
+  useEffect(() => forceUpdate(), []);
   //---------
   const toast = useToast();
   const Ale = (status, title, description) => {
@@ -103,7 +103,7 @@ export default function Main({ navigation }: any) {
   useEffect(() => {
     axios
 
-      .get("http://192.168.104.7:5001/posts")
+      .get("http://192.168.103.4:5001/posts")
 
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));

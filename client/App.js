@@ -25,8 +25,6 @@ import { async } from "@firebase/util";
 
 export const theme = extendTheme({ config });
 export default function App() {
-  
-
   const [connected, setConnected] = useState(null);
   const [user, setUser] = useState(null);
   const [chatUser, setChatUser] = useState(null);
@@ -55,7 +53,7 @@ export default function App() {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://192.168.104.7:5001/users/id/${user.user_id}`)
+        .get(`http://192.168.103.4:5001/users/id/${user.user_id}`)
         .then((res) => {
           setUser(res.data);
         });
@@ -76,7 +74,7 @@ export default function App() {
       for (let i = 0; i < user.contactList.length; i++) {
         axios
 
-          .get(`http://192.168.104.7:5001/users/${user.contactList[i]}`)
+          .get(`http://192.168.103.4:5001/users/${user.contactList[i]}`)
 
           .then((res) => {
             contact.push(res.data);
@@ -87,7 +85,7 @@ export default function App() {
       for (let i = 0; i < user.pendingRequests.length; i++) {
         axios
 
-          .get(`http://192.168.104.7:5001/users/${user.pendingRequests[i]}`)
+          .get(`http://192.168.103.4:5001/users/${user.pendingRequests[i]}`)
 
           .then((res) => {
             pending.push(res.data);
@@ -136,6 +134,7 @@ export default function App() {
         contactArray,
         setContactList,
         setcontactArray,
+        pendingList,
       }}
     >
       <NativeBaseProvider>

@@ -57,7 +57,7 @@ export default function FlyContent({ navigation, posts }) {
     let idx = contacts.indexOf(user.email);
     contacts.splice(idx, 1);
     axios
-      .put(`http://192.168.104.7:5001/users/${oneUser.user_id}`, {
+      .put(`http://192.168.103.4:5001/users/${oneUser.user_id}`, {
         contactList: contacts,
       })
       .then((res) => {
@@ -68,7 +68,7 @@ export default function FlyContent({ navigation, posts }) {
     let index = usercontacts.indexOf(oneUser.email);
     usercontacts.splice(index, 1);
     axios
-      .put(`http://192.168.104.7:5001/users/${user.user_id}`, {
+      .put(`http://192.168.103.4:5001/users/${user.user_id}`, {
         contactList: usercontacts,
       })
       .then((res) => {
@@ -82,7 +82,7 @@ export default function FlyContent({ navigation, posts }) {
 
     contacts.push(user.email);
     axios
-      .put(`http://192.168.104.7:5001/users/${oneUser.user_id}`, {
+      .put(`http://192.168.103.4:5001/users/${oneUser.user_id}`, {
         pendingRequests: contacts,
       })
       .then((res) => {
@@ -98,7 +98,7 @@ export default function FlyContent({ navigation, posts }) {
     let contacts = [...oneUser.contactList];
     contacts.push(user.email);
     axios
-      .put(`http://192.168.104.7:5001/users/${oneUser.user_id}`, {
+      .put(`http://192.168.103.4:5001/users/${oneUser.user_id}`, {
         contactList: contacts,
       })
       .then((res) => {
@@ -108,7 +108,7 @@ export default function FlyContent({ navigation, posts }) {
     let contactuser = [...user.contactList];
     contactuser.push(oneUser.email);
     axios
-      .put(`http://192.168.104.7:5001/users/${user.user_id}`, {
+      .put(`http://192.168.103.4:5001/users/${user.user_id}`, {
         pendingRequests: pending,
         contactList: contacts,
       })
@@ -145,7 +145,7 @@ export default function FlyContent({ navigation, posts }) {
   const postReview = () => {
     console.log("post");
     axios
-      .post("http://192.168.104.7:5001/reviews/", {
+      .post("http://192.168.103.4:5001/reviews/", {
         content: message,
         reviewSender: user.user_id,
         reviewReceiver: oneUser.user_id,
@@ -157,7 +157,7 @@ export default function FlyContent({ navigation, posts }) {
     if (oneUser) {
       console.log(oneUser.user_id);
       axios
-        .get(`http://192.168.104.7:5001/reviews/${oneUser.user_id}`)
+        .get(`http://192.168.103.4:5001/reviews/${oneUser.user_id}`)
         .then((res) => {
           setReview(res.data);
           console.log(res.data, "res.data");
