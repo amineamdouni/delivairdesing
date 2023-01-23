@@ -98,6 +98,17 @@ export default function ActionSheet({ navigation, focused, icon, styles }) {
           <Actionsheet.Item
             backgroundColor={"#5FC8C0"}
             startIcon={
+              <FontAwesome5 color={"white"} name="user-friends" size={26} />
+            }
+            onPress={() => navigation.navigate("allposts")}
+          >
+            <TouchableOpacity>
+              <Text color={"white"}>All Posts</Text>
+            </TouchableOpacity>
+          </Actionsheet.Item>
+          <Actionsheet.Item
+            backgroundColor={"#5FC8C0"}
+            startIcon={
               <MaterialCommunityIcons
                 color={"white"}
                 name="text-box-plus-outline"

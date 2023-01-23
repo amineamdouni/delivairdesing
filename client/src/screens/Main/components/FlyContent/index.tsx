@@ -141,7 +141,7 @@ export default function FlyContent({ navigation, posts, to, from, setPosts }) {
                         <Center style={style.left}>
                           <Avatar
                             source={{
-                              uri: e.acceptedItems[0],
+                              uri: e.poster_image,
                             }}
                           />
                         </Center>
