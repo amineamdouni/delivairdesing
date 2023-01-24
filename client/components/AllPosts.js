@@ -78,7 +78,7 @@ export default function AllPosts({ navigation }) {
   React.useEffect(() => {
     axios
 
-      .get(`http://192.168.103.4:5001/posts`)
+      .get(`http://192.168.94.101:5001/posts`)
 
       .then((res) => {
         setPosts(res.data);
@@ -155,7 +155,7 @@ export default function AllPosts({ navigation }) {
             let test;
             axios
 
-              .get(`http://192.168.103.4:5001/users/id/${e.poster_id}`)
+              .get(`http://192.168.94.101:5001/users/id/${e.poster_id}`)
 
               .then((res) => (test = res.data));
             console.log(test, "titi");
@@ -165,7 +165,7 @@ export default function AllPosts({ navigation }) {
                   onPress={async () => {
                     await axios
 
-                      .get(`http://192.168.103.4:5001/users/id/${e.poster_id}`)
+                      .get(`http://192.168.94.101:5001/users/id/${e.poster_id}`)
 
                       .then((res) => {
                         setOneUser(res.data);

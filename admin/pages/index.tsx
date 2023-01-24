@@ -22,7 +22,7 @@ const login = () => {
         <span className="fas fa-key" />
         <input  className='border border-dark' type="password" name="password" id="pwd" placeholder="Password" />
       </div>
-      <div className='row'><div className='col-2'></div><div className='col-10 btn mt-3' onClick={()=>window.location.href='home'}>
+      <div className='row'><div className='col-2'></div><div className='col-10 btn mt-3' onClick={()=>window.location.href='users'}>
       Login
       </div>
       </div>

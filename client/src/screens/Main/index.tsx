@@ -103,7 +103,7 @@ export default function Main({ navigation }: any) {
   useEffect(() => {
     axios
 
-      .get("http://192.168.103.4:5001/posts")
+      .get("http://192.168.94.101:5001/posts")
 
       .then((res) => setPosts(res.data))
       .catch((err) => console.log(err));

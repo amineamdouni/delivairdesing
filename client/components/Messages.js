@@ -31,7 +31,7 @@ export default Messages = () => {
   };
   const { chatUser, to, user } = useContext(UserContext);
 
-  const socket = io("http://192.168.103.4:3000/");
+  const socket = io("http://192.168.94.101:3000/");
 
   console.log("From ", chatUser._id);
   console.log("to ", to);
@@ -46,7 +46,7 @@ export default Messages = () => {
     });
     await axios
 
-      .post("http://192.168.103.4:3000/api/messages/addmsg/", {
+      .post("http://192.168.94.101:3000/api/messages/addmsg/", {
         from: chatUser._id,
         to: to,
         message: newMsg["text"],
@@ -62,7 +62,7 @@ export default Messages = () => {
   };
   useEffect(() => {
     axios
-      .get(`http://192.168.103.4:3000/api/users/allusers/${to}`)
+      .get(`http://192.168.94.101:3000/api/users/allusers/${to}`)
       .then((res) => {
         let torec = res.data.filter((e) => e._id == to);
         console.log(res.data);
@@ -74,7 +74,7 @@ export default Messages = () => {
   useEffect(() => {
     axios
 
-      .post("http://192.168.103.4:3000/api/messages/getmsg/", {
+      .post("http://192.168.94.101:3000/api/messages/getmsg/", {
         from: chatUser._id,
         to: to,
       })
