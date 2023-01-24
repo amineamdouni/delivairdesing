@@ -153,7 +153,7 @@ const SignUpForm = ({ navigation }) => {
     });
     axios
 
-      .post("http://192.168.103.4:5001/users", {
+      .post("http://192.168.94.101:5001/users", {
         userName,
         phoneNumber: Number(phoneNumber),
         location,
@@ -164,7 +164,7 @@ const SignUpForm = ({ navigation }) => {
         console.log("refresh");
         axios
 
-          .get(`http://192.168.103.4:5001/users/${response.data.email}`)
+          .get(`http://192.168.94.101:5001/users/${response.data.email}`)
 
           .then((res) => {
             setUser(res.data);
