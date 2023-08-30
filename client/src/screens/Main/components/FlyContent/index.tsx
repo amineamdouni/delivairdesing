@@ -21,6 +21,7 @@ import {
   VStack,
   useToast,
 } from "native-base";
+import Alert from "../../../../../components/Alert";
 
 import Swiper from "react-native-swiper";
 

@@ -24,38 +24,42 @@ import AllPosts from "./AllPosts";
 
 const Stack = createNativeStackNavigator();
 const Stacks = () => {
-  const { user, connected } = useContext(UserContext);
-  useEffect(() => {
-    console.log(user, "stack");
-  }, [user]);
+  // const { user, connected } = useContext(UserContext);
+  // useEffect(() => {
+  //   console.log(user, "stack");
+  // }, [user]);
 
-  if (!user) {
+  // if (!user) {
+  //   return (
+  //     <Stack.Navigator
+  //       screenOptions={{
+  //         headerShown: false,
+  //         gestureEnabled: true,
+  //         gestureDirection: "horizontal",
+  //       }}
+  //     >
+  //       <Stack.Screen name="login" component={Login} />
+  //       <Stack.Screen name="signup" component={SignUp} />
+  //       <Stack.Screen name="form" component={Form} />
+  //       <Stack.Screen name="notices" component={Notices} />
+  //     </Stack.Navigator>
+  //   );
+  // } else if (user) {
     return (
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-          gestureEnabled: true,
-          gestureDirection: "horizontal",
-        }}
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="otherprofile" component={OthersProfile} />
+        <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="form" component={Form} />
         <Stack.Screen name="notices" component={Notices} />
-      </Stack.Navigator>
-    );
-  } else if (user) {
-    return (
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="unverfied" component={Unverifed} />
-        <Stack.Screen name="otherprofile" component={OthersProfile} />
         <Stack.Screen name="contarct" component={Alert} />
         <Stack.Screen name="setting" component={UserSetting} />
         <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
         <Stack.Screen name="banned" component={Banned} />
         <Stack.Screen name="track" component={Track} />
-        <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="addpost" component={AddPost} />
         <Stack.Screen
           name="contact"
@@ -74,7 +78,7 @@ const Stacks = () => {
         <Stack.Screen name="history" component={History} />
       </Stack.Navigator>
     );
-  }
+  //}
 };
 
 export default Stacks;

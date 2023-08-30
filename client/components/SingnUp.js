@@ -25,33 +25,33 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   KeyboardAvoidingView,
+  TouchableOpacity,
 } from "react-native";
 import Alert from "./Alert";
 
-//--------- We need to secure this amine !------
-const firebaseConfig = {
-  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
-  authDomain: "delivair-959e9.firebaseapp.com",
-  projectId: "delivair-959e9",
-  storageBucket: "delivair-959e9.appspot.com",
-  messagingSenderId: "1084409904306",
-  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
-};
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-const app = initializeApp(firebaseConfig);
-const auth = getAuth();
-//-----------------------
-import { UserContext } from "../UserContext";
-import axios from "axios";
-import { TouchableOpacity } from "react-native-gesture-handler";
+// //--------- We need to secure this amine !------
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+//   authDomain: "delivair-959e9.firebaseapp.com",
+//   projectId: "delivair-959e9",
+//   storageBucket: "delivair-959e9.appspot.com",
+//   messagingSenderId: "1084409904306",
+//   appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+// };
+// import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+// import { initializeApp } from "firebase/app";
+// const app = initializeApp(firebaseConfig);
+// const auth = getAuth();
+// //-----------------------
+// import { UserContext } from "../UserContext";
+// import axios from "axios";
 export default function SignUp({ navigation }) {
   const [username, setUsername] = useState("");
   const [Email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  const [dataInput, setDataInput] = useState([]);
-  const { setUser, setConnected, setChatUser } = useContext(UserContext);
+  // const [dataInput, setDataInput] = useState([]);
+  // const { setUser, setConnected, setChatUser } = useContext(UserContext);
   const [showModal, setShowModal] = useState(false);
   const [terms, setTerms] = useState(false);
 
@@ -72,37 +72,39 @@ export default function SignUp({ navigation }) {
       },
     });
   };
-  console.log(terms);
+  // console.log(terms);
   //SignUp function
   const SignUpUser = () => {
-    console.log("click");
-    const info = { Email: Email, passw: password };
-    setDataInput([info]);
-    createUserWithEmailAndPassword(auth, Email, password)
-      .then((res) => {
-        console.log("firebase succ");
-        axios
-
-          .post("http://192.168.94.101:3000/api/users/register", {
-            email: Email,
-            password,
-            username,
-          })
-          .then((res) => {
-            console.log(res.data.user);
-
-            setConnected(res.data.user);
-            setChatUser(res.data.user);
             navigation.navigate("notices");
-            Ale("success", "Welcome!", "Have fun and respect everyone !");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      })
-      .catch((err) => {
-        Ale("error", "error", JSON.stringify(err.code));
-      });
+
+    // console.log("click");
+    // const info = { Email: Email, passw: password };
+    // setDataInput([info]);
+    // createUserWithEmailAndPassword(auth, Email, password)
+    //   .then((res) => {
+    //     console.log("firebase succ");
+    //     axios
+
+    //       .post("http://192.168.1.107:3000/api/users/register", {
+    //         email: Email,
+    //         password,
+    //         username,
+    //       })
+    //       .then((res) => {
+    //         console.log(res.data.user);
+
+    //         setConnected(res.data.user);
+    //         setChatUser(res.data.user);
+    //         navigation.navigate("notices");
+    //         Ale("success", "Welcome!", "Have fun and respect everyone !");
+    //       })
+    //       .catch((err) => {
+    //         console.log(err);
+    //       });
+    //   })
+    //   .catch((err) => {
+    //     Ale("error", "error", JSON.stringify(err.code));
+    //   });
   };
 
   return (
@@ -417,6 +419,6 @@ const style = StyleSheet.create({
     marginTop: 10,
   },
   logoSignUp: {
-    Top: 5000,
+    top: 5000,
   },
 });

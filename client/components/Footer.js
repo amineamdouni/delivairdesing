@@ -7,7 +7,7 @@ const windowHeight = Dimensions.get("window").height;
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState, useContext } from "react";
-export default function Footer({ navigation, focused }) {
+export default function Footer({ navigation }) {
   const { selected, setSelected } = useContext(UserContext);
 
   return (

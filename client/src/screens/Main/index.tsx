@@ -24,7 +24,7 @@ import StatusContent from "./components/StatusContent";
 import Cloud from "./components/Cloud";
 import FlyContent from "./components/FlyContent";
 import axios from "axios";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 const date = new Date();
 
 import Alert from "../../../components/Alert";
@@ -74,14 +74,12 @@ export default function Main({ navigation }: any) {
       setShowStatus(true);
     } else {
       if (from.length == 0 && to.length == 0) {
-        console.log("null");
         Ale(
           "error",
           "please pick destination",
           "Please pick both destination in order to get results"
         );
 
-        navigation.navigate("allposts");
       } else if (from.length > 0 && to.length == 0) {
         Ale(
           "error",
@@ -103,9 +101,75 @@ export default function Main({ navigation }: any) {
   useEffect(() => {
     axios
 
-      .get("http://192.168.94.101:5001/posts")
+      .get("http://192.168.1.107:5001/posts")
 
-      .then((res) => setPosts(res.data))
+      .then((res) => setPosts([
+  {
+    "post_id": 4,
+    "type": "reciver",
+    "departCountry": "tunisia",
+    "departTime": "202020",
+    "arriveCountry": "spain",
+    "arriveTime": "20223",
+    "content": "i need someone",
+    "paymentWays": [
+      "paypal"
+    ],
+    "acceptedItems": [
+      "anything",
+      "smth"
+    ],
+    "weight": "5",
+    "postTime": "5am",
+    "poster_id": 19,
+    "flight_id": "Tun514"
+  },
+  {
+    "post_id": 5,
+    "type": "shipper",
+    "departCountry": "Tunis",
+    "departTime": "2023-01-04 13:25+01:00",
+    "arriveCountry": "Tunis",
+    "arriveTime": "2023-01-04 13:25+01:00",
+    "content": "hi",
+    "paymentWays": [],
+    "acceptedItems": [],
+    "weight": "0",
+    "postTime": "2023-01-12T08:56:43.504Z",
+    "poster_id": 19,
+    "flight_id": "TU 514"
+  },
+  {
+    "post_id": 6,
+    "type": "shipper",
+    "departCountry": "Tunis",
+    "departTime": "2023-01-13 17:10+01:00",
+    "arriveCountry": "Tunis",
+    "arriveTime": "2023-01-13 17:10+01:00",
+    "content": "hi",
+    "paymentWays": [],
+    "acceptedItems": [],
+    "weight": "0",
+    "postTime": "2023-01-12T08:59:22.478Z",
+    "poster_id": 19,
+    "flight_id": "TU 397"
+  },
+  {
+    "post_id": 7,
+    "type": "shipper",
+    "departCountry": "Tunis",
+    "departTime": "2023-01-13 17:10+01:00",
+    "arriveCountry": "Tunis",
+    "arriveTime": "2023-01-13 17:10+01:00",
+    "content": "hi",
+    "paymentWays": [],
+    "acceptedItems": [],
+    "weight": "0",
+    "postTime": "2023-01-12T09:02:39.769Z",
+    "poster_id": 19,
+    "flight_id": "TU 397"
+  }
+]))
       .catch((err) => console.log(err));
     if (confirm) {
       backgroundColor.value = withTiming("#F1F1F1", { duration: 300 });

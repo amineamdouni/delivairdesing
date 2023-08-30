@@ -26,30 +26,30 @@ import {
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Alert from "./Alert";
 //--------- We need to secure this amine !------
-const firebaseConfig = {
-  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
-  authDomain: "delivair-959e9.firebaseapp.com",
-  projectId: "delivair-959e9",
-  storageBucket: "delivair-959e9.appspot.com",
-  messagingSenderId: "1084409904306",
-  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
-};
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+//   authDomain: "delivair-959e9.firebaseapp.com",
+//   projectId: "delivair-959e9",
+//   storageBucket: "delivair-959e9.appspot.com",
+//   messagingSenderId: "1084409904306",
+//   appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+// };
 
-const app = initializeApp(firebaseConfig);
+// const app = initializeApp(firebaseConfig);
 
-//-------------------------
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
+// //-------------------------
+// import { initializeApp } from "firebase/app";
+// import {
+//   getAuth,
+//   signInWithEmailAndPassword,
+//   sendPasswordResetEmail,
+// } from "firebase/auth";
 
-const auth = getAuth();
-import { UserContext } from "../UserContext";
-import axios from "axios";
+// const auth = getAuth();
+// import { UserContext } from "../UserContext";
+// import axios from "axios";
 
-import socketIO from "socket.io-client";
+// import socketIO from "socket.io-client";
 
 export default function Login({ navigation }) {
   const toast = useToast();
@@ -69,51 +69,52 @@ export default function Login({ navigation }) {
       },
     });
   };
-  const { setUser, setChatUser, setSocket } = useContext(UserContext);
+  // const { setUser, setChatUser, setSocket } = useContext(UserContext);
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        console.log("firebase succ");
-        axios
-
-          .post("http://192.168.94.101:3000/api/users/login", {
-            email,
-            password,
-          })
-          .then((result) => {
-            console.log(result.data, "mongosucc");
-            setChatUser(result.data.user);
-            axios
-
-              .get(`http://192.168.94.101:5001/users/${result.data.user.email}`)
-              .then((res) => {
-                setUser(res.data);
-                console.log(res.data.verified, "verdief");
-                console.log(res.data.banned, "verdief");
-                setSocket(socketIO.connect("http://192.168.94.101:3000"));
-                if (res.data.verfied == false) {
-                  console.log(res.data.verified);
-                  navigation.navigate("unverfied");
-                } else if (res.data.banned == true) {
-                  navigation.navigate("banned");
-                } else {
-                  navigation.navigate("home");
-                }
-
-                Ale(
-                  "success",
-                  "login succussfully",
-                  "welcome " + res.data.userName
-                );
-              });
-          });
-      })
-      .catch((err) =>
-        Ale("error", "error", "please check your email or password ")
-      );
+    navigation.navigate("home");
+    //           navigation.navigate("unverfied");
+    //           navigation.navigate("banned");
+    
+    // signInWithEmailAndPassword(auth, email, password)
+    //   .then((res) => {
+    //     console.log("firebase succ");
+    //     axios
+    //       .post("http://192.168.1.107:3000/api/users/login", {
+    //         email,
+    //         password,
+    //       })
+    //       .then((result) => {
+    //         console.log(result.data, "mongosucc");
+    //         setChatUser(result.data.user);
+    //         axios
+    //           .get(`http://192.168.1.107:5001/users/${result.data.user.email}`)
+    //           .then((res) => {
+    //             setUser(res.data);
+    //             console.log(res.data.verified, "verdief");
+    //             console.log(res.data.banned, "verdief");
+    //             setSocket(socketIO.connect("http://192.168.1.107:3000"));
+    //             if (res.data.verfied == false) {
+    //               console.log(res.data.verified);
+    //               navigation.navigate("unverfied");
+    //             } else if (res.data.banned == true) {
+    //               navigation.navigate("banned");
+    //             } else {
+    //               navigation.navigate("home");
+    //             }
+    //             Ale(
+    //               "success",
+    //               "login succussfully",
+    //               "welcome " + res.data.userName
+    //             );
+    //           });
+    //       });
+    //   })
+    //   .catch((err) =>
+    //     Ale("error", "error", "please check your email or password ")
+    //   );
   };
   const resetPassword = () => {
     if (email != null) {

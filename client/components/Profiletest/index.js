@@ -15,13 +15,13 @@ import Footer from "../Footer";
 import { getAuth, signOut } from "firebase/auth";
 const auth = getAuth();
 import { UserContext } from "../../UserContext";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import Alert from "../Alert";
 export default function FlyContent({ navigation, posts }) {
-  const { user, setUser, setOneUser, setConnected, setChatUser, contactList } =
-    useContext(UserContext);
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
+  // const { user, setUser, setOneUser, setConnected, setChatUser, contactList } =
+  //   useContext(UserContext);
+  // const [, updateState] = useState();
+  // const forceUpdate = useCallback(() => updateState({}), []);
 
   const toast = useToast();
   const Ale = (status, title, description) => {
@@ -41,9 +41,10 @@ export default function FlyContent({ navigation, posts }) {
     });
   };
 
-  useEffect(() => {
-    forceUpdate();
-  }, [user]);
+  // useEffect(() => {
+  //   forceUpdate();
+  // }, [user]);
+  const[contactList,setContactList]=useState([{},{},{},{},{},{},{},{}])
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -63,18 +64,20 @@ export default function FlyContent({ navigation, posts }) {
   }, []);
 
   function SignOut() {
-    signOut(auth)
-      .then((res) => {
-        setUser(null);
-        setChatUser(null);
-        setConnected(null);
-        Ale("success", "Logout successful", "Sorry to see you go !");
-
         navigation.navigate("login");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+
+    // signOut(auth)
+    //   .then((res) => {
+    //     setUser(null);
+    //     setChatUser(null);
+    //     setConnected(null);
+    //     Ale("success", "Logout successful", "Sorry to see you go !");
+
+    //     navigation.navigate("login");
+    //   })
+    //   .catch((error) => {
+    //     alert(error);
+    //   });
   }
 
   return (
@@ -138,7 +141,8 @@ export default function FlyContent({ navigation, posts }) {
                 size={150}
                 borderRadius={100}
                 source={{
-                  uri: user.image,
+                  //TODO:image
+                  uri: "",
                 }}
                 alt="Alternate Text"
               />
@@ -149,7 +153,7 @@ export default function FlyContent({ navigation, posts }) {
                 <S.LargeText
                   style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                 >
-                  {user.userName}
+                  //TODO:change data username
                 </S.LargeText>
 
                 <Box marginRight={-50}>
@@ -158,7 +162,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Phone Number :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {user.phoneNumber}
+                      //TODO:change data userphonenumber
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -168,7 +172,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Email :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {user.email}
+                      //TODO:change data user email
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -178,7 +182,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Location :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      {user.location}
+                      //TODO:change data user location
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -205,14 +209,14 @@ export default function FlyContent({ navigation, posts }) {
                     {contactList.map((e) => (
                       <TouchableOpacity
                         onPress={() => {
-                          setOneUser(e);
+                          // setOneUser(e);
                           navigation.navigate("otherprofile");
                         }}
                       >
                         <Box style={styles.mediaImageContainer}>
                           <Image
                             source={{
-                              uri: e.image,
+                              uri: "https://i.pinimg.com/564x/cc/61/e0/cc61e0afec490d5a8e59ba330c67ab2a.jpg",
                             }}
                             style={styles.image}
                             alt="*"

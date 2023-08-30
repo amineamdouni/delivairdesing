@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, StatusBar, Text, Dimensions } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 import StepIndicator from "react-native-step-indicator";
 
 const { width, height } = Dimensions.get("window");

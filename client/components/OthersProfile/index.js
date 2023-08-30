@@ -42,8 +42,8 @@ import axios from "axios";
 export default function FlyContent({ navigation, posts }) {
   const [starRating, setStarRating] = useState(null);
   const [rating, setRating] = useState(0);
-  const { user, setConnected, oneUser, setUser, setcontactArray } =
-    useContext(UserContext);
+  // const { user, setConnected, oneUser, setUser, setcontactArray } =
+  //   useContext(UserContext);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
   const [userStatus, setUserStatus] = useState(null);
@@ -53,180 +53,180 @@ export default function FlyContent({ navigation, posts }) {
   const [review, setReview] = useState([]);
 
   const unfriend = async () => {
-    let contacts = [...oneUser.contactList];
-    let idx = contacts.indexOf(user.email);
-    contacts.splice(idx, 1);
-    axios
-      .put(`http://192.168.94.101:5001/users/${oneUser.user_id}`, {
-        contactList: contacts,
-      })
-      .then((res) => {
-        setUserStatus("unknown");
-        console.log("friend removed succ");
-      });
-    let usercontacts = [...user.contactList];
-    let index = usercontacts.indexOf(oneUser.email);
-    usercontacts.splice(index, 1);
-    axios
-      .put(`http://192.168.94.101:5001/users/${user.user_id}`, {
-        contactList: usercontacts,
-      })
-      .then((res) => {
-        console.log("friend removed succ");
-      });
+    // let contacts = [...oneUser.contactList];
+    // let idx = contacts.indexOf(user.email);
+    // contacts.splice(idx, 1);
+    // axios
+    //   .put(`http://192.168.1.107:5001/users/${oneUser.user_id}`, {
+    //     contactList: contacts,
+    //   })
+    //   .then((res) => {
+    //     setUserStatus("unknown");
+    //     console.log("friend removed succ");
+    //   });
+    // let usercontacts = [...user.contactList];
+    // let index = usercontacts.indexOf(oneUser.email);
+    // usercontacts.splice(index, 1);
+    // axios
+    //   .put(`http://192.168.1.107:5001/users/${user.user_id}`, {
+    //     contactList: usercontacts,
+    //   })
+    //   .then((res) => {
+    //     console.log("friend removed succ");
+    //   });
 
-    console.log(idx, "      ", index);
+    // console.log(idx, "      ", index);
   };
   const addFriend = () => {
-    let contacts = [...oneUser.pendingRequests];
+    // let contacts = [...oneUser.pendingRequests];
 
-    contacts.push(user.email);
-    axios
-      .put(`http://192.168.94.101:5001/users/${oneUser.user_id}`, {
-        pendingRequests: contacts,
-      })
-      .then((res) => {
-        setUserStatus("waiting");
+    // contacts.push(user.email);
+    // axios
+    //   .put(`http://192.168.1.107:5001/users/${oneUser.user_id}`, {
+    //     pendingRequests: contacts,
+    //   })
+    //   .then((res) => {
+    //     setUserStatus("waiting");
 
-        console.log("friend sent  succ");
-      });
+    //     console.log("friend sent  succ");
+    //   });
   };
   const acceptRequest = () => {
-    let pending = [...user.pendingRequests];
-    let idx = pending.indexOf(oneUser.email);
-    pending.splice(idx, 1);
-    let contacts = [...oneUser.contactList];
-    contacts.push(user.email);
-    axios
-      .put(`http://192.168.94.101:5001/users/${oneUser.user_id}`, {
-        contactList: contacts,
-      })
-      .then((res) => {
-        setUserStatus("friend");
-        console.log("friend added succ");
-      });
-    let contactuser = [...user.contactList];
-    contactuser.push(oneUser.email);
-    axios
-      .put(`http://192.168.94.101:5001/users/${user.user_id}`, {
-        pendingRequests: pending,
-        contactList: contacts,
-      })
-      .then((res) => {
-        console.log("friend accepted succ");
-      });
+    // let pending = [...user.pendingRequests];
+    // let idx = pending.indexOf(oneUser.email);
+    // pending.splice(idx, 1);
+    // let contacts = [...oneUser.contactList];
+    // contacts.push(user.email);
+    // axios
+    //   .put(`http://192.168.1.107:5001/users/${oneUser.user_id}`, {
+    //     contactList: contacts,
+    //   })
+    //   .then((res) => {
+    //     setUserStatus("friend");
+    //     console.log("friend added succ");
+    //   });
+    // let contactuser = [...user.contactList];
+    // contactuser.push(oneUser.email);
+    // axios
+    //   .put(`http://192.168.1.107:5001/users/${user.user_id}`, {
+    //     pendingRequests: pending,
+    //     contactList: contacts,
+    //   })
+    //   .then((res) => {
+    //     console.log("friend accepted succ");
+    //   });
   };
 
-  useEffect(() => {
-    forceUpdate();
+  // useEffect(() => {
+  //   forceUpdate();
 
-    if (oneUser) {
-      if (oneUser.pendingRequests.includes(user.email)) {
-        setUserStatus("waiting");
-      } else if (user.contactList.includes(oneUser.email)) {
-        setUserStatus("friend");
-      } else if (user.pendingRequests.includes(oneUser.email)) {
-        setUserStatus("pending");
-      } else {
-        setUserStatus("unknown");
-      }
-      setRating(
-        oneUser.ratings.reduce(
-          (accumulateur, valeurCourante) =>
-            Number(accumulateur) + Number(valeurCourante),
-          0
-        ) / oneUser.ratings.length
-      );
-    }
+  //   if (oneUser) {
+  //     if (oneUser.pendingRequests.includes(user.email)) {
+  //       setUserStatus("waiting");
+  //     } else if (user.contactList.includes(oneUser.email)) {
+  //       setUserStatus("friend");
+  //     } else if (user.pendingRequests.includes(oneUser.email)) {
+  //       setUserStatus("pending");
+  //     } else {
+  //       setUserStatus("unknown");
+  //     }
+  //     setRating(
+  //       oneUser.ratings.reduce(
+  //         (accumulateur, valeurCourante) =>
+  //           Number(accumulateur) + Number(valeurCourante),
+  //         0
+  //       ) / oneUser.ratings.length
+  //     );
+  //   }
 
-    console.log(oneUser, "profile");
-  }, [oneUser]);
+  //   console.log(oneUser, "profile");
+  // }, [oneUser]);
 
   const postReview = () => {
-    console.log("post");
-    axios
-      .post("http://192.168.94.101:5001/reviews/", {
-        content: message,
-        reviewSender: user.user_id,
-        reviewReceiver: oneUser.user_id,
-      })
-      .then(() => {});
+    // console.log("post");
+    // axios
+    //   .post("http://192.168.1.107:5001/reviews/", {
+    //     content: message,
+    //     reviewSender: user.user_id,
+    //     reviewReceiver: oneUser.user_id,
+    //   })
+    //   .then(() => {});
   };
 
-  useEffect(() => {
-    if (oneUser) {
-      console.log(oneUser.user_id);
-      axios
-        .get(`http://192.168.94.101:5001/reviews/${oneUser.user_id}`)
-        .then((res) => {
-          setReview(res.data);
-          console.log(res.data, "res.data");
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [oneUser]);
+  // useEffect(() => {
+  //   if (oneUser) {
+  //     console.log(oneUser.user_id);
+  //     axios
+  //       .get(`http://192.168.1.107:5001/reviews/${oneUser.user_id}`)
+  //       .then((res) => {
+  //         setReview(res.data);
+  //         console.log(res.data, "res.data");
+  //       })
+  //       .catch((err) => console.log(err));
+  //   }
+  // }, [oneUser]);
 
-  const userStat = () => {
-    console.log(userStatus);
-    if (userStatus === "waiting") {
-      return (
-        <Button
-          mx="1"
-          backgroundColor={"#5FC8C0"}
-          width={100}
-          borderColor={"black"}
-          height={36}
-        >
-          remove request
-        </Button>
-      );
-    } else if (userStatus === "pending") {
-      return (
-        <Button
-          mx="1"
-          backgroundColor={"#5FC8C0"}
-          width={100}
-          borderColor={"black"}
-          height={36}
-          onPress={() => {
-            acceptRequest();
-          }}
-        >
-          accept
-        </Button>
-      );
-    } else if (userStatus === "unknown") {
-      return (
-        <Button
-          mx="1"
-          backgroundColor={"#5FC8C0"}
-          width={100}
-          borderColor={"black"}
-          height={36}
-          onPress={() => {
-            addFriend();
-          }}
-        >
-          add
-        </Button>
-      );
-    } else if (userStatus === "friend") {
-      return (
-        <Button
-          mx="1"
-          backgroundColor={"#5FC8C0"}
-          width={100}
-          borderColor={"black"}
-          height={36}
-          onPress={() => {
-            unfriend();
-          }}
-        >
-          Unfriend
-        </Button>
-      );
-    }
-  };
+  // const userStat = () => {
+  //   console.log(userStatus);
+  //   if (userStatus === "waiting") {
+  //     return (
+  //       <Button
+  //         mx="1"
+  //         backgroundColor={"#5FC8C0"}
+  //         width={100}
+  //         borderColor={"black"}
+  //         height={36}
+  //       >
+  //         remove request
+  //       </Button>
+  //     );
+  //   } else if (userStatus === "pending") {
+  //     return (
+  //       <Button
+  //         mx="1"
+  //         backgroundColor={"#5FC8C0"}
+  //         width={100}
+  //         borderColor={"black"}
+  //         height={36}
+  //         onPress={() => {
+  //           acceptRequest();
+  //         }}
+  //       >
+  //         accept
+  //       </Button>
+  //     );
+  //   } else if (userStatus === "unknown") {
+  //     return (
+  //       <Button
+  //         mx="1"
+  //         backgroundColor={"#5FC8C0"}
+  //         width={100}
+  //         borderColor={"black"}
+  //         height={36}
+  //         onPress={() => {
+  //           addFriend();
+  //         }}
+  //       >
+  //         add
+  //       </Button>
+  //     );
+  //   } else if (userStatus === "friend") {
+  //     return (
+  //       <Button
+  //         mx="1"
+  //         backgroundColor={"#5FC8C0"}
+  //         width={100}
+  //         borderColor={"black"}
+  //         height={36}
+  //         onPress={() => {
+  //           unfriend();
+  //         }}
+  //       >
+  //         Unfriend
+  //       </Button>
+  //     );
+  //   }
+  // };
   console.log(rating);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
@@ -258,7 +258,7 @@ export default function FlyContent({ navigation, posts }) {
         alert(error);
       });
   }
-  if (oneUser) {
+ // if (oneUser) {
     return (
       <S.Container>
         <StatusBar barStyle="light-content" />
@@ -323,7 +323,8 @@ export default function FlyContent({ navigation, posts }) {
                   size={150}
                   borderRadius={100}
                   source={{
-                    uri: oneUser.image,
+                    //todo fix data
+                    uri: "",
                   }}
                   alt="Alternate Text"
                 />
@@ -334,11 +335,15 @@ export default function FlyContent({ navigation, posts }) {
                   <S.LargeText
                     style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                   >
-                    {oneUser.userName}
+                    //todo fix data oneusername
                   </S.LargeText>
-                  {userStat()}
-                  <Rating starRating={rating} />
-                  <Text>({oneUser && oneUser.ratings.length})reviews</Text>
+                  {/* {userStat()} */}
+                  <Rating starRating={[1,5,5]} />
+                  <Text>
+                    //todo fix data 5
+                    {/* ({oneUser && oneUser.ratings.length}) */}
+                    reviews
+                  </Text>
 
                   {/* add star rating here  */}
                   <Box marginRight={-50}>
@@ -347,7 +352,7 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Phone Number :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        {oneUser.phoneNumber}
+                        //todo fix data 55039{" "}
                       </Text>
                     </S.HeaderInfoText>
                   </Box>
@@ -357,8 +362,7 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Email :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        {" "}
-                        {oneUser.email}
+                        //todo fix data email
                       </Text>
                     </S.HeaderInfoText>
                   </Box>
@@ -368,8 +372,8 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Location :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        {" "}
-                        {oneUser.location}
+                        //todo fix data
+                        location
                       </Text>
                     </S.HeaderInfoText>
                   </Box>
@@ -477,9 +481,9 @@ export default function FlyContent({ navigation, posts }) {
         <Footer navigation={navigation} />
       </S.Container>
     );
-  } else {
-    return <Text size={50}> hi err</Text>;
-  }
+  // } else {
+  //   return <Text size={50}> hi err</Text>;
+  // }
 }
 const styles = StyleSheet.create({
   text: {

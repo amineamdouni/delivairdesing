@@ -14,36 +14,36 @@ import * as ImagePicker from "expo-image-picker";
 import ProgressBar from "react-native-animated-progress";
 import Alert from "./Alert";
 
-import axios from "axios";
+// import axios from "axios";
 
-//---------Firebase---------
-import firebase from "firebase/compat/app";
-import "firebase/compat/storage";
-import { initializeApp } from "firebase/app";
-const firebaseConfig = {
-  apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
-  authDomain: "delivair-959e9.firebaseapp.com",
-  projectId: "delivair-959e9",
-  storageBucket: "delivair-959e9.appspot.com",
-  messagingSenderId: "1084409904306",
-  appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
-};
+// //---------Firebase---------
+// import firebase from "firebase/compat/app";
+// import "firebase/compat/storage";
+// import { initializeApp } from "firebase/app";
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCVBbACohSkuUr0FntAmt9BvMUK-RkpY-E",
+//   authDomain: "delivair-959e9.firebaseapp.com",
+//   projectId: "delivair-959e9",
+//   storageBucket: "delivair-959e9.appspot.com",
+//   messagingSenderId: "1084409904306",
+//   appId: "1:1084409904306:web:03f5e420eb889f115d1dab",
+// };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
-}
-const app = initializeApp(firebaseConfig);
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
+// const app = initializeApp(firebaseConfig);
 
 //------------firebase-----------
-import { UserContext } from "../UserContext";
+// import { UserContext } from "../UserContext";
 const SignUpForm = ({ navigation }) => {
-  const { user, connected, setUser } = useContext(UserContext);
-  const [, updateState] = useState();
-  const forceUpdate = useCallback(() => updateState({}), []);
-  console.log(connected, "connectedd");
-  useEffect(() => {
-    forceUpdate();
-  }, [user]);
+  // const { user, connected, setUser } = useContext(UserContext);
+  // const [, updateState] = useState();
+  // const forceUpdate = useCallback(() => updateState({}), []);
+  // console.log(connected, "connectedd");
+  // useEffect(() => {
+  //   forceUpdate();
+  // }, [user]);
   const [userName, setUsername] = useState("");
   const [phoneNumber, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ const SignUpForm = ({ navigation }) => {
   const [image, setImage] = useState(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
   );
-  const [uploading, setUploading] = useState(false);
+  // const [uploading, setUploading] = useState(false);
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -90,99 +90,100 @@ const SignUpForm = ({ navigation }) => {
     }
   };
 
-  const uploadImage = async () => {
-    setProgress(0);
-    setLoading(true);
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", image, true);
-      xhr.send(null);
-    });
-    const ref = firebase.storage().ref().child(`Pictures/Image2`);
-    const snapshot = ref.put(blob);
-    snapshot.on(
-      firebase.storage.TaskEvent.STATE_CHANGED,
-      () => {
-        setUploading(true);
-      },
-      (error) => {
-        setUploading(false);
-        console.log(error);
-        alert(error);
-        blob.close();
-        Ale("error", "Oups there is an error", "Try again please!");
-        return;
-      },
+  // const uploadImage = async () => {
+  //   setProgress(0);
+  //   setLoading(true);
+  //   const blob = await new Promise((resolve, reject) => {
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.onload = function () {
+  //       resolve(xhr.response);
+  //     };
+  //     xhr.onerror = function () {
+  //       reject(new TypeError("Network request failed"));
+  //     };
+  //     xhr.responseType = "blob";
+  //     xhr.open("GET", image, true);
+  //     xhr.send(null);
+  //   });
+  //   const ref = firebase.storage().ref().child(`Pictures/Image2`);
+  //   const snapshot = ref.put(blob);
+  //   snapshot.on(
+  //     firebase.storage.TaskEvent.STATE_CHANGED,
+  //     () => {
+  //       setUploading(true);
+  //     },
+  //     (error) => {
+  //       setUploading(false);
+  //       console.log(error);
+  //       alert(error);
+  //       blob.close();
+  //       Ale("error", "Oups there is an error", "Try again please!");
+  //       return;
+  //     },
 
-      () => {
-        snapshot.snapshot.ref.getDownloadURL().then((url) => {
-          Ale(
-            "success",
-            "Upload successful",
-            "You can submit now! (don't forget to fill the rest of the form!"
-          );
-          setUploading(false);
-          setProgress(100);
-          console.log("Download URL: ", url);
-          setImage(url);
-          setLoading(false);
-          blob.close();
-          return url;
-        });
-      }
-    );
-  };
+  //     () => {
+  //       snapshot.snapshot.ref.getDownloadURL().then((url) => {
+  //         Ale(
+  //           "success",
+  //           "Upload successful",
+  //           "You can submit now! (don't forget to fill the rest of the form!"
+  //         );
+  //         setUploading(false);
+  //         setProgress(100);
+  //         console.log("Download URL: ", url);
+  //         setImage(url);
+  //         setLoading(false);
+  //         blob.close();
+  //         return url;
+  //       });
+  //     }
+  //   );
+  // };
 
   //----------end of firebase upload picture----
 
   const handleSubmit = () => {
-    console.log("submit");
-    console.log({
-      userName,
-      phoneNumber: Number(phoneNumber),
-      location,
-      image,
-      email: connected.email,
-    });
-    axios
+    navigation.navigate("home");
+    //           navigation.navigate("unverfied");
+    //           navigation.navigate("banned");
 
-      .post("http://192.168.94.101:5001/users", {
-        userName,
-        phoneNumber: Number(phoneNumber),
-        location,
-        image,
-        email: connected.email,
-      })
-      .then((response) => {
-        console.log("refresh");
-        axios
-
-          .get(`http://192.168.94.101:5001/users/${response.data.email}`)
-
-          .then((res) => {
-            setUser(res.data);
-            if (res.data.verfied == false) {
-              console.log(res.data.verified);
-              navigation.navigate("unverfied");
-            } else if (res.data.banned == true) {
-              navigation.navigate("banned");
-            } else {
-              navigation.navigate("home");
-            }
-            Ale("success", "Thank you for updating your profile", "Enjoy!");
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        Ale("error", "An error occured", "Please fill up everything!");
-      });
+    // console.log("submit");
+    // console.log({
+    //   userName,
+    //   phoneNumber: Number(phoneNumber),
+    //   location,
+    //   image,
+    //   email: connected.email,
+    // });
+    // axios
+    //   .post("http://192.168.1.107:5001/users", {
+    //     userName,
+    //     phoneNumber: Number(phoneNumber),
+    //     location,
+    //     image,
+    //     email: connected.email,
+    //   })
+    //   .then((response) => {
+    //     console.log("refresh");
+    //     axios
+    //       .get(`http://192.168.1.107:5001/users/${response.data.email}`)
+    //       .then((res) => {
+    //         setUser(res.data);
+    //         if (res.data.verfied == false) {
+    //           console.log(res.data.verified);
+    //           navigation.navigate("unverfied");
+    //         } else if (res.data.banned == true) {
+    //           navigation.navigate("banned");
+    //         } else {
+    //           navigation.navigate("home");
+    //         }
+    //         Ale("success", "Thank you for updating your profile", "Enjoy!");
+    //       });
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     Ale("error", "An error occured", "Please fill up everything!");
+    //   });
   };
 
   return (
@@ -285,7 +286,7 @@ const SignUpForm = ({ navigation }) => {
             variant="subtle"
             isLoading={loading}
             title="upload"
-            onPress={uploadImage}
+            // onPress={uploadImage}
           >
             Upload
           </Button>

@@ -27,7 +27,7 @@ const imaage = {
 import { UserContext } from "../UserContext";
 import axios from "axios";
 
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from "react-native";
 export default function Chat({ navigation }) {
   const { user, setTo, contactList } = useContext(UserContext);
   const [allUsers, getAllUsers] = useState([]);
@@ -42,7 +42,7 @@ export default function Chat({ navigation }) {
   useEffect(() => {
     axios
       .get(
-        "http://192.168.94.101:3000/api/users/allusers/63bc585f004eb697059c2a7d"
+        "http://192.168.1.107:3000/api/users/allusers/63bc585f004eb697059c2a7d"
       )
       .then((res) => {
         console.log(res.data.filter((e) => contactList.includes(e.email)));
