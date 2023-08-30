@@ -12,10 +12,13 @@ app.use(cors());
 app.use(express.json());
 mongoose.set("strictQuery", false);
 mongoose
-  .connect("mongodb+srv://root:root@delivair.1zg97hn.mongodb.net/delivair", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    "mongodb+srv://root:root@cluster0.fkaxvra.mongodb.net/delivair",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     console.log("DB Connetion Successfull");
   })

@@ -38,7 +38,8 @@ const add = async (req, res) => {
           location: req.body.location,
           contactList: [],
           verified: false,
-          banned: false,
+          // banned: false,
+          password:req.body.password
         },
       })
       .then((result) => res.json(result));
