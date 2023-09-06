@@ -6,8 +6,10 @@ import {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { Entypo } from "@expo/vector-icons";
+import { TouchableOpacity, View, Platform ,Linking} from "react-native";
 
+import { Entypo } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import * as S from "./styles";
 import {
   Text,
@@ -18,6 +20,7 @@ import {
   Center,
   Avatar,
   Heading,
+  Image,
   VStack,
   useToast,
 } from "native-base";
@@ -98,12 +101,20 @@ export default function FlyContent({ navigation, posts, to, from, setPosts }) {
   const headerContentAnimatedStyled = useAnimatedStyle(() => ({
     transform: [{ translateY: headerContentTranslateY.value }],
   }));
-
+ const dialCall = (number) => {
+   let phoneNumber = "";
+   if (Platform.OS === "android") {
+     phoneNumber = `tel:${number}`;
+   } else {
+     phoneNumber = `telprompt:${number}`;
+   }
+   Linking.openURL(phoneNumber);
+ };
   useEffect(() => {
     headertranslateY.value = withTiming(0, { duration: 700 });
     headerContentTranslateY.value = withTiming(0, { duration: 900 });
     headerContentopacity.value = withTiming(1, { duration: 700 });
-    search(from, to);
+    // search(from, to);
   }, []);
   useEffect(() => {
     if (posts.length == 0) {
@@ -135,36 +146,109 @@ export default function FlyContent({ navigation, posts, to, from, setPosts }) {
           <Box style={{ zIndex: 10002, height: 200, width: 300 }}>
             <Swiper showsPagination={false}>
               {posts.map((e, i) => (
-                <Box width={300} style={style.graybox}>
-                  <Container margin={3}>
-                    <HStack space={2}>
-                      <VStack>
-                        <Center style={style.left}>
-                          <Avatar
-                            source={{
-                              uri: e.poster_image,
-                            }}
-                          />
-                        </Center>
-                        <Center backgroundColor="#EBC8CB" borderRadius="5">
-                          <Text>{e.weight}kg</Text>
-                        </Center>
-                      </VStack>
-                      <Center></Center>
-                      <VStack>
-                        <Container style={style.Middle}>
-                          <Heading size="sm">{e.content}</Heading>
-                          <Text color={"grey"}>{relativeDate(e.postTime)}</Text>
-                          <Text>{e.departCountry}</Text>
-                        </Container>
-                        <Container marginTop="3" fontWeight="400">
-                          <Text>Departure Time:</Text>
-                          <Text>{convertTime(e.departTime)}</Text>
-                        </Container>
-                      </VStack>
-                    </HStack>
-                  </Container>
-                </Box>
+                // <Box width={300} style={style.graybox}>
+                //   <Container margin={3}>
+                //     <HStack space={2}>
+                //       <VStack>
+                //         <Center style={style.left}>
+                //           <Avatar
+                //             source={{
+                //               uri: e.poster_image,
+                //             }}
+                //           />
+                //         </Center>
+                //         <Center backgroundColor="#EBC8CB" borderRadius="5">
+                //           <Text>{e.weight}kg</Text>
+                //         </Center>
+                //       </VStack>
+                //       <Center></Center>
+                //       <VStack>
+                //         <Container style={style.Middle}>
+                //           <Heading size="sm">{e.content}</Heading>
+                //           <Text color={"grey"}>{relativeDate(e.postTime)}</Text>
+                //           <Text>{e.departCountry}</Text>
+                //         </Container>
+                //         <Container marginTop="3" fontWeight="400">
+                //           <Text>Departure Time:</Text>
+                //           <Text>{convertTime(e.departTime)}</Text>
+                //         </Container>
+                //       </VStack>
+                //     </HStack>
+                //   </Container>
+                // </Box>
+                <VStack style={style.friendItem}>
+                  <HStack>
+                    <TouchableOpacity
+                      onPress={() => {
+                        //   await axios
+
+                        //     .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+
+                        //     .then((res) => {
+                        //       setOneUser(res.data);
+                        // });
+                        navigation.navigate("otherprofile");
+                      }}
+                    >
+                      <Image
+                        source={{ uri: e.poster_image }}
+                        style={style.profileImage}
+                      />
+                    </TouchableOpacity>
+                    <Text style={style.friendName}>{e.poster_name}</Text>
+                    <View>
+                      <TouchableOpacity
+                        style={style.callIconContainer}
+                        onPress={() => dialCall(e.phone)}
+                      >
+                        <AntDesign
+                          name="phone"
+                          color={"#5FC8C0"}
+                          size={25}
+                        ></AntDesign>
+                      </TouchableOpacity>
+                    </View>
+                  </HStack>
+
+                  <VStack style={style.friendInfo}>
+                    <Text style={style.friendEmail}>
+                      <MaterialCommunityIcons
+                        name="weight-kilogram"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :
+                      <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                        {e.weight}
+                      </Text>
+                      <Text style={{ fontWeight: "bold" }}> KG</Text>
+                    </Text>
+                    <Text style={style.friendPhone}>
+                      <MaterialCommunityIcons
+                        name="clock-time-eight-outline"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      {convertTime(e.departTime)}
+                    </Text>
+                    <Text style={style.friendCountry}>
+                      <MaterialCommunityIcons
+                        name="airplane-marker"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :{e.depart}
+                    </Text>
+                    <Text>
+                      <MaterialCommunityIcons
+                        name="message"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      : {e.content}
+                    </Text>
+                  </VStack>
+                </VStack>
               ))}
             </Swiper>
           </Box>
@@ -199,5 +283,57 @@ const style = StyleSheet.create({
   left: {
     width: 50,
     margin: 10,
+  },
+  
+  logo: {
+    color: "white",
+    width: 143,
+    height: 48,
+    left: 20,
+    top: 10,
+    fontSize: 30,
+  },
+  friendItem: {
+    alignItems: "center",
+    margin: 20,
+    borderRadius: 30,
+    padding: 20,
+    backgroundColor: "white",
+  },
+  profileImage: {
+    width: "35%", // Set to 20% of the screen width
+    aspectRatio: 1, // To maintain a square aspect ratio
+    borderRadius: 25,
+    right: 35,
+    marginBottom: 15,
+  },
+  friendInfoContainer: {
+    width: "70%", // Set to 70% of the screen width
+    marginLeft: "2%", // Add a small margin between the image and info
+  },
+  friendInfo: {
+    right: 35,
+  },
+  callIconContainer: {
+    left: 30, // Adjust the right position as needed
+  },
+  friendName: {
+    fontSize: 20,
+    right: 80,
+    top: 7,
+    fontWeight: "bold",
+  },
+  friendEmail: {
+    fontSize: 16,
+  },
+  friendPhone: {
+    fontSize: 16,
+  },
+  friendCountry: {
+    fontSize: 16,
+  },
+  verticleLine: {
+    width: 1,
+    backgroundColor: "#5FC8C0",
   },
 });

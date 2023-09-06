@@ -47,6 +47,9 @@ const Stacks = () => {
   // } else if (user) {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="allposts" component={AllPosts} />
+        <Stack.Screen name="chat" component={Chat} />
+
         <Stack.Screen name="otherprofile" component={OthersProfile} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="login" component={Login} />
@@ -72,8 +75,6 @@ const Stacks = () => {
             headerStyle: { backgroundColor: "#FFC8CE" },
           }}
         />
-        <Stack.Screen name="allposts" component={AllPosts} />
-        <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="reclamation" component={Reclamation} />
         <Stack.Screen name="history" component={History} />
       </Stack.Navigator>

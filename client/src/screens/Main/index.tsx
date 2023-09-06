@@ -66,7 +66,30 @@ export default function Main({ navigation }: any) {
   const [confirm, setConfirm] = useState(false);
   const [showStatus, setShowStatus] = useState(false);
   const [showFlyInfo, setShowFlyInfo] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([
+    {
+      poster_id: 1,
+      poster_name: "John Doe",
+      poster_image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2aSUcU-KC_ZGl1KIFES1pwRe4YOMv2gPx_g&usqp=CAU",
+      weight: 150,
+      departTime: "2023-09-15T10:00:00Z",
+      depart: "spain",
+      phone: "123-456-7890",
+      content: "Looking for a travel buddy!",
+    },
+    {
+      poster_id: 2,
+      poster_name: "Alice Smith",
+      poster_image:
+        "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      weight: 130,
+      departTime: "2023-09-20T08:30:00Z",
+      depart: "tunis",
+      phone: "987-654-3210",
+      content: "Planning a hiking trip.",
+    },
+  ]);
   const handleConfirm = () => {
     if (showCardSelect) {
       setShowCardSelect(false);
@@ -99,78 +122,12 @@ export default function Main({ navigation }: any) {
   };
 
   useEffect(() => {
-    axios
+    // axios
 
-      .get("http://192.168.1.107:5001/posts")
+    //   .get("http://192.168.1.107:5001/posts")
 
-      .then((res) => setPosts([
-  {
-    "post_id": 4,
-    "type": "reciver",
-    "departCountry": "tunisia",
-    "departTime": "202020",
-    "arriveCountry": "spain",
-    "arriveTime": "20223",
-    "content": "i need someone",
-    "paymentWays": [
-      "paypal"
-    ],
-    "acceptedItems": [
-      "anything",
-      "smth"
-    ],
-    "weight": "5",
-    "postTime": "5am",
-    "poster_id": 19,
-    "flight_id": "Tun514"
-  },
-  {
-    "post_id": 5,
-    "type": "shipper",
-    "departCountry": "Tunis",
-    "departTime": "2023-01-04 13:25+01:00",
-    "arriveCountry": "Tunis",
-    "arriveTime": "2023-01-04 13:25+01:00",
-    "content": "hi",
-    "paymentWays": [],
-    "acceptedItems": [],
-    "weight": "0",
-    "postTime": "2023-01-12T08:56:43.504Z",
-    "poster_id": 19,
-    "flight_id": "TU 514"
-  },
-  {
-    "post_id": 6,
-    "type": "shipper",
-    "departCountry": "Tunis",
-    "departTime": "2023-01-13 17:10+01:00",
-    "arriveCountry": "Tunis",
-    "arriveTime": "2023-01-13 17:10+01:00",
-    "content": "hi",
-    "paymentWays": [],
-    "acceptedItems": [],
-    "weight": "0",
-    "postTime": "2023-01-12T08:59:22.478Z",
-    "poster_id": 19,
-    "flight_id": "TU 397"
-  },
-  {
-    "post_id": 7,
-    "type": "shipper",
-    "departCountry": "Tunis",
-    "departTime": "2023-01-13 17:10+01:00",
-    "arriveCountry": "Tunis",
-    "arriveTime": "2023-01-13 17:10+01:00",
-    "content": "hi",
-    "paymentWays": [],
-    "acceptedItems": [],
-    "weight": "0",
-    "postTime": "2023-01-12T09:02:39.769Z",
-    "poster_id": 19,
-    "flight_id": "TU 397"
-  }
-]))
-      .catch((err) => console.log(err));
+    //   .then((res) => setPosts([]))
+    //   .catch((err) => console.log(err));
     if (confirm) {
       backgroundColor.value = withTiming("#F1F1F1", { duration: 300 });
       setTimeout(() => {

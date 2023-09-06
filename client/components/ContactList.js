@@ -26,7 +26,25 @@ function Basic() {
   const { contactList, setContactList, contactArray, setcontactArray } =
     useContext(UserContext);
 
-  const [listData, setListData] = useState(contactList);
+  const [listData, setListData] = useState([
+    {
+      userName: "John Doe",
+      phoneNumber: "+1234567890",
+      email: "johndoe@example.com",
+      location: "123 Main Street, City, Country",
+      image:
+        "https://images.unsplash.com/photo-1521119989659-a83eee488004?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2823&q=80",
+    },
+    {
+      userName: "Jane Smith",
+      phoneNumber: "+9876543210",
+      email: "janesmith@example.com",
+      location: "456 Elm Avenue, Town, Country",
+      image:
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2459&q=80",
+    },
+    // Add more objects with dummy data as needed
+  ]);
 
   const closeRow = (rowMap, rowKey) => {
     if (rowMap[rowKey]) {
@@ -47,7 +65,13 @@ function Basic() {
   };
 
   const renderItem = ({ item, index }) => (
-    <Box>
+    <Box
+      style={{
+        borderTopWidth: 1, // Add a top border with 1 pixel width
+        borderBottomWidth: index%2==0?0:1, // Add a bottom border with 1 pixel width
+        borderColor: "#FFC8CE", // Specify the border color
+      }}
+    >
       <Pressable
         onPress={() => console.log("You touched me")}
         _dark={{

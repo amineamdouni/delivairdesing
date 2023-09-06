@@ -1,6 +1,6 @@
 //import liraries
 import * as React from "react";
-import { Box, HStack, Center, Heading, ScrollView } from "native-base";
+import { Box, HStack, Center, Heading, ScrollView ,VStack} from "native-base";
 import { View, Text, StyleSheet, Image } from "react-native";
 import axios from "axios";
 import { Linking, Platform } from "react-native";
@@ -53,6 +53,7 @@ const friends = [
       "https://cdn.discordapp.com/attachments/1030292601489854626/1059141955470229585/D7C1F79F-0816-4479-9397-1CF6493F9CD7.jpg",
   },
 ];
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function AllPosts({ navigation }) {
   //----------
@@ -75,21 +76,21 @@ export default function AllPosts({ navigation }) {
   };
 
   //----------
-  React.useEffect(() => {
-    axios
+  // React.useEffect(() => {
+  //   axios
 
-      .get(`http://192.168.1.107:5001/posts`)
+  //     .get(`http://192.168.1.107:5001/posts`)
 
-      .then((res) => {
-        setPosts(res.data);
-        Ale(
-          "success",
-          res.data.length + " people posted!",
-          "Make sure to verify everything before sending goods !"
-        );
-      })
-      .catch((err) => Ale("error", "oups", err));
-  }, []);
+  //     .then((res) => {
+  //       setPosts(res.data);
+  //       Ale(
+  //         "success",
+  //         res.data.length + " people posted!",
+  //         "Make sure to verify everything before sending goods !"
+  //       );
+  //     })
+  //     .catch((err) => Ale("error", "oups", err));
+  // }, []);
 
   const relativeDate = (param) => {
     var olddate = new Date(param);
@@ -125,7 +126,30 @@ export default function AllPosts({ navigation }) {
   };
 
   const { setOneUser, contactList } = useContext(UserContext);
-  const [posts, setPosts] = useState("");
+  const [posts, setPosts] = useState([
+    {
+      poster_id: 1,
+      poster_name: "John Doe",
+      poster_image: "https://example.com/john.jpg",
+      weight: 150,
+      departTime: "2023-09-15T10:00:00Z",
+      depart:"spain",
+      phone: "123-456-7890",
+      content: "Looking for a travel buddy!",
+    },
+    {
+      poster_id: 2,
+      poster_name: "Alice Smith",
+      poster_image:
+        "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60",
+      weight: 130,
+      departTime: "2023-09-20T08:30:00Z",
+      depart:"tunis",
+      phone: "987-654-3210",
+      content: "Planning a hiking trip.",
+    },
+    // Add more posts here...
+  ]);
   const dialCall = (number) => {
     let phoneNumber = "";
     if (Platform.OS === "android") {
@@ -151,89 +175,87 @@ export default function AllPosts({ navigation }) {
       <ScrollView>
         {posts &&
           posts.map((e, i) => {
-            console.log(e, "eeeee");
-            let test;
-            axios
+           
+            // axios
 
-              .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+            //   .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
 
-              .then((res) => (test = res.data));
-            console.log(test, "titi");
+            //   .then((res) => (test = res.data));
+            // console.log(test, "titi");
             return (
-              <View style={styles.friendItem}>
-                <TouchableOpacity
-                  onPress={async () => {
-                    await axios
+              <VStack style={styles.friendItem}>
+                <HStack>
+                  <TouchableOpacity
+                    onPress={() => {
+                      //   await axios
 
-                      .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+                      //     .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
 
-                      .then((res) => {
-                        setOneUser(res.data);
-                      });
-
-                    navigation.navigate("otherprofile");
-                  }}
-                >
-                  <Image
-                    source={{ uri: e.poster_image }}
-                    style={styles.profileImage}
-                  />
-                </TouchableOpacity>
-                <View style={styles.friendInfo}>
+                      //     .then((res) => {
+                      //       setOneUser(res.data);
+                      // });
+                      navigation.navigate("otherprofile");
+                    }}
+                  >
+                    <Image
+                      source={{ uri: e.poster_image }}
+                      style={styles.profileImage}
+                    />
+                  </TouchableOpacity>
                   <Text style={styles.friendName}>{e.poster_name}</Text>
+                  <View>
+                    <TouchableOpacity
+                      style={styles.callIconContainer}
+                      onPress={() => dialCall(e.phone)}
+                    >
+                      <AntDesign
+                        name="phone"
+                        color={"#5FC8C0"}
+                        size={25}
+                      ></AntDesign>
+                    </TouchableOpacity>
+                  </View>
+                </HStack>
+
+                <VStack style={styles.friendInfo}>
                   <Text style={styles.friendEmail}>
                     <MaterialCommunityIcons
                       name="weight-kilogram"
                       size={20}
                       color="#FFC8CE"
-                    ></MaterialCommunityIcons>{" "}
-                    :{" "}
+                    ></MaterialCommunityIcons>
+                    :
                     <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
                       {e.weight}
                     </Text>
+                    <Text style={{ fontWeight: "bold" }}> KG</Text>
                   </Text>
                   <Text style={styles.friendPhone}>
                     <MaterialCommunityIcons
                       name="clock-time-eight-outline"
                       size={20}
                       color="#FFC8CE"
-                    ></MaterialCommunityIcons>{" "}
-                    Going Tomorrow
+                    ></MaterialCommunityIcons>
+                    {convertTime(e.departTime)}
                   </Text>
                   <Text style={styles.friendCountry}>
                     <MaterialCommunityIcons
                       name="airplane-marker"
                       size={20}
                       color="#FFC8CE"
-                    ></MaterialCommunityIcons>{" "}
-                    : {convertTime(e.departTime)}
+                    ></MaterialCommunityIcons>
+                    :{e.depart}
                   </Text>
-
                   <Text>
                     <MaterialCommunityIcons
                       name="message"
                       size={20}
                       color="#FFC8CE"
-                    ></MaterialCommunityIcons>{" "}
+                    ></MaterialCommunityIcons>
                     : {e.content}
                   </Text>
-                </View>
-                <View
-                  style={{
-                    height: 80,
-                    marginTop: 15,
-                    justifyContent: "space-around",
-                  }}
-                >
-                  <TouchableOpacity onPress={() => dialCall(friends[0].phone)}>
-                    <AntDesign
-                      name="phone"
-                      color={"#5FC8C0"}
-                      size={25}
-                    ></AntDesign>
-                  </TouchableOpacity>
-                </View>
-              </View>
+                </VStack>
+              </VStack>
             );
           })}
       </ScrollView>
@@ -263,7 +285,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   friendItem: {
-    flexDirection: "row",
     alignItems: "center",
     margin: 20,
     borderRadius: 30,
@@ -271,16 +292,27 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   profileImage: {
-    width: 50,
-    height: 50,
+    width: "35%", // Set to 20% of the screen width
+    aspectRatio: 1, // To maintain a square aspect ratio
     borderRadius: 25,
-    marginRight: 20,
+    right: 35,
+    marginBottom: 15,
+  },
+  friendInfoContainer: {
+    width: "70%", // Set to 70% of the screen width
+    marginLeft: "2%", // Add a small margin between the image and info
   },
   friendInfo: {
-    flex: 1,
+    right:35
+  },
+  callIconContainer: {
+    
+    left:30, // Adjust the right position as needed
   },
   friendName: {
     fontSize: 20,
+    right: 95,
+    top:7,
     fontWeight: "bold",
   },
   friendEmail: {
@@ -293,7 +325,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   verticleLine: {
-    height: "100%",
     width: 1,
     backgroundColor: "#5FC8C0",
   },

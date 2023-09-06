@@ -35,7 +35,7 @@ export default function AddPost({ navigation }) {
             status={status}
             variant={"left-accent"}
             title={title}
-            description={description}
+            description={!description ?description: 'flight not found'}
             isClosable={true}
           />
         );
@@ -64,7 +64,13 @@ export default function AddPost({ navigation }) {
         `https://aerodatabox.p.rapidapi.com/flights/number/${input}?rapidapi-key=0d11f53845msh4376157ff14641cp152948jsnf3bf30a8b5bd`
       )
       .then((res) => {
+        if (res==undefined) {
+           Ale("error", "Please try again", res);
+           return
+        }
+        console.log(res);
         setFlight(res.data[0]);
+
         console.log(res.data[0]);
         Ale(
           "success",
@@ -77,16 +83,16 @@ export default function AddPost({ navigation }) {
       });
   };
   const post = (body) => {
-    axios
+    // axios
 
-      .post(`http://192.168.1.107:5001/posts`, body)
+    //   .post(`http://192.168.1.107:5001/posts`, body)
 
-      .then((res) =>
+    //   .then((res) =>
         Ale("success", "Your post is successfully submitted!", "Good luck!")
-      )
-      .catch((err) =>
-        Ale("error", "try again", "Make sure the flight number is correct!")
-      );
+      // )
+      // .catch((err) =>
+      //   Ale("error", "try again", "Make sure the flight number is correct!")
+      // );
   };
   return (
     <NativeBaseProvider>
@@ -127,14 +133,14 @@ export default function AddPost({ navigation }) {
             width={100}
             borderColor={"black"}
             borderWidth={1}
-            height={36}
+          
             onPress={() => check(text)}
           >
             Check
           </Button>
         }
         <Text fontSize={17} bottom={170} right={100} width={150}>
-          Weight :{" "}
+          Weight :
         </Text>
         <Text
           fontSize={17}
@@ -143,8 +149,8 @@ export default function AddPost({ navigation }) {
           width={150}
           textAlign="center"
         >
-          {" "}
-          {onChangeValue} KG{" "}
+          
+          {onChangeValue} KG
         </Text>
         <Box bottom={170} alignItems="center" w="100%">
           <Stack space={4} alignItems="center" w="75%" maxW="300">
@@ -201,12 +207,12 @@ export default function AddPost({ navigation }) {
                 size={15}
               ></FontAwesome5>
               <Text fontSize={17} fontWeight={700}>
-                {" "}
+                
                 Departure country :
               </Text>
               <Text fontSize={17}>
-                {" "}
-                {flight.departure.airport.municipalityName}{" "}
+                
+                {flight.departure.airport.municipalityName}
               </Text>
             </HStack>
             <HStack marginTop={3}>
@@ -216,7 +222,7 @@ export default function AddPost({ navigation }) {
                 size={17}
               ></MaterialCommunityIcons>
               <Text fontSize={17} fontWeight={700}>
-                {" "}
+                
                 Departure time :
               </Text>
               <Text fontSize={17}> {flight.departure.scheduledTimeLocal} </Text>
@@ -231,8 +237,8 @@ export default function AddPost({ navigation }) {
                 Arrival country :
               </Text>
               <Text fontSize={17}>
-                {" "}
-                {flight.arrival.airport.municipalityName}{" "}
+                
+                {flight.arrival.airport.municipalityName}
               </Text>
             </HStack>
             <HStack marginTop={3}>
@@ -242,7 +248,7 @@ export default function AddPost({ navigation }) {
                 size={17}
               ></MaterialCommunityIcons>
               <Text fontSize={17} fontWeight={700}>
-                {" "}
+                
                 Arrival time :
               </Text>
               <Text fontSize={17}> {flight.arrival.scheduledTimeLocal} </Text>
@@ -256,22 +262,25 @@ export default function AddPost({ navigation }) {
           top={45}
           borderRadius={10}
           onPress={() =>
-            post({
-              type: "shipper",
-              departCountry: flight.departure.airport.municipalityName,
-              content: "who need to send somthing ",
-              departTime: flight.departure.scheduledTimeLocal,
-              arriveCountry: flight.departure.airport.municipalityName,
-              arriveTime: flight.departure.scheduledTimeLocal,
-              weight: JSON.stringify(onChangeEndValue),
-              flight_id: flight.number,
-              postTime: date,
-              paymentWays: ["paypal"],
-              acceptedItems: [],
-              poster_id: user.user_id,
-              poster_image: user.image,
-              poster_name: user.userName,
-            })
+            post(
+              // {
+
+            //   type: "shipper",
+            //   departCountry: flight.departure.airport.municipalityName,
+            //   content: "who need to send somthing ",
+            //   departTime: flight.departure.scheduledTimeLocal,
+            //   arriveCountry: flight.departure.airport.municipalityName,
+            //   arriveTime: flight.departure.scheduledTimeLocal,
+            //   weight: JSON.stringify(onChangeEndValue),
+            //   flight_id: flight.number,
+            //   postTime: date,
+            //   paymentWays: ["paypal"],
+            //   acceptedItems: [],
+            //   poster_id: user.user_id,
+            //   poster_image: user.image,
+            //   poster_name: user.userName,
+            // }
+            )
           }
         >
           Post
