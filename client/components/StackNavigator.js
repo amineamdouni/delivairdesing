@@ -47,21 +47,24 @@ const Stacks = () => {
   // } else if (user) {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="login" component={Login} />
+        <Stack.Screen name="banned" component={Banned} />
+        <Stack.Screen name="unverfied" component={Unverifed} />
+
+
+        <Stack.Screen name="home" component={Main} />
+        <Stack.Screen name="setting" component={UserSetting} />
+        <Stack.Screen name="profile" component={Profile} />
+
         <Stack.Screen name="allposts" component={AllPosts} />
         <Stack.Screen name="chat" component={Chat} />
 
         <Stack.Screen name="otherprofile" component={OthersProfile} />
-        <Stack.Screen name="profile" component={Profile} />
-        <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={SignUp} />
         <Stack.Screen name="form" component={Form} />
         <Stack.Screen name="notices" component={Notices} />
-        <Stack.Screen name="unverfied" component={Unverifed} />
         <Stack.Screen name="contarct" component={Alert} />
-        <Stack.Screen name="setting" component={UserSetting} />
-        <Stack.Screen name="home" component={Main} />
         <Stack.Screen name="messages" component={Messages} />
-        <Stack.Screen name="banned" component={Banned} />
         <Stack.Screen name="track" component={Track} />
         <Stack.Screen name="addpost" component={AddPost} />
         <Stack.Screen

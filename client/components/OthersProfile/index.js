@@ -323,8 +323,7 @@ export default function FlyContent({ navigation, posts }) {
                   size={150}
                   borderRadius={100}
                   source={{
-                    //todo fix data
-                    uri: "",
+                    uri: "https://randomuser.me/api/portraits/men/7.jpg",
                   }}
                   alt="Alternate Text"
                 />
@@ -335,24 +334,18 @@ export default function FlyContent({ navigation, posts }) {
                   <S.LargeText
                     style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                   >
-                    //todo fix data oneusername
+                    Xaver Abner
                   </S.LargeText>
                   {/* {userStat()} */}
-                  <Rating starRating={[1,5,5]} />
-                  <Text>
-                    //todo fix data 5
-                    {/* ({oneUser && oneUser.ratings.length}) */}
-                    reviews
-                  </Text>
+                  <Rating starRating={4} />
 
-                  {/* add star rating here  */}
                   <Box marginRight={-50}>
                     <S.HeaderInfoText
                       style={{ fontSize: 17, fontWeight: "bold" }}
                     >
                       Phone Number :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        //todo fix data 55039{" "}
+                        (262) 162-1585
                       </Text>
                     </S.HeaderInfoText>
                   </Box>
@@ -362,7 +355,7 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Email :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        //todo fix data email
+                      xaver.abner@gmail.com
                       </Text>
                     </S.HeaderInfoText>
                   </Box>
@@ -372,8 +365,7 @@ export default function FlyContent({ navigation, posts }) {
                     >
                       Location :
                       <Text style={{ color: "#36454F", fontSize: 17 }}>
-                        //todo fix data
-                        location
+                       georgia
                       </Text>
                     </S.HeaderInfoText>
                   </Box>

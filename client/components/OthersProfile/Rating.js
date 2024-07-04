@@ -64,7 +64,6 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
   },
   stars: {
     display: "flex",

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Button, Text, TouchableOpacity } from "react-native";
+import { StyleSheet, Image,View, Button, Text, TouchableOpacity } from "react-native";
 import {
   Box,
   Flex,
@@ -9,8 +9,7 @@ import {
   VStack,
   ScrollView,
 } from "native-base";
-
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, MaterialCommunityIcons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 
 //---------Firebase---------
@@ -34,6 +33,20 @@ const app = initializeApp(firebaseConfig);
 //------------firebase-----------
 import { useState } from "react";
 const PersonalInformationForm = () => {
+  const convertTime = (pa) => {
+    return pa.slice(0, pa.length - 6) + " UTC " + pa.slice(pa.length - 6);
+  };
+
+  const e = {
+    poster_id: 1,
+    poster_name: "John Doe",
+    poster_image: "https://randomuser.me/api/portraits/men/12.jpg",
+    weight: 150,
+    departTime: "2023-09-15T10:00:00Z",
+    depart: "spain",
+    phone: "123-456-7890",
+    content: "Looking for a travel buddy!",
+  };
   const [selected, setSelected] = useState("settings");
   const [settings, setSettings] = useState("settings");
   const [posts, setPosts] = useState(null);
@@ -79,88 +92,90 @@ const PersonalInformationForm = () => {
     }
   };
 
-  const uploadImage = async () => {
-    setProgress(0);
-    setLoading(true);
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function () {
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", image, true);
-      xhr.send(null);
-    });
-    const ref = firebase.storage().ref().child(`Pictures/Image2`);
-    const snapshot = ref.put(blob);
-    snapshot.on(
-      firebase.storage.TaskEvent.STATE_CHANGED,
-      () => {
-        setUploading(true);
-      },
-      (error) => {
-        setUploading(false);
-        console.log(error);
-        alert(error);
-        blob.close();
-        Ale("error", "Oups there is an error", "Try again please!");
-        return;
-      },
+  // const uploadImage = async () => {
+  //   setProgress(0);
+  //   setLoading(true);
+  //   const blob = await new Promise((resolve, reject) => {
+  //     const xhr = new XMLHttpRequest();
+  //     xhr.onload = function () {
+  //       resolve(xhr.response);
+  //     };
+  //     xhr.onerror = function () {
+  //       reject(new TypeError("Network request failed"));
+  //     };
+  //     xhr.responseType = "blob";
+  //     xhr.open("GET", image, true);
+  //     xhr.send(null);
+  //   });
+  //   const ref = firebase.storage().ref().child(`Pictures/Image2`);
+  //   const snapshot = ref.put(blob);
+  //   snapshot.on(
+  //     firebase.storage.TaskEvent.STATE_CHANGED,
+  //     () => {
+  //       setUploading(true);
+  //     },
+  //     (error) => {
+  //       setUploading(false);
+  //       console.log(error);
+  //       alert(error);
+  //       blob.close();
+  //       Ale("error", "Oups there is an error", "Try again please!");
+  //       return;
+  //     },
 
-      () => {
-        snapshot.snapshot.ref.getDownloadURL().then((url) => {
-          Ale(
-            "success",
-            "Upload successful",
-            "You can submit now! (don't forget to fill the rest of the form!"
-          );
-          setUploading(false);
-          setProgress(100);
-          console.log("Download URL: ", url);
-          setImage(url);
-          setLoading(false);
-          blob.close();
-          return url;
-        });
-      }
-    );
-  };
+  //     () => {
+  //       snapshot.snapshot.ref.getDownloadURL().then((url) => {
+  //         Ale(
+  //           "success",
+  //           "Upload successful",
+  //           "You can submit now! (don't forget to fill the rest of the form!"
+  //         );
+  //         setUploading(false);
+  //         setProgress(100);
+  //         console.log("Download URL: ", url);
+  //         setImage(url);
+  //         setLoading(false);
+  //         blob.close();
+  //         return url;
+  //       });
+  //     }
+  //   );
+  // };
 
   //----------end of firebase upload picture----
 
   return (
-    <Box backgroundColor={"#5FC8C0"} height={1000}>
-      <TouchableOpacity onPress={pickImage}>
-        {image ? (
-          <Avatar
-            top={200}
-            bg="lightBlue.400"
-            size="xl"
-            borderRadius={100}
-            source={{ uri: image }}
-            alt="Alternate Text"
-            alignSelf="center"
-          ></Avatar>
-        ) : (
-          <Avatar
-            borderColor={"black"}
-            borderWidth={1}
-            size="xl"
-            alignSelf="center"
-            top={200}
-            borderRadius={100}
-            source={{
-              uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
-            }}
-            alt="Alternate Text"
-          />
-        )}
-      </TouchableOpacity>
+    <Box backgroundColor={"#FFFFFF"} height={2000}>
+      {settings && (
+        <TouchableOpacity onPress={pickImage}>
+          {image ? (
+            <Avatar
+              top={120}
+              bg="lightBlue.400"
+              size="2xl"
+              borderRadius={100}
+              source={{ uri: image }}
+              alt="Alternate Text"
+              alignSelf="center"
+            ></Avatar>
+          ) : (
+            <Avatar
+              borderColor={"black"}
+              borderWidth={1}
+              size="2xl"
+              alignSelf="center"
+              top={120}
+              borderRadius={100}
+              source={{
+                uri: "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
+              }}
+              alt="Alternate Text"
+            />
+          )}
+        </TouchableOpacity>
+      )}
 
-      <Box top={250} alignItems="center">
+      <Box top={200} alignItems="center">
         <Flex direction="row" h="58" p="4">
           <HStack>
             <TouchableOpacity
@@ -169,7 +184,7 @@ const PersonalInformationForm = () => {
               }}
             >
               <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: "16" }}
+                style={{ color:settings?"#5FC8C0": "#000000", fontWeight: "bold", fontSize: "16" }}
               >
                 Settings
               </Text>
@@ -183,23 +198,9 @@ const PersonalInformationForm = () => {
               }}
             >
               <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: "16" }}
+                style={{ color: posts?"#5FC8C0": "#000000", fontWeight: "bold", fontSize: "16" }}
               >
                 Posts
-              </Text>
-            </TouchableOpacity>
-          </HStack>
-          <Divider bg="#FFC8CE" thickness="2" mx="2" orientation="vertical" />
-          <HStack>
-            <TouchableOpacity
-              onPress={() => {
-                changed("history");
-              }}
-            >
-              <Text
-                style={{ color: "white", fontWeight: "bold", fontSize: "16" }}
-              >
-                History
               </Text>
             </TouchableOpacity>
           </HStack>
@@ -215,8 +216,8 @@ const PersonalInformationForm = () => {
               <View style={styles.inputColumn}>
                 <Input
                   variant="rounded"
-                  borderColor={"white"}
-                  placeholderTextColor={"white"}
+                  borderColor={"#000000"}
+                  placeholderTextColor={"#000000"}
                   mx="0"
                   size="l"
                   style={styles.input}
@@ -231,8 +232,8 @@ const PersonalInformationForm = () => {
               <View style={styles.inputColumn}>
                 <Input
                   variant="rounded"
-                  borderColor={"white"}
-                  placeholderTextColor={"white"}
+                  borderColor={"#000000"}
+                  placeholderTextColor={"#000000"}
                   mx="0"
                   size="l"
                   style={styles.input}
@@ -247,8 +248,8 @@ const PersonalInformationForm = () => {
               <View style={styles.inputColumn}>
                 <Input
                   variant="rounded"
-                  borderColor={"white"}
-                  placeholderTextColor={"white"}
+                  borderColor={"#000000"}
+                  placeholderTextColor={"#000000"}
                   mx="0"
                   size="l"
                   style={styles.input}
@@ -263,8 +264,8 @@ const PersonalInformationForm = () => {
               <View style={styles.inputColumn}>
                 <Input
                   variant="rounded"
-                  borderColor={"white"}
-                  placeholderTextColor={"white"}
+                  borderColor={"#000000"}
+                  placeholderTextColor={"#000000"}
                   mx="0"
                   size="l"
                   style={styles.input}
@@ -279,8 +280,8 @@ const PersonalInformationForm = () => {
               <View style={styles.inputColumn}>
                 <Input
                   variant="rounded"
-                  borderColor={"white"}
-                  placeholderTextColor={"white"}
+                  borderColor={"#000000"}
+                  placeholderTextColor={"#000000"}
                   mx="0"
                   size="l"
                   style={styles.input}
@@ -291,7 +292,11 @@ const PersonalInformationForm = () => {
             <View style={styles.row}>
               <View style={styles.emptyColumn} />
               <View style={styles.buttonColumn}>
-                <Button title="Save Changes" color="white" />
+                <Button
+                  title="Save Changes"
+                  backgroundColor="#5FC8C0"
+                  color="#000000"
+                />
               </View>
             </View>
           </View>
@@ -299,221 +304,317 @@ const PersonalInformationForm = () => {
       )}
       {posts && (
         <View style={styles.card}>
-          <ScrollView h="80">
+          <ScrollView h="600">
             <Box>
-              <VStack space={4} alignItems="center">
-                <Box
-                  w="64"
-                  h="20"
-                  bg="#7CE4DC"
-                  rounded="md"
-                  shadow={3}
-                  shadowColor={"white"}
-                >
+              <VStack  alignItems="center">
+                <VStack style={(styles.friendItem)}>
                   <HStack>
-                    <Avatar
-                      bg="green.500"
-                      left={2}
-                      top={1}
-                      size="xs"
-                      source={{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                      }}
-                    ></Avatar>
-                    <Box left={200}>
-                      <AntDesign color={"red"} name="delete" />
-                    </Box>
-                  </HStack>
-                  <Text style={{ color: "grey", left: 27, width: 230 }}>
-                    {" "}
-                    I have 2 kilos from Tunisa to Paris 5 February{" "}
-                  </Text>
-                </Box>
+                    <TouchableOpacity
+                      onPress={() => {
+                        //   await axios
 
-                <Box
-                  w="64"
-                  h="20"
-                  bg="#99FFF8"
-                  rounded="md"
-                  shadow={3}
-                  shadowColor={"white"}
-                >
-                  <HStack>
-                    <Avatar
-                      bg="green.500"
-                      left={2}
-                      top={1}
-                      size="xs"
-                      source={{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                        //     .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+
+                        //     .then((res) => {
+                        //       setOneUser(res.data);
+                        // });
+                        navigation.navigate("otherprofile");
                       }}
-                    ></Avatar>
-                    <Box left={200}>
-                      <AntDesign color={"red"} name="delete" />
-                    </Box>
+                    >
+                      <Image
+                        source={{ uri: e.poster_image }}
+                        style={styles.profileImage}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.friendName}>{e.poster_name}</Text>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.callIconContainer}
+                        onPress={() => dialCall(e.phone)}
+                      >
+                        <AntDesign
+                          name="delete"
+                          color={"#5FC8C0"}
+                          size={25}
+                        ></AntDesign>
+                      </TouchableOpacity>
+                    </View>
                   </HStack>
-                  <Text style={{ color: "grey", left: 27, width: 230 }}>
-                    {" "}
-                    I have 2 kilos from Tunisa to Paris 2 March{" "}
-                  </Text>
-                </Box>
-                <Box
-                  w="64"
-                  h="20"
-                  bg="#B6FFFF"
-                  rounded="md"
-                  shadow={3}
-                  shadowColor={"white"}
-                >
+
+                  <VStack style={styles.friendInfo}>
+                    <Text style={styles.friendEmail}>
+                      <MaterialCommunityIcons
+                        name="weight-kilogram"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :
+                      <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                        {e.weight}
+                      </Text>
+                      <Text style={{ fontWeight: "bold" }}> KG</Text>
+                    </Text>
+                    <Text style={styles.friendPhone}>
+                      <MaterialCommunityIcons
+                        name="clock-time-eight-outline"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      {convertTime(e.departTime)}
+                    </Text>
+                    <Text style={styles.friendCountry}>
+                      <MaterialCommunityIcons
+                        name="airplane-marker"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :{e.depart}
+                    </Text>
+                    <Text>
+                      <MaterialCommunityIcons
+                        name="message"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      : {e.content}
+                    </Text>
+                  </VStack>
+                </VStack>
+
+                <VStack style={styles.friendItem}>
                   <HStack>
-                    <Avatar
-                      bg="green.500"
-                      left={2}
-                      top={1}
-                      size="xs"
-                      source={{
-                        uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+                    <TouchableOpacity
+                      onPress={() => {
+                        //   await axios
+
+                        //     .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+
+                        //     .then((res) => {
+                        //       setOneUser(res.data);
+                        // });
+                        navigation.navigate("otherprofile");
                       }}
-                    ></Avatar>
-                    <Box left={200}>
-                      <AntDesign color={"red"} name="delete" />
-                    </Box>
+                    >
+                      <Image
+                        source={{ uri: e.poster_image }}
+                        style={styles.profileImage}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.friendName}>{e.poster_name}</Text>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.callIconContainer}
+                        onPress={() => dialCall(e.phone)}
+                      >
+                        <AntDesign
+                          name="delete"
+                          color={"#5FC8C0"}
+                          size={25}
+                        ></AntDesign>
+                      </TouchableOpacity>
+                    </View>
                   </HStack>
-                  <Text style={{ color: "grey", left: 27, width: 230 }}>
-                    {" "}
-                    I have 2 kilos from Tunisa to Paris 20 January{" "}
-                  </Text>{" "}
-                </Box>
+
+                  <VStack  style={ styles.friendInfo}>
+                    <Text style={styles.friendEmail}>
+                      <MaterialCommunityIcons
+                        name="weight-kilogram"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :
+                      <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                        {e.weight}
+                      </Text>
+                      <Text style={{ fontWeight: "bold" }}> KG</Text>
+                    </Text>
+                    <Text style={styles.friendPhone}>
+                      <MaterialCommunityIcons
+                        name="clock-time-eight-outline"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      {convertTime(e.departTime)}
+                    </Text>
+                    <Text style={styles.friendCountry}>
+                      <MaterialCommunityIcons
+                        name="airplane-marker"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :{e.depart}
+                    </Text>
+                    <Text>
+                      <MaterialCommunityIcons
+                        name="message"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      : {e.content}
+                    </Text>
+                  </VStack>
+                </VStack>
+                <VStack style={styles.friendItem}>
+                  <HStack>
+                    <TouchableOpacity
+                      onPress={() => {
+                        //   await axios
+
+                        //     .get(`http://192.168.1.107:5001/users/id/${e.poster_id}`)
+
+                        //     .then((res) => {
+                        //       setOneUser(res.data);
+                        // });
+                        navigation.navigate("otherprofile");
+                      }}
+                    >
+                      <Image
+                        source={{ uri: e.poster_image }}
+                        style={styles.profileImage}
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.friendName}>{e.poster_name}</Text>
+                    <View>
+                      <TouchableOpacity
+                        style={styles.callIconContainer}
+                        onPress={() => dialCall(e.phone)}
+                      >
+                        <AntDesign
+                          name="delete"
+                          color={"#5FC8C0"}
+                          size={25}
+                        ></AntDesign>
+                      </TouchableOpacity>
+                    </View>
+                  </HStack>
+
+                  <VStack style={styles.friendInfo}>
+                    <Text style={styles.friendEmail}>
+                      <MaterialCommunityIcons
+                        name="weight-kilogram"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :
+                      <Text style={{ color: "#5FC8C0", fontWeight: "bold" }}>
+                        {e.weight}
+                      </Text>
+                      <Text style={{ fontWeight: "bold" }}> KG</Text>
+                    </Text>
+                    <Text style={styles.friendPhone}>
+                      <MaterialCommunityIcons
+                        name="clock-time-eight-outline"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      {convertTime(e.departTime)}
+                    </Text>
+                    <Text style={styles.friendCountry}>
+                      <MaterialCommunityIcons
+                        name="airplane-marker"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      :{e.depart}
+                    </Text>
+                    <Text>
+                      <MaterialCommunityIcons
+                        name="message"
+                        size={20}
+                        color="#FFC8CE"
+                      ></MaterialCommunityIcons>
+                      : {e.content}
+                    </Text>
+                  </VStack>
+                </VStack>
               </VStack>
             </Box>
           </ScrollView>
         </View>
       )}
-      {history && (
-        <View style={styles.card}>
-          <Box
-            alignSelf={"center"}
-            w="64"
-            h="300"
-            bg="#B6FFFF"
-            rounded="md"
-            shadow={1}
-            shadowColor={"white"}
-          >
-            <ScrollView>
-              <Box marginTop={8}>
-                <Avatar
-                  alignSelf={"center"}
-                  bg="green.500"
-                  left={2}
-                  top={1}
-                  size="xs"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 10,
-                    color: "grey",
-                    fontWeight: "bold",
-                  }}
-                >
-                  added new post
-                </Text>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 17,
-                    color: "grey",
-                    fontSize: 10,
-                  }}
-                >
-                  21/02/2021
-                </Text>
-              </Box>
-              <Box>
-                <Avatar
-                  alignSelf={"center"}
-                  bg="green.500"
-                  left={2}
-                  top={8}
-                  size="xs"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 35,
-                    color: "grey",
-                    fontWeight: "bold",
-                  }}
-                >
-                  reserved new Delivair
-                </Text>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 40,
-                    color: "grey",
-                    fontSize: 10,
-                  }}
-                >
-                  13/09/2021
-                </Text>
-              </Box>
-              <Box>
-                <Avatar
-                  alignSelf={"center"}
-                  bg="green.500"
-                  left={2}
-                  top={49}
-                  size="xs"
-                  source={{
-                    uri: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-                  }}
-                ></Avatar>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 55,
-                    color: "grey",
-                    fontWeight: "bold",
-                  }}
-                >
-                  changed profile photo
-                </Text>
-                <Text
-                  style={{
-                    alignSelf: "center",
-                    top: 60,
-                    color: "grey",
-                    fontSize: 10,
-                  }}
-                >
-                  10/06/2021
-                </Text>
-              </Box>
-            </ScrollView>
-          </Box>
-        </View>
-      )}
     </Box>
   );
 };
+
 const styles = StyleSheet.create({
-  card: {
-    top: 300,
+  Header: {
+    backgroundColor: "#FFC8CE",
+    paddingTop: 80,
+    width: 500,
+    height: 100,
+    left: 0,
+    top: -33,
+    ImageBackground:
+      "https://i.ibb.co/S6BX4nQ/eberhard-grossgasteiger-j-CL98-LGaeo-E-unsplash.jpg",
+    alignContent: "middle",
+  },
+  logo: {
+    color: "white",
+    width: 143,
+    height: 48,
+    left: 20,
+    top: 10,
+    fontSize: 30,
+  },
+  friendItem: {
+    alignItems: "center",
+    margin:10,
+    borderRadius: 30,
+    padding: 50,
+    backgroundColor: "white",
+shadowOffset: {
+    width: 0,
+    height: 2,
+  },
+  shadowOpacity: 0.5, // Adjust the shadow opacity as needed
+  shadowRadius: 5,    // Adjust the shadow radius as needed
+  elevation: 5,       // For Android
+
+
+  },
+  profileImage: {
+    width: "35%", // Set to 20% of the screen width
+    aspectRatio: 1, // To maintain a square aspect ratio
+    borderRadius: 25,
+    right: 35,
+    marginBottom: 15,
+  },
+  friendInfoContainer: {
+    width: "70%", // Set to 70% of the screen width
+    marginLeft: "2%", // Add a small margin between the image and info
+  },
+  friendInfo: {
+    right: 35,
+  },
+  callIconContainer: {
+    left: 30, // Adjust the right position as needed
+  },
+  friendName: {
+    fontSize: 20,
+    right: 95,
+    top: 7,
+    fontWeight: "bold",
+  },
+  friendEmail: {
+    fontSize: 16,
+  },
+  friendPhone: {
+    fontSize: 16,
+  },
+  friendCountry: {
+    fontSize: 16,
+  },
+  verticleLine: {
+    width: 1,
     backgroundColor: "#5FC8C0",
+  },
+
+  card: {
+    top: 200,
+    backgroundColor: "#FFFFFF",
     borderRadius: 4,
     marginBottom: 1.5,
-    shadowColor: "#dadae3",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.65,
-    shadowRadius: 2,
+    
   },
   cardBody: {
     padding: 70,
@@ -529,7 +630,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontWeight: "bold",
     fontSize: 14,
-    color: "white",
+    color: "#000000",
   },
   inputColumn: {
     flex: 1,
@@ -539,8 +640,10 @@ const styles = StyleSheet.create({
     width: 80,
   },
   buttonColumn: {
+    backgroundColor: "#5FC8C0",
     left: 80,
     top: 20,
+    borderRadius: 10,
   },
 });
 

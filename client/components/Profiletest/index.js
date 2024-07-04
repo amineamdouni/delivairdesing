@@ -44,7 +44,16 @@ export default function FlyContent({ navigation, posts }) {
   // useEffect(() => {
   //   forceUpdate();
   // }, [user]);
-  const[contactList,setContactList]=useState([{},{},{},{},{},{},{},{}])
+  const [contactList, setContactList] = useState([
+    "https://randomuser.me/api/portraits/men/79.jpg",
+    "https://randomuser.me/api/portraits/women/75.jpg",
+    "https://randomuser.me/api/portraits/men/7.jpg",
+    "https://randomuser.me/api/portraits/men/83.jpg",
+    "https://randomuser.me/api/portraits/men/66.jpg",
+    "https://randomuser.me/api/portraits/women/89.jpg",
+    "https://randomuser.me/api/portraits/men/58.jpg",
+    "https://randomuser.me/api/portraits/women/39.jpg",
+  ]);
   const headertranslateY = useSharedValue(-320);
   const headerContentTranslateY = useSharedValue(320);
   const headerContentopacity = useSharedValue(0);
@@ -64,7 +73,7 @@ export default function FlyContent({ navigation, posts }) {
   }, []);
 
   function SignOut() {
-        navigation.navigate("login");
+    navigation.navigate("login");
 
     // signOut(auth)
     //   .then((res) => {
@@ -141,10 +150,9 @@ export default function FlyContent({ navigation, posts }) {
                 size={150}
                 borderRadius={100}
                 source={{
-                  //TODO:image
-                  uri: "",
+                  uri: "https://randomuser.me/api/portraits/men/12.jpg",
                 }}
-                alt="Alternate Text"
+                alt="Alternatedd Text"
               />
             </Center>
 
@@ -153,7 +161,7 @@ export default function FlyContent({ navigation, posts }) {
                 <S.LargeText
                   style={[styles.text, { fontWeight: "bold", fontSize: 34 }]}
                 >
-                  //TODO:change data username
+                  dave doe
                 </S.LargeText>
 
                 <Box marginRight={-50}>
@@ -162,7 +170,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Phone Number :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      //TODO:change data userphonenumber
+                      (717) 550-1675
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -172,7 +180,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Email :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      //TODO:change data user email
+                      davedoe21@gmail.com
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -182,7 +190,7 @@ export default function FlyContent({ navigation, posts }) {
                   >
                     Location :
                     <Text style={{ color: "#36454F", fontSize: 17 }}>
-                      //TODO:change data user location
+                    london
                     </Text>
                   </S.HeaderInfoText>
                 </Box>
@@ -216,7 +224,7 @@ export default function FlyContent({ navigation, posts }) {
                         <Box style={styles.mediaImageContainer}>
                           <Image
                             source={{
-                              uri: "https://i.pinimg.com/564x/cc/61/e0/cc61e0afec490d5a8e59ba330c67ab2a.jpg",
+                              uri: e,
                             }}
                             style={styles.image}
                             alt="*"
